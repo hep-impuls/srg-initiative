@@ -1,0 +1,86 @@
+{
+  "pages": {
+    "agora": {
+      "title": "Vom Dorfplatz zum Digitalen Feed",
+      "audioSrc": "/audio/mobilität.mp3",
+      "timeline": [
+        {
+          "seconds": 0,
+          "tab": "theory",
+          "focusId": "header-intro",
+          "label": "Einführung",
+          "isChapter": true
+        },
+        {
+          "seconds": 15,
+          "tab": "theory",
+          "focusId": "agora-explanation",
+          "label": "Was bedeutet Agora?"
+        },
+        {
+          "seconds": 45,
+          "tab": "theory",
+          "focusId": "comparison-section",
+          "label": "Früher vs. Heute",
+          "isChapter": true
+        },
+        {
+          "seconds": 90,
+          "tab": "theory",
+          "focusId": "gatekeeper-infobox",
+          "label": "Gatekeeper erklärt"
+        },
+        {
+          "seconds": 120,
+          "tab": "data",
+          "focusId": "data-intro",
+          "label": "Die Zahlen",
+          "isChapter": true
+        },
+        {
+          "seconds": 135,
+          "tab": "data",
+          "focusId": "stat-cards",
+          "label": "Schlüsselstatistiken"
+        },
+        {
+          "seconds": 180,
+          "tab": "data",
+          "focusId": "chart-section",
+          "label": "Nachrichtennutzung"
+        },
+        {
+          "seconds": 240,
+          "tab": "consequences",
+          "focusId": "consequences-intro",
+          "label": "Auswirkungen",
+          "isChapter": true
+        },
+        {
+          "seconds": 270,
+          "tab": "consequences",
+          "focusId": "slacktivism-card",
+          "label": "Schein-Aktivität"
+        },
+        {
+          "seconds": 300,
+          "tab": "consequences",
+          "focusId": "fake-news-card",
+          "label": "Anfälligkeit für Fakes"
+        },
+        {
+          "seconds": 330,
+          "tab": "consequences",
+          "focusId": "polarization-card",
+          "label": "Polarisierung"
+        },
+        {
+          "seconds": 370,
+          "tab": "consequences",
+          "focusId": "regulation-section",
+          "label": "Gesetzliche Regulierung"
+        }
+      ]
+    }
+  }
+}
