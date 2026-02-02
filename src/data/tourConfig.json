@@ -12,73 +12,73 @@
           "isChapter": true
         },
         {
-          "seconds": 15,
+          "seconds": 43,
           "tab": "theory",
           "focusId": "agora-explanation",
           "label": "Was bedeutet Agora?"
         },
         {
-          "seconds": 45,
+          "seconds": 59,
           "tab": "theory",
           "focusId": "comparison-section",
           "label": "Früher vs. Heute",
           "isChapter": true
         },
         {
-          "seconds": 90,
+          "seconds": 70,
           "tab": "theory",
           "focusId": "gatekeeper-infobox",
           "label": "Gatekeeper erklärt"
         },
         {
-          "seconds": 120,
+          "seconds": 136,
           "tab": "data",
           "focusId": "data-intro",
-          "label": "Die Zahlen",
+          "label": "Die Datenlage",
           "isChapter": true
         },
         {
-          "seconds": 135,
+          "seconds": 142,
           "tab": "data",
           "focusId": "stat-cards",
-          "label": "Schlüsselstatistiken"
+          "label": "Statistiken"
         },
         {
-          "seconds": 180,
+          "seconds": 175,
           "tab": "data",
           "focusId": "chart-section",
-          "label": "Nachrichtennutzung"
+          "label": "TikTok & Bildung"
         },
         {
-          "seconds": 240,
+          "seconds": 223,
           "tab": "consequences",
           "focusId": "consequences-intro",
-          "label": "Auswirkungen",
+          "label": "Folgen für Demokratie",
           "isChapter": true
         },
         {
-          "seconds": 270,
+          "seconds": 230,
           "tab": "consequences",
           "focusId": "slacktivism-card",
-          "label": "Schein-Aktivität"
+          "label": "Slactivism"
         },
         {
-          "seconds": 300,
+          "seconds": 258,
           "tab": "consequences",
           "focusId": "fake-news-card",
-          "label": "Anfälligkeit für Fakes"
+          "label": "Fake News"
         },
         {
-          "seconds": 330,
+          "seconds": 271,
           "tab": "consequences",
           "focusId": "polarization-card",
           "label": "Polarisierung"
         },
         {
-          "seconds": 370,
+          "seconds": 343,
           "tab": "consequences",
           "focusId": "regulation-section",
-          "label": "Gesetzliche Regulierung"
+          "label": "Verantwortung & Staat"
         }
       ]
     }
