@@ -47,6 +47,7 @@ export interface AudioDirectorState {
   activeElementId: string | null;
   activeElementIds?: string[] | null;
   isUserInteracting: boolean;
+  setInteractionLock: () => void;
   resumeAutoScroll: () => void;
   audioState: AudioPlayerState;
   audioRef: RefObject<HTMLAudioElement>;

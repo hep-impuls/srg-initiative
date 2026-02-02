@@ -321,13 +321,14 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
     activeElementId: activeElementIds.length > 0 ? activeElementIds[0] : null, // Backward compatibility
     activeElementIds,
     isUserInteracting: isUserScrolling,
-    resumeAutoScroll,
+    chapters,
     audioState,
     audioRef,
     play,
     pause,
     seek,
     setPlaybackRate,
-    chapters,
+    setInteractionLock: resumeAutoScroll,
+    resumeAutoScroll,
   };
 }

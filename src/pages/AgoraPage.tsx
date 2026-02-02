@@ -4,6 +4,7 @@ import {
     Users,
     TrendingDown,
     Vote,
+    MessageCircle,
     ExternalLink,
     BookOpen,
     BarChart3,
@@ -18,6 +19,7 @@ import {
 import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StatCard } from '@/components/StatCard';
+import { InfoBox } from '@/components/InfoBox';
 import { SourceBadge } from '@/components/SourceBadge';
 import { OnboardingTour } from '@/components/OnboardingTour';
 import { PageConfig, Source } from '@/types';
@@ -210,7 +212,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     <div className="flex-1">
                                         <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Wie wir miteinander reden</h2>
                                         <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                                            Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert.
+                                            Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert. <SourceBadge ids={["1", "2"]} />
                                         </p>
                                     </div>
                                     <div className="w-full lg:w-2/5 group">
@@ -261,7 +263,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             <ul className="space-y-3 text-sm text-slate-700">
                                                 <li className="flex gap-2.5 items-start">
                                                     <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
-                                                    <span>Jeder sieht etwas anderes. Es fehlt die gemeinsame Basis.</span>
+                                                    <span>Jeder sieht etwas anderes. Es fehlt die gemeinsame Basis. <SourceBadge ids={["1", "2"]} /></span>
                                                 </li>
                                                 <li className="flex gap-2.5 items-start">
                                                     <BrainCircuit className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
@@ -516,7 +518,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 Geld, das den Schweizer Medienhäusern fehlt, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.
                                             </p>
                                             <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-xl">
-                                                <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen</p>
+                                                <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen <SourceBadge ids={["7"]} /></p>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2">
@@ -561,6 +563,48 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     </div>
                                 </div>
 
+                                <div className="max-w-4xl mx-auto py-6">
+                                    <InfoBox title="Beispiel: Covid-Abstimmungen" icon={<MessageCircle className="w-4 h-4 mr-2" />} color="amber">
+                                        <p className="text-sm mb-3">Agenda-Setting Machtverschiebung: Themen wurden oft auf Telegram gross gemacht, die Politik musste reagieren. <SourceBadge ids={["9"]} /></p>
+                                    </InfoBox>
+                                </div>
+
+                                {/* Regulation Section */}
+                                <div id="regulation-section" className="scroll-mt-32 bg-slate-900 text-white rounded-[2rem] p-8 md:p-12 my-6 shadow-2xl relative overflow-hidden">
+                                    <div className="relative z-10">
+                                        <div className="flex items-start mb-8">
+                                            <div className="bg-green-500/20 p-3 rounded-2xl mr-4"><Scale className="w-8 h-8 text-green-400" /></div>
+                                            <div>
+                                                <h3 className="text-2xl font-bold mb-1 tracking-tight">Was macht der Staat?</h3>
+                                                <p className="text-slate-400 text-base max-w-xl">Die EU nutzt den DSA, die Schweiz plant das KomPG Gesetz. <SourceBadge ids={["12"]} /></p>
+                                            </div>
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-6 text-sm">
+                                            <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-3xl border border-slate-700">
+                                                <div className="flex items-center gap-2.5 mb-4">
+                                                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+                                                    <strong className="text-blue-400 font-bold uppercase tracking-wider text-xs">EU (DSA)</strong>
+                                                </div>
+                                                <ul className="space-y-3 text-slate-300 text-xs">
+                                                    <li className="flex gap-2"><span>•</span><span>Plattformen müssen gesellschaftliche Risiken minimieren.</span></li>
+                                                    <li className="flex gap-2"><span>•</span><span>Haftung für illegale Inhalte (Hate Speech).</span></li>
+                                                </ul>
+                                            </div>
+                                            <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-3xl border border-green-500/30">
+                                                <div className="flex items-center gap-2.5 mb-4">
+                                                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+                                                    <strong className="text-green-400 font-bold uppercase tracking-wider text-xs">Schweiz (KomPG)</strong>
+                                                </div>
+                                                <ul className="space-y-3 text-slate-300 text-xs">
+                                                    <li className="flex gap-2"><span>•</span><span>Fokus auf Transparenz (Warum sehe ich das?).</span></li>
+                                                    <li className="flex gap-2 text-slate-400 italic"><span>•</span><span>Keine Lösch-Pflichten aus Angst vor Zensur.</span></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+                                </div>
+
 
                                 {/* Final Responsibility Question Section */}
                                 <div id="final-question" className="scroll-mt-32 bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-8 md:p-12 my-8 border-2 border-slate-200 relative overflow-hidden">
@@ -583,7 +627,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                         </li>
                                                         <li className="flex items-center gap-3">
                                                             <span className="text-2xl">🏛️</span>
-                                                            <span><strong>Der Staat?</strong></span>
+                                                            <span><strong>Der Staat?</strong> <SourceBadge ids={["12"]} /></span>
                                                         </li>
                                                         <li className="flex items-center gap-3">
                                                             <span className="text-2xl">🪞</span>
@@ -617,10 +661,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
                             {sources.map((source) => (
                                 <a
                                     key={source.id}
+                                    id={`source-${source.id}`}
                                     href={source.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block group"
+                                    className="block group scroll-mt-32 outline-none target:ring-2 target:ring-blue-500 target:ring-offset-2 target:rounded-xl transition-all"
                                 >
                                     <div className="h-full text-[10px] bg-white p-2.5 rounded-xl shadow-sm border border-slate-100/50 group-hover:border-blue-200 group-hover:shadow-md transition-all">
                                         <div className="flex items-baseline justify-between mb-1">
