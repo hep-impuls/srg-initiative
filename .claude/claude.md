@@ -427,9 +427,37 @@ npm run build
 - Öffne Network Tab → Prüfe ob Audio geladen wird
 - Prüfe ob `audioSrc` Pfad in JSON korrekt ist
 
+### Problem: Manuelle Klicks (z.B. Quellen) springen zurück
+
+**Symptome:** Klick auf Anker-Link funktioniert kurz, dann scrollt Audio Director zurück.
+
+**Lösung:**
+- Der Audio Director erzwingt Fokus solange `isUserScrolling` false ist.
+- **Fix:** Im `onClick` Handler muss ein User-Event simuliert werden:
+```typescript
+window.dispatchEvent(new Event('wheel')); // Signale "User interagiert"
+target.scrollIntoView(); // Manuell scrollen
+e.preventDefault(); // Standard-Anker verhindern
+```
+- Siehe Implementierung in `SourceBadge.tsx`.
+
 ---
 
 ## Best Practices
+
+### Highlighting Strategies
+
+#### 1. Container Grouping (Empfohlen für zusammenhängende Bereiche)
+Wenn mehrere Elemente (z.B. Titel + Bild + Cards) als *eine* Einheit hervorgehoben werden sollen:
+- Umschließe sie im JSX mit einem `div`.
+- Gib dem Container eine ID (z.B. `id="data-overview-container"`).
+- Nutze diese Single-ID in der `tourConfig.json`.
+- **Vorteil:** Ein ruhiger, großer Highlight-Rahmen statt vieler kleiner.
+
+#### 2. Multi-Element Highlighting (Array)
+Wenn Elemente optisch oder im DOM getrennt sind (z.B. Tab-Button oben + Content unten):
+- Nutze `focusIds: ["tab-btn-data", "data-content"]` in der Config.
+- **Vorteil:** Verbindet visuell getrennte Bereiche.
 
 ### IDs vergeben
 
