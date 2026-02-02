@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-    Newspaper,
     Smartphone,
-    Tv,
     Users,
     TrendingDown,
-    AlertTriangle,
     Vote,
     MessageCircle,
-    Info,
     ExternalLink,
-    ShieldCheck,
     BookOpen,
     BarChart3,
     Scale,
@@ -21,472 +16,649 @@ import {
     Flame,
     LayoutGrid
 } from 'lucide-react';
+import { useAudioDirector } from '@/hooks/useAudioDirector';
+import { AudioPlayer } from '@/components/AudioPlayer';
+import { StatCard } from '@/components/StatCard';
+import { SourceBadge } from '@/components/SourceBadge';
+import { OnboardingTour } from '@/components/OnboardingTour';
+import { PageConfig, Source } from '@/types';
+import { swissifyData } from '@/utils/textUtils';
 
-// --- Types ---
-
-interface Source {
-    id: string;
-    text: string;
-    details: string;
+interface AgoraPageProps {
+    config: PageConfig;
 }
 
-// --- Data: Sources ---
-const sources: Source[] = [
-    { id: "1", text: "Reuters Institute Digital News Report 2025 (Deutschland)", details: "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen." },
-    { id: "2", text: "Reuters Institute Digital News Report 2025 (Schweiz)", details: "Verschiebung von Print/TV zu Video-Plattformen." },
-    { id: "4", text: "Reuters Institute Digital News Report 2025 (Plattformen)", details: "Wachstum von TikTok (+7%) als Nachrichtenquelle." },
-    { id: "5", text: "Marktanalyse Online-Werbung Schweiz 2024", details: "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen." },
-    { id: "8", text: "fög Jahrbuch Qualität der Medien 2024/2025", details: "News-Deprivation auf Rekordhoch von 46%." },
-    { id: "9", text: "fög Studie zu Bildungskluft", details: "Zusammenhang zwischen formaler Bildung und News-Deprivation." },
-    { id: "16", text: "Analyse 'Crowding Out' Effekt", details: "Widerlegung der These, dass SRG private Medien verdrängt." },
-    { id: "19", text: "Forschung zu politischer Partizipation", details: "'Slacktivism' und das Paradox der Social-Media-Teilnahme." },
-    { id: "21", text: "Studie zu COVID-19 Referenden", details: "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'." },
-    { id: "27", text: "Polarisierungs-Forschung 2025", details: "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau." },
-    { id: "31", text: "OECD Studie zu Desinformation", details: "Niedrige Erkennungsrate von Fake News in der Schweiz (55%)." },
-    { id: "36", text: "BAKOM Bericht zum KomPG", details: "Unterschiede zwischen Schweizer Regulierung und EU-DSA." }
-];
+// Sources data
+const sources: Source[] = swissifyData([
+    {
+        id: "1",
+        text: "Reuters Institute Digital News Report 2025 (Deutschland)",
+        details: "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen.",
+        url: "https://leibniz-hbi.de/en/hbi-news/pressinfo/german-findings-of-the-reuters-institute-digital-news-report-2025/"
+    },
+    {
+        id: "2",
+        text: "Reuters Institute Digital News Report 2025 (Schweiz)",
+        details: "Verschiebung von Print/TV zu Video-Plattformen.",
+        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025"
+    },
+    {
+        id: "3",
+        text: "Reuters Institute Digital News Report 2025 (Plattformen)",
+        details: "Wachstum von TikTok (+7%) als Nachrichtenquelle.",
+        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/switzerland"
+    },
+    {
+        id: "4",
+        text: "Marktanalyse Online-Werbung Schweiz 2024",
+        details: "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:adbffe22-c427-4c9a-8e3f-390ef071eb9a/JB_2025_I_Main_Findings_20251030_final%20korr.pdf"
+    },
+    {
+        id: "5",
+        text: "fög Jahrbuch Qualität der Medien 2024/2025",
+        details: "News-Deprivation auf Rekordhoch von 46%.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:eaddc4bc-a0fd-4323-8c4a-2376ceeac959/Pr%C3%A4sentation_2024_final_DE.pdf"
+    },
+    {
+        id: "6",
+        text: "fög Studie zu Bildungskluft",
+        details: "Zusammenhang zwischen formaler Bildung und News-Deprivation.",
+        url: "https://www.news.uzh.ch/en/articles/media/2025/yearbook-quality-of-the-media-foeg.html"
+    },
+    {
+        id: "7",
+        text: "Analyse 'Crowding Out' Effekt",
+        details: "Widerlegung der These, dass SRG private Medien verdrängt.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:85ef7b15-95f8-4815-bde8-179b0d0e1089/JB_2024_Study_I_private_Media_EN.pdf"
+    },
+    {
+        id: "8",
+        text: "Forschung zu politischer Partizipation",
+        details: "'Slacktivism' und das Paradox der Social-Media-Teilnahme.",
+        url: "https://www.mdpi.com/2673-5172/6/3/155"
+    },
+    {
+        id: "9",
+        text: "Studie zu COVID-19 Referenden",
+        details: "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'.",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8242806/"
+    },
+    {
+        id: "10",
+        text: "Polarisierungs-Forschung 2025",
+        details: "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau.",
+        url: "https://www.news.uzh.ch/en/articles/news/2024/political-polarization.html"
+    },
+    {
+        id: "11",
+        text: "OECD Studie zu Desinformation",
+        details: "Niedrige Erkennungsrate von Fake News in der Schweiz (55%).",
+        url: "https://www.swissinfo.ch/eng/information-wars/swiss-found-to-be-gullible-regarding-fake-news/87475624"
+    },
+    {
+        id: "12",
+        text: "BAKOM Bericht zum KomPG",
+        details: "Unterschiede zwischen Schweizer Regulierung und EU-DSA.",
+        url: "https://www.bakom.admin.ch/dam/de/sd-web/-XQxe6i9YyQN/Erl%C3%A4uternder%20Bericht%20(VE-KomPG).pdf"
+    }
+]);
 
-// --- Components ---
+export function AgoraPage({ config }: AgoraPageProps) {
+    const directorState = useAudioDirector(config.timeline);
+    const { currentTab, audioState } = directorState;
+    const [manualTab, setManualTab] = useState<'theory' | 'data' | 'consequences'>('theory');
 
-const SourceBadge = ({ ids }: { ids: string[] }) => (
-    <div className="flex flex-wrap gap-1 mt-2">
-        {ids.map(id => (
-            <a key={id} href="#quellen" className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                [{id}]
-            </a>
-        ))}
-    </div>
-);
+    // Use audio director's tab when playing, manual tab when paused
+    const activeTab = audioState.isPlaying ? currentTab : manualTab;
 
-const InfoBox = ({ title, children, icon, color = "blue" }: { title: string, children: React.ReactNode, icon?: React.ReactNode, color?: string }) => {
-    const styles = {
-        blue: "bg-blue-50 border-blue-500 text-blue-900",
-        amber: "bg-amber-50 border-amber-500 text-amber-900",
-        emerald: "bg-emerald-50 border-emerald-500 text-emerald-900"
-    };
+    // Sync manual tab with director when audio starts playing
+    useEffect(() => {
+        if (audioState.isPlaying) {
+            setManualTab(currentTab);
+        }
+    }, [audioState.isPlaying, currentTab]);
+
+    // Ensure smooth scrolling
+    useEffect(() => {
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }, []);
 
     return (
-        <div className={`${styles[color as keyof typeof styles]} border-l-4 p-5 rounded-r-lg my-6`}>
-            <h4 className="flex items-center font-bold mb-3 text-sm uppercase tracking-wide">
-                {icon || <BrainCircuit className="w-4 h-4 mr-2" />}
-                {title}
-            </h4>
-            <div className="text-gray-700 text-sm leading-relaxed">
-                {children}
-            </div>
-        </div>
-    );
-};
+        <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
 
-const StatCard = ({ value, label, subtext, color = "blue", sourceIds }: { value: string, label: string, subtext?: string, color?: string, sourceIds: string[] }) => {
-    const colors = {
-        blue: "text-blue-600 bg-blue-50 border-blue-100",
-        red: "text-red-600 bg-red-50 border-red-100",
-        amber: "text-amber-600 bg-amber-50 border-amber-100",
-        purple: "text-purple-600 bg-purple-50 border-purple-100"
-    };
-
-    return (
-        <div className={`p-6 rounded-xl border ${colors[color as keyof typeof colors]} flex flex-col justify-between h-full hover:shadow-md transition-shadow`}>
+            {/* Unified Beginning Section (Header, Tabs, Intro) */}
             <div>
-                <div className={`text-4xl font-extrabold mb-2 ${colors[color as keyof typeof colors].split(" ")[0]}`}>{value}</div>
-                <div className="font-bold text-gray-800 mb-2">{label}</div>
-                {subtext && <p className="text-sm text-gray-600">{subtext}</p>}
-            </div>
-            <SourceBadge ids={sourceIds} />
-        </div>
-    );
-};
-
-export default function PublicSphereApp() {
-    const [activeTab, setActiveTab] = useState<'theory' | 'data' | 'consequences'>('theory');
-
-    return (
-        <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
-
-            {/* Header */}
-            <header className="bg-slate-900 text-white pt-12 pb-24 px-4 shadow-lg relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-12 opacity-10">
-                    <Globe size={300} />
-                </div>
-                <div className="max-w-5xl mx-auto relative z-10">
-                    <div className="inline-flex items-center space-x-2 bg-slate-800 rounded-full px-4 py-1 mb-6 border border-slate-700">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="text-xs font-semibold tracking-wider text-slate-300">INTERAKTIVER REPORT 2026</span>
+                {/* Header */}
+                <header id="beginning-highlight" className="scroll-mt-24 bg-slate-900 text-white pt-6 pb-8 px-4 shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-6 opacity-10">
+                        <Globe size={200} />
                     </div>
-                    <h1 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
-                        Vom Dorfplatz zum<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
-                            Digitalen Feed
-                        </span>
-                    </h1>
-                    <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
-                        Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen. Eine Analyse der Situation in Deutschland und der Schweiz.
-                    </p>
-                </div>
-            </header>
-
-            {/* Main Content Area */}
-            <main className="max-w-5xl mx-auto px-4 -mt-12 relative z-20 pb-20">
-
-                {/* Navigation Tabs */}
-                <div className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
-                    <button
-                        onClick={() => setActiveTab('theory')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'theory' ? 'bg-white border-b-4 border-blue-500 text-blue-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'theory' ? 'bg-blue-100' : 'bg-slate-200'}`}>
-                            <BookOpen size={24} />
+                    <div className="max-w-5xl mx-auto relative z-10">
+                        <div className="inline-flex items-center space-x-2 bg-slate-800 rounded-full px-4 py-1 mb-6 border border-slate-700">
+                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            <span className="text-xs font-semibold tracking-wider text-slate-300">INTERAKTIVER REPORT 2026</span>
                         </div>
-                        <div>
-                            <div className="font-bold text-lg">1. Theorie</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Verstehen</div>
-                        </div>
-                    </button>
+                        <h1 className="text-2xl md:text-4xl font-extrabold mb-4 leading-tight">
+                            Vom Dorfplatz zum<br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                                Digitalen Feed
+                            </span>
+                        </h1>
+                        <p className="text-base text-slate-300 max-w-2xl leading-relaxed">
+                            Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen. Eine Analyse der Situation in Deutschland und der Schweiz.
+                        </p>
+                    </div>
+                </header>
 
-                    <button
-                        onClick={() => setActiveTab('data')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'data' ? 'bg-white border-b-4 border-purple-500 text-purple-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'data' ? 'bg-purple-100' : 'bg-slate-200'}`}>
-                            <BarChart3 size={24} />
-                        </div>
-                        <div>
-                            <div className="font-bold text-lg">2. Datenlage</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Erkennen</div>
-                        </div>
-                    </button>
+                {/* Main Content Area */}
+                <main className="max-w-5xl mx-auto px-4 -mt-6 relative z-20 pb-16">
 
-                    <button
-                        onClick={() => setActiveTab('consequences')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'consequences' ? 'bg-white border-b-4 border-amber-500 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'consequences' ? 'bg-amber-100' : 'bg-slate-200'}`}>
-                            <Scale size={24} />
-                        </div>
-                        <div>
-                            <div className="font-bold text-lg">3. Folgen</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Handeln</div>
-                        </div>
-                    </button>
-                </div>
-
-                {/* Tab Content Container */}
-                <div className="bg-white rounded-b-2xl shadow-xl p-6 md:p-12 min-h-[600px]">
-
-                    {/* TAB 1: THEORIE (SIMPLIFIED) */}
-                    {activeTab === 'theory' && (
-                        <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
-
-                            {/* Intro Text */}
-                            <div className="max-w-3xl">
-                                <h2 className="text-3xl font-bold text-slate-900 mb-4">Wie wir miteinander reden</h2>
-                                <p className="text-lg text-slate-600 mb-6">
-                                    Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert.
-                                </p>
+                    {/* Navigation Tabs */}
+                    <div id="main-tabs" className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
+                        <button
+                            onClick={() => setManualTab('theory')}
+                            id="tab-btn-theory"
+                            className={`flex-1 py-3 px-4 text-left flex items-center transition-all ${activeTab === 'theory' ? 'bg-white border-b-4 border-blue-500 text-blue-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-2 rounded-full mr-3 ${activeTab === 'theory' ? 'bg-blue-100' : 'bg-slate-200'}`}>
+                                <BookOpen size={18} />
                             </div>
+                            <div>
+                                <div className="font-bold text-base text-slate-900">1. Theorie</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Verstehen</div>
+                            </div>
+                        </button>
 
-                            {/* Agora Box */}
-                            <div className="bg-gradient-to-br from-indigo-50 to-white border border-indigo-100 rounded-2xl p-6 md:p-8 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 -mr-4 -mt-4 bg-indigo-100 rounded-full w-24 h-24 opacity-50"></div>
-                                <div className="relative z-10">
-                                    <h3 className="text-2xl font-bold text-indigo-900 mb-4 flex items-center">
-                                        <LayoutGrid className="w-6 h-6 mr-2 text-indigo-600" />
-                                        Was bedeutet "Agora"?
-                                    </h3>
-                                    <div className="grid md:grid-cols-2 gap-6 items-center">
-                                        <div>
-                                            <p className="text-slate-700 leading-relaxed mb-4">
-                                                Das Wort kommt aus dem alten Griechenland. Die <strong>Agora</strong> war der zentrale <strong>Marktplatz</strong> einer Stadt.
-                                            </p>
-                                            <p className="text-slate-700 leading-relaxed">
-                                                Dort kaufte man nicht nur Gemüse, sondern dort trafen sich alle Bürger/innen, um zu diskutieren und Politik zu machen.
-                                                Es war der Ort, an dem sich die "Öffentlichkeit" bildete. Ohne diesen gemeinsamen Platz wusste niemand, was in der Stadt los war.
-                                            </p>
+                        <button
+                            onClick={() => setManualTab('data')}
+                            id="tab-btn-data"
+                            className={`flex-1 py-3 px-4 text-left flex items-center transition-all ${activeTab === 'data' ? 'bg-white border-b-4 border-purple-500 text-purple-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-2 rounded-full mr-3 ${activeTab === 'data' ? 'bg-purple-100' : 'bg-slate-200'}`}>
+                                <BarChart3 size={18} />
+                            </div>
+                            <div>
+                                <div className="font-bold text-base text-slate-900">2. Datenlage</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Erkennen</div>
+                            </div>
+                        </button>
+
+                        <button
+                            onClick={() => setManualTab('consequences')}
+                            id="tab-btn-consequences"
+                            className={`flex-1 py-3 px-4 text-left flex items-center transition-all ${activeTab === 'consequences' ? 'bg-white border-b-4 border-amber-500 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-2 rounded-full mr-3 ${activeTab === 'consequences' ? 'bg-amber-100' : 'bg-slate-200'}`}>
+                                <Scale size={18} />
+                            </div>
+                            <div>
+                                <div className="font-bold text-base text-slate-900">3. Folgen</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Handeln</div>
+                            </div>
+                        </button>
+                    </div>
+
+                    {/* Tab Content Container */}
+                    <div className="bg-white rounded-b-2xl shadow-xl p-4 md:p-6 border-t border-slate-100">
+
+                        {/* TAB 1: THEORIE */}
+                        {activeTab === 'theory' && (
+                            <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+
+                                {/* Intro Text Section */}
+                                <div id="theory-intro" className="scroll-mt-24 flex flex-col lg:flex-row gap-6 items-center py-4 border-b border-slate-50 pb-8">
+                                    <div className="flex-1">
+                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Wie wir miteinander reden</h2>
+                                        <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
+                                            <strong>Früher bestimmten Zeitungsredaktionen</strong>, was wichtig war. <strong>Heute entscheidet oft ein Algorithmus</strong> auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert. <SourceBadge ids={["1", "2"]} />
+                                        </p>
+                                    </div>
+                                    <div className="w-full lg:w-2/5 group">
+                                        <div className="aspect-video bg-slate-100 rounded-2xl overflow-hidden shadow-xl border border-slate-200 transition-transform duration-500 hover:scale-[1.02]">
+                                            <img
+                                                src="img/agora1.png"
+                                                alt="Digitale Informationslands landscapes"
+                                                className="w-full h-full object-cover"
+                                            />
                                         </div>
-                                        <div className="bg-white/80 p-4 rounded-xl border border-indigo-100 text-sm shadow-sm">
-                                            <strong className="block text-indigo-700 mb-2">Vergleich für heute:</strong>
-                                            <ul className="space-y-2 text-slate-600">
-                                                <li className="flex items-start">
-                                                    <span className="mr-2">🏛️</span>
-                                                    <span><strong>Früher:</strong> Wie eine grosse Schulversammlung. Einer spricht vorne, alle hören dasselbe.</span>
+                                    </div>
+                                </div>
+
+                                {/* Comparison Grid - MOVED TO TOP */}
+                                <div id="comparison-section" className="scroll-mt-24 py-6 border-b border-slate-50">
+                                    <h3 className="text-lg font-bold mb-4 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
+                                    <div className="grid md:grid-cols-2 gap-4 relative">
+                                        <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-1.5 rounded-full shadow border border-slate-200">
+                                            <ArrowRight className="text-slate-400 w-5 h-5" />
+                                        </div>
+
+                                        {/* FRÜHER */}
+                                        <div className="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors">
+                                            <div className="flex items-center justify-center w-8 h-8 bg-slate-200 rounded-full mb-2 mx-auto">
+                                                <Flame className="w-4 h-4 text-slate-600" />
+                                            </div>
+                                            <h4 className="text-center font-bold text-slate-700 mb-1">Das "Lagerfeuer"</h4>
+                                            <p className="text-center text-[10px] text-slate-400 uppercase font-black tracking-widest mb-3">Massenmedien</p>
+                                            <ul className="space-y-3 text-sm text-slate-600">
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
+                                                    <span><strong>Alle sehen das Gleiche</strong> (z.B. Tagesschau um 20:00 Uhr).</span>
                                                 </li>
-                                                <li className="flex items-start">
-                                                    <span className="mr-2">📱</span>
-                                                    <span><strong>Heute:</strong> Wie tausende kleine WhatsApp-Gruppenchats gleichzeitig. Jeder sieht nur seinen Teil, es ist laut und chaotisch.</span>
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Lock className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
+                                                    <span>Journalisten filtern Fakten und sortieren Gerüchte aus.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* HEUTE */}
+                                        <div className="bg-blue-50/50 p-4 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors">
+                                            <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mb-2 mx-auto">
+                                                <Smartphone className="w-4 h-4 text-blue-600" />
+                                            </div>
+                                            <h4 className="text-center font-bold text-blue-900 mb-1">Der "Eigene Tunnel"</h4>
+                                            <p className="text-center text-[10px] text-blue-400 uppercase font-black tracking-widest mb-3">Plattformen</p>
+                                            <ul className="space-y-3 text-sm text-slate-700">
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
+                                                    <span><strong>Jeder sieht etwas anderes.</strong> Es fehlt die gemeinsame Basis. <SourceBadge ids={["1", "2"]} /></span>
+                                                </li>
+                                                <li className="flex gap-2.5 items-start">
+                                                    <BrainCircuit className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
+                                                    <span>Algorithmen entscheiden, was dich am Bildschirm hält.</span>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Comparison Grid */}
-                            <div className="mt-12">
-                                <h3 className="text-xl font-bold mb-6 text-center">Der Wandel: Ein Vergleich</h3>
-                                <div className="grid md:grid-cols-2 gap-8 relative">
+                                {/* Agora Box Section */}
+                                <div id="agora-explanation" className="scroll-mt-24 py-8 bg-gradient-to-br from-indigo-50/30 to-white rounded-3xl border border-indigo-100/50 p-4 md:p-8 relative overflow-hidden">
+                                    <div className="relative z-10 w-full">
+                                        <h3 className="text-lg font-bold text-indigo-900 mb-4 flex items-center">
+                                            <LayoutGrid className="w-5 h-5 mr-3 text-indigo-600" />
+                                            Was bedeutet "Agora"?
+                                        </h3>
+                                        <div className="grid md:grid-cols-2 gap-6 items-center">
+                                            <div className="space-y-4">
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    Das Wort kommt aus dem alten Griechenland. Die <strong>Agora</strong> war der zentrale <strong>Marktplatz</strong> einer Stadt.
+                                                </p>
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    Es war der Ort, an dem sich die <strong>"Öffentlichkeit"</strong> bildete – wo Bürger/innen diskutierten und Politik machten.
+                                                </p>
+                                                <div className="w-full max-w-[280px] mx-auto group pt-2">
+                                                    <div className="aspect-square bg-white rounded-2xl shadow-lg border border-indigo-100 overflow-hidden transition-transform duration-500 hover:rotate-1">
+                                                        <img
+                                                            src="img/agora2.png"
+                                                            alt="Antike Agora Rekonstruktion"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="bg-white/90 backdrop-blur-sm p-4 rounded-2xl border border-indigo-100 text-sm shadow-xl space-y-3">
 
-                                    {/* Arrow for Desktop */}
-                                    <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow border border-slate-200">
-                                        <ArrowRight className="text-slate-400" />
-                                    </div>
-
-                                    {/* FRÜHER */}
-                                    <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 hover:border-slate-300 transition-colors">
-                                        <div className="flex items-center justify-center w-12 h-12 bg-slate-200 rounded-full mb-4 mx-auto">
-                                            <Flame className="w-6 h-6 text-slate-600" />
+                                                <strong className="block text-lg text-indigo-700 mb-3 border-b border-indigo-50 pb-2">Vergleich für heute:</strong>
+                                                <div className="flex items-start gap-4 text-slate-600">
+                                                    <div className="bg-indigo-50 p-2 rounded-lg text-xl">🏛️</div>
+                                                    <p><strong className="text-slate-900">Früher:</strong> Wie eine grosse Schulversammlung. <strong>Alle hören dasselbe.</strong></p>
+                                                </div>
+                                                <div className="flex items-start gap-4 text-slate-600">
+                                                    <div className="bg-indigo-50 p-2 rounded-lg text-xl">📱</div>
+                                                    <p><strong className="text-slate-900">Heute:</strong> Tausende kleine WhatsApp-Gruppenchats gleichzeitig. <strong>Jeder sieht nur seinen Teil.</strong></p>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h4 className="text-center text-lg font-bold text-slate-700 mb-2">Das "Lagerfeuer"</h4>
-                                        <p className="text-center text-xs text-slate-500 uppercase tracking-widest mb-6">Massenmedien (TV, Zeitung)</p>
-
-                                        <ul className="space-y-4 text-sm text-slate-600">
-                                            <li className="flex gap-3">
-                                                <Users className="w-5 h-5 shrink-0 text-slate-400" />
-                                                <span><strong>Alle sehen das Gleiche:</strong> Wenn um 20:00 Uhr die Tagesschau lief, sahen fast alle zu. Am nächsten Tag konnte man im Büro darüber reden.</span>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                <Lock className="w-5 h-5 shrink-0 text-slate-400" />
-                                                <span><strong>Der Türsteher ("Gatekeeper"):</strong> Chefredakteur/innen entschieden, was wichtig genug ist, um gedruckt zu werden. Sie filterten Fake News (meistens) raus.</span>
-                                            </li>
-                                        </ul>
                                     </div>
-
-                                    {/* HEUTE */}
-                                    <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100 hover:border-blue-300 transition-colors">
-                                        <div className="flex items-center justify-center w-12 h-12 bg-blue-200 rounded-full mb-4 mx-auto">
-                                            <Smartphone className="w-6 h-6 text-blue-600" />
-                                        </div>
-                                        <h4 className="text-center text-lg font-bold text-blue-900 mb-2">Der "Eigene Tunnel"</h4>
-                                        <p className="text-center text-xs text-blue-400 uppercase tracking-widest mb-6">Plattformen (Social Media)</p>
-
-                                        <ul className="space-y-4 text-sm text-slate-700">
-                                            <li className="flex gap-3">
-                                                <Users className="w-5 h-5 shrink-0 text-blue-500" />
-                                                <span><strong>Jeder sieht etwas anderes:</strong> Dein TikTok-Feed sieht komplett anders aus als der deiner Eltern. Es gibt keine gemeinsame Basis mehr.</span>
-                                            </li>
-                                            <li className="flex gap-3">
-                                                <BrainCircuit className="w-5 h-5 shrink-0 text-blue-500" />
-                                                <span><strong>Der Algorithmus:</strong> Ein Computerprogramm entscheidet, was du siehst. Das Ziel ist nicht "Wahrheit", sondern dass du möglichst lange in der App bleibst.</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/5 rounded-full -mr-24 -mt-24 blur-3xl"></div>
                                 </div>
-                            </div>
 
-                            <InfoBox title="Was bedeutet 'Gatekeeper'?" icon={<Lock className="w-4 h-4 mr-2" />} color="emerald">
-                                Gatekeeper heißt übersetzt <strong>"Torwächter"</strong>. <br />
-                                Stell dir einen Club vor. Der Türsteher entscheidet, wer reinkommt. Bei Nachrichten war das früher die Chefredaktion. Sie sortierte: "Das ist ein Gerücht (kommt nicht rein)" und "Das ist ein Fakt (kommt rein)". <br />
-                                <strong>Das Problem heute:</strong> Auf Social Media gibt es keinen Türsteher. Jeder kann alles posten, ob wahr oder falsch.
-                            </InfoBox>
-
-                        </div>
-                    )}
-
-                    {/* TAB 2: DATEN */}
-                    {activeTab === 'data' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="max-w-3xl">
-                                <h2 className="text-3xl font-bold text-slate-900 mb-4">Die Zahlen: Eine gespaltene Gesellschaft</h2>
-                                <p className="text-lg text-slate-600 mb-6">
-                                    Die Daten aus 2024 und 2025 zeigen: Wir driften auseinander. Ältere Menschen nutzen noch TV und Zeitungen, junge Menschen sind fast nur noch auf Social Media.
-                                </p>
-                            </div>
-
-                            {/* Grid of Stats */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                                <StatCard
-                                    value="46%"
-                                    label="News Deprivierte"
-                                    subtext="Fast die Hälfte der Schweizer/innen konsumiert kaum noch 'harte' Nachrichten."
-                                    color="red"
-                                    sourceIds={["8"]}
-                                />
-                                <StatCard
-                                    value="17%"
-                                    label="Nur Social Media"
-                                    subtext="Anteil der 18-24 Jährigen in DE, die Journalismus komplett ignorieren."
-                                    color="purple"
-                                    sourceIds={["1"]}
-                                />
-                                <StatCard
-                                    value="2.1 Mrd."
-                                    label="Werbegeld weg"
-                                    subtext="CHF pro Jahr gehen an Google/Meta statt an Schweizer Medien."
-                                    color="amber"
-                                    sourceIds={["5"]}
-                                />
-                                <StatCard
-                                    value="+7%"
-                                    label="TikTok Boom"
-                                    subtext="Starker Anstieg der TikTok-Nutzung für News bei jungen Schweizern."
-                                    color="blue"
-                                    sourceIds={["4"]}
-                                />
-                            </div>
-
-                            <div className="bg-slate-50 rounded-xl p-8 border border-slate-200">
-                                <h3 className="font-bold text-xl mb-6">Wer schaut noch Nachrichten?</h3>
-
-                                <div className="space-y-6">
-                                    <div>
-                                        <div className="flex justify-between mb-2 text-sm font-semibold">
-                                            <span>Klassisches TV (Gesamtbevölkerung DE)</span>
-                                            <span>43%</span>
+                                {/* Gatekeeper Section */}
+                                <div id="gatekeeper-infobox" className="scroll-mt-24 py-8">
+                                    <div className="flex flex-col md:flex-row gap-6 items-center w-full">
+                                        <div className="flex-1">
+                                            <div className="bg-emerald-50/50 border border-emerald-100 rounded-3xl p-4 md:p-8">
+                                                <div className="flex items-center gap-3 mb-3">
+                                                    <div className="bg-emerald-500 p-1.5 rounded-lg"><Lock className="w-4 h-4 text-white" /></div>
+                                                    <h3 className="text-lg font-bold text-emerald-900">Was bedeutet 'Gatekeeper'?</h3>
+                                                </div>
+                                                <p className="text-base text-emerald-900/80 leading-relaxed">
+                                                    Gatekeeper heisst <strong>"Torwächter"</strong>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – <strong>jeder kann alles posten</strong>, wahr oder falsch.
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div className="w-full bg-slate-200 rounded-full h-2.5">
-                                            <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '43%' }}></div>
+                                        <div className="w-full md:w-1/3 group">
+                                            <div className="aspect-square bg-white rounded-3xl shadow-xl border border-emerald-100 overflow-hidden p-1.5 transition-transform duration-500 hover:-rotate-1">
+                                                <img
+                                                    src="img/agora3.png"
+                                                    alt="Digitaler Gatekeeper Konzept"
+                                                    className="w-full h-full object-cover rounded-2xl"
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div>
-                                        <div className="flex justify-between mb-2 text-sm font-semibold">
-                                            <span className="text-purple-700">Social Media als Hauptquelle (18-24 Jahre)</span>
-                                            <span className="text-purple-700">50%</span>
-                                        </div>
-                                        <div className="w-full bg-slate-200 rounded-full h-2.5">
-                                            <div className="bg-purple-600 h-2.5 rounded-full" style={{ width: '50%' }}></div>
-                                        </div>
-                                        <SourceBadge ids={["1", "4"]} />
                                     </div>
                                 </div>
 
-                                <div className="mt-8 grid md:grid-cols-2 gap-4">
-                                    <div className="bg-white p-4 rounded border border-slate-100 shadow-sm">
-                                        <h4 className="font-bold text-sm mb-2">Die "TikTokisierung"</h4>
-                                        <p className="text-xs text-slate-600">
-                                            TikTok wird wichtiger. Das Problem: Komplexe Politik wird dort oft auf 15 Sekunden Spaß reduziert. Hintergründe fehlen oft.
-                                        </p>
-                                    </div>
-                                    <div className="bg-white p-4 rounded border border-slate-100 shadow-sm">
-                                        <h4 className="font-bold text-sm mb-2">Bildung entscheidet</h4>
-                                        <p className="text-xs text-slate-600">
-                                            Menschen mit niedrigerer formaler Bildung gehören öfter zur Gruppe, die gar keine Nachrichten mehr schaut ("News Deprivierte").
-                                        </p>
-                                        <SourceBadge ids={["9"]} />
+                                {/* Unified Algorithm & Attention Section */}
+                                <div className="scroll-mt-24 py-4">
+                                    <div className="bg-gradient-to-br from-blue-50 to-amber-50 rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                                        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                                            {/* Left: Hype Man */}
+                                            <div id="algorithm-hypeman" className="p-6 md:p-8 scroll-mt-24">
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <BrainCircuit className="w-5 h-5 text-blue-600" />
+                                                    <h3 className="font-bold text-blue-900">Der Ja-Sager</h3>
+                                                </div>
+                                                <p className="text-sm text-slate-700 mb-4 leading-relaxed">
+                                                    Der Algorithmus will dich nicht informieren, sondern <strong>bestätigen</strong>. <strong>Wut und Freude binden dich stärker</strong> als neutrale Fakten.
+                                                </p>
+                                                <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-blue-100/50">
+                                                    <img src="img/agora5.png" alt="Algorithm Hype-Man" className="w-full h-full object-cover" />
+                                                </div>
+                                            </div>
+
+                                            {/* Right: Attention */}
+                                            <div id="attention-economy" className="p-6 md:p-8 scroll-mt-24 bg-white/50">
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <div className="bg-amber-100 p-1 rounded"><BrainCircuit className="w-4 h-4 text-amber-600" /></div>
+                                                    <h3 className="font-bold text-amber-900">Die Währung</h3>
+                                                </div>
+                                                <p className="text-sm text-slate-700 mb-4 leading-relaxed">
+                                                    Das Ziel ist deine <strong>Aufmerksamkeit</strong> (Verweildauer). <strong>Je länger du bleibst, desto mehr Werbung</strong> kannst du sehen.
+                                                </p>
+                                                <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-amber-100/50">
+                                                    <img src="img/agora6.png" alt="Attention Economy" className="w-full h-full object-cover" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    {/* TAB 3: FOLGEN */}
-                    {activeTab === 'consequences' && (
-                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <div className="max-w-3xl">
-                                <h2 className="text-3xl font-bold text-slate-900 mb-4">Was passiert mit unserer Demokratie?</h2>
-                                <p className="text-lg text-slate-600 mb-6">
-                                    Die Schweiz ist eine direkte Demokratie. Wir müssen mehrmals im Jahr über komplexe Gesetze abstimmen. Das funktioniert nur, wenn wir informiert sind.
-                                </p>
-                            </div>
-
-                            <div className="grid md:grid-cols-3 gap-6">
-
-                                {/* Konsequenz 1 */}
-                                <div className="bg-white border-t-4 border-red-500 shadow-lg p-6 rounded-lg hover:-translate-y-1 transition-transform">
-                                    <div className="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                        <Vote className="text-red-600" />
+                        {/* TAB 2: DATEN */}
+                        {activeTab === 'data' && (
+                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                <div id="data-overview-container" className="scroll-mt-24 p-2 -m-2 rounded-3xl">
+                                    <div className="flex flex-col lg:flex-row gap-6 items-center py-4">
+                                        <div id="data-intro" className="scroll-mt-24 flex-1">
+                                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Die Zahlen: Eine gespaltene Gesellschaft</h2>
+                                            <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
+                                                Die Daten aus 2024 und 2025 zeigen ein klares Bild: <strong>Wir driften beim Medienkonsum massiv auseinander.</strong>
+                                            </p>
+                                        </div>
+                                        <div id="data-intro-image" className="w-full lg:w-2/5 group">
+                                            <div className="aspect-video bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 transition-all duration-500 hover:shadow-purple-200/50">
+                                                <img
+                                                    src="img/agora4.png"
+                                                    alt="Digitale Nachrichtennutzung Visual"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="font-bold text-lg mb-2">Schein-Aktivität ("Slacktivism")</h3>
-                                    <p className="text-sm text-slate-600 mb-4">
-                                        Viele liken politische Posts und fühlen sich informiert. Aber Forschung zeigt: Das führt oft nicht dazu, dass sie wirklich wählen gehen. Es ist eine "Illusion".
+
+                                    {/* Combined Stats & Chart Grid */}
+                                    <div className="grid md:grid-cols-3 gap-6 mt-6">
+                                        {/* Left: Vertical Stats */}
+                                        <div id="stat-cards" className="col-span-1 flex flex-col gap-4 scroll-mt-24">
+                                            <StatCard id="stat-deprivierte" value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["5"]} />
+                                            <StatCard id="stat-social" value="17%" label="Nur Social" subtext="Kein Journalismus (18-24 J.)." color="purple" sourceIds={["1"]} />
+                                            <StatCard id="stat-tiktok" value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["3"]} />
+                                        </div>
+
+                                        {/* Right: Chart Section */}
+                                        <div id="chart-section" className="col-span-2 scroll-mt-24 bg-slate-50/50 rounded-3xl p-4 md:p-6 border border-slate-100 h-full mt-0">
+                                            <h3 className="font-bold text-lg mb-6 text-center text-slate-800 tracking-tight">Wer schaut noch Nachrichten?</h3>
+                                            <div className="max-w-3xl mx-auto w-full space-y-6 pb-2">
+                                                <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                                                    <div className="flex justify-between mb-2 text-sm font-bold text-slate-700">
+                                                        <span>Klassisches TV (Gesamt DE)</span>
+                                                        <span className="bg-slate-100 px-2 py-0.5 rounded-full text-xs">43%</span>
+                                                    </div>
+                                                    <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                                                        <div className="bg-slate-400 h-full rounded-full" style={{ width: '43%' }}></div>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-white p-4 rounded-2xl shadow-md border-2 border-purple-100">
+                                                    <div className="flex justify-between mb-2 text-sm font-bold text-purple-900">
+                                                        <span>Social Media (18-24 Jahre)</span>
+                                                        <span className="bg-purple-100 px-2 py-0.5 rounded-full text-xs">50%</span>
+                                                    </div>
+                                                    <div className="w-full bg-purple-50 rounded-full h-2.5 overflow-hidden">
+                                                        <div className="bg-purple-600 h-full rounded-full" style={{ width: '50%' }}></div>
+                                                    </div>
+                                                    <div className="mt-2 flex justify-end shrink-0 scale-90 origin-right"><SourceBadge ids={["1", "3"]} /></div>
+                                                </div>
+                                            </div>
+                                            <div className="mt-6 grid md:grid-cols-2 gap-4">
+                                                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">Die "TikTokisierung"</h4>
+                                                    <p className="text-[10px] text-slate-600 leading-relaxed"><strong>Komplexe Politik wird oft auf 15 Sekunden Spass reduziert.</strong> Hintergründe fehlen meist.</p>
+                                                </div>
+                                                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">Bildungskluft</h4>
+                                                    <p className="text-[10px] text-slate-600 leading-relaxed">Menschen mit niedriger formaler Bildung gehören öfter zu den News-Deprivierten.</p>
+                                                    <div className="mt-1 scale-90 origin-left"><SourceBadge ids={["6"]} /></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 15-Second Video Problem Section */}
+                                <div id="tiktok-problem" className="scroll-mt-24 bg-purple-50/30 rounded-3xl p-4 md:p-8 border border-purple-100 my-4">
+                                    <h3 className="font-bold text-xl mb-6 text-center text-purple-900 tracking-tight">Das 15-Sekunden-Problem</h3>
+                                    <div className="grid md:grid-cols-2 gap-6 items-center">
+                                        <div className="space-y-4">
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Kannst du eine <strong>Rentenreform</strong> wirklich in einem 15-Sekunden-Video verstehen?
+                                            </p>
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Du kriegst die <strong>Emotion</strong>, den schnellen <strong>Slogan</strong>, aber die <strong>Details</strong>, die du für die Stimmabgabe brauchst, fallen weg.
+                                            </p>
+                                            <div className="bg-purple-100 border-l-4 border-purple-500 p-4 rounded-r-xl">
+                                                <p className="text-sm text-purple-900 font-semibold">Komplexe Politik wird auf Unterhaltung reduziert. Hintergründe fehlen meist.</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
+                                                <img
+                                                    src="img/agora7.png"
+                                                    alt="Komplexität vs. 15 Sekunden"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                            <div className="aspect-[4/3] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
+                                                <img
+                                                    src="img/agora8.png"
+                                                    alt="Information Loss Funnel"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Money Flow Section */}
+                                <div id="money-flow" className="scroll-mt-24 bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl p-4 md:p-8 border border-red-100 my-4">
+                                    <h3 className="font-bold text-xl mb-4 text-center text-red-900 tracking-tight">Der Teufelskreis</h3>
+                                    <div className="flex flex-col md:flex-row gap-6 items-center">
+                                        <div className="flex-1 space-y-4">
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Jedes Jahr fliessen <strong>2,1 Milliarden Franken</strong> an Werbegeldern an globale Plattformen.
+                                            </p>
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                <strong>Geld, das den Schweizer Medienhäusern fehlt</strong>, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.
+                                            </p>
+                                            <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-xl">
+                                                <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen <SourceBadge ids={["7"]} /></p>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-red-100 hover:rotate-1 transition-transform">
+                                                <img
+                                                    src="img/agora9.png"
+                                                    alt="Der Teufelskreis der Finanzierung"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB 3: FOLGEN */}
+                        {activeTab === 'consequences' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+                                <div id="consequences-intro" className="scroll-mt-24 py-6">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Was passiert mit der Demokratie?</h2>
+                                    <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
+                                        In einer direkten Demokratie müssen wir <strong>informiert sein, um über komplexe Gesetze abstimmen zu können.</strong>
                                     </p>
-                                    <SourceBadge ids={["19"]} />
                                 </div>
 
-                                {/* Konsequenz 2 */}
-                                <div className="bg-white border-t-4 border-amber-500 shadow-lg p-6 rounded-lg hover:-translate-y-1 transition-transform">
-                                    <div className="bg-amber-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                        <BrainCircuit className="text-amber-600" />
+                                <div className="grid md:grid-cols-3 gap-4 py-2">
+                                    <div id="slacktivism-card" className="bg-white border-t-4 border-red-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
+                                        <div className="bg-red-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><Vote className="text-red-600 w-5 h-5" /></div>
+                                        <h3 className="font-bold text-base mb-1 text-slate-800">Slacktivism</h3>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed"><strong>Liken statt wählen:</strong> Politische Posts fühlen sich wie Aktivität an, führen aber selten zur Urne. <SourceBadge ids={["8"]} /></p>
                                     </div>
-                                    <h3 className="font-bold text-lg mb-2">Anfällig für Fakes</h3>
-                                    <p className="text-sm text-slate-600 mb-4">
-                                        Nur 55% der Schweizer/innen erkennen Falschnachrichten. Das ist im internationalen Vergleich wenig. Da wir oft abstimmen, ist das gefährlich.
-                                    </p>
-                                    <SourceBadge ids={["31"]} />
+                                    <div id="fake-news-card" className="bg-white border-t-4 border-amber-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
+                                        <div className="bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><BrainCircuit className="text-amber-600 w-5 h-5" /></div>
+                                        <h3 className="font-bold text-base mb-1 text-slate-800">Anfällig für Fakes</h3>
+                                        <p className="text-xs text-slate-600 mb-3 leading-relaxed"><strong>Nur 55% der Schweizer erkennen Fakes</strong> zuverlässig. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["11"]} /></p>
+                                    </div>
+                                    <div id="polarization-card" className="bg-white border-t-4 border-blue-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
+                                        <div className="bg-blue-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><TrendingDown className="text-blue-600 w-5 h-5" /></div>
+                                        <h3 className="font-bold text-base mb-1 text-slate-800">Affektive Polarisierung</h3>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed"><strong>Wut klickt besser.</strong> Der politische Gegner wird oft nicht mehr als falsch, sondern als böse gesehen. <SourceBadge ids={["10"]} /></p>
+                                    </div>
                                 </div>
 
-                                {/* Konsequenz 3 */}
-                                <div className="bg-white border-t-4 border-blue-500 shadow-lg p-6 rounded-lg hover:-translate-y-1 transition-transform">
-                                    <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                                        <TrendingDown className="text-blue-600" />
+                                {/* Agenda Setting Section (Replaces Regulation) */}
+                                <div id="agenda-setting" className="scroll-mt-24 bg-amber-50/50 rounded-[2rem] p-6 md:p-8 my-4 border border-amber-100 relative overflow-hidden">
+                                    <div className="relative z-10">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="bg-amber-500 p-2 rounded-xl"><MessageCircle className="w-5 h-5 text-white" /></div>
+                                            <h3 className="text-xl font-bold text-amber-900 tracking-tight">Die Macht der Agenda</h3>
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                                            <div className="space-y-4">
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    <strong>Beispiel Covid-Abstimmungen:</strong> Früher setzten Journalisten die Themen. Heute wachsen Themen oft in privaten Chats (Telegram) heran, bis <strong>die Politik reagieren <em>muss</em>.</strong>
+                                                </p>
+                                                <div className="bg-white/60 p-4 rounded-xl border border-amber-200/50">
+                                                    <p className="text-sm text-amber-900 font-semibold italic">
+                                                        "Die Politik diskutiert nicht mehr das, was wichtig ist, sondern das, was viral geht." <SourceBadge ids={["9"]} />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div className="relative">
+                                                {/* Placeholder for visual or just clean layout */}
+                                                <div className="bg-white p-4 rounded-2xl shadow-sm border border-amber-100 rotate-1">
+                                                    <div className="flex items-center gap-2 mb-2 border-b border-slate-100 pb-2">
+                                                        <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                                                        <span className="text-[10px] font-bold text-slate-400 uppercase">Live Trend</span>
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <div className="h-2 bg-slate-100 rounded w-3/4"></div>
+                                                        <div className="h-2 bg-slate-100 rounded w-full"></div>
+                                                        <div className="h-2 bg-slate-100 rounded w-5/6"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h3 className="font-bold text-lg mb-2">Mehr Wut, weniger Diskussion</h3>
-                                    <p className="text-sm text-slate-600 mb-4">
-                                        Auf Social Media klickt man eher auf das, was wütend macht. Das führt dazu, dass wir den politischen Gegner nicht mehr nur "falsch", sondern "böse" finden.
-                                    </p>
-                                    <SourceBadge ids={["27"]} />
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
+                                </div>
+
+
+                                {/* Final Responsibility Question Section */}
+                                <div id="final-question" className="scroll-mt-24 bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-6 md:p-10 my-6 border-2 border-slate-200 relative overflow-hidden">
+                                    <div className="relative z-10">
+                                        <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 text-center">Die entscheidende Frage</h3>
+                                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                                            <div className="space-y-6">
+                                                <div>
+                                                    <p className="text-lg text-slate-700 leading-relaxed mb-4">
+                                                        Wenn der Algorithmus dich nicht informieren <em>will</em>, wer ist dann dafür verantwortlich, dass du informiert <em>bist</em>?
+                                                    </p>
+                                                    <ul className="space-y-3 text-base text-slate-600">
+                                                        <li className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                                                            <span className="text-2xl">🏢</span>
+                                                            <span>Die Tech-Giganten?</span>
+                                                        </li>
+                                                        <li className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
+                                                            <span className="text-2xl">🏛️</span>
+                                                            <span>Der Staat? <SourceBadge ids={["12"]} /></span>
+                                                        </li>
+                                                        <li className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm border border-blue-100">
+                                                            <span className="text-2xl">🪞</span>
+                                                            <span className="text-blue-700 font-bold">Oder bist du es selbst?</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 transition-transform hover:rotate-0 duration-500">
+                                                <img
+                                                    src="img/agora11.png"
+                                                    alt="Die Entscheidung liegt bei dir"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                                 </div>
                             </div>
-
-                            <InfoBox title="Beispiel: Covid-Abstimmungen" icon={<MessageCircle className="w-4 h-4 mr-2" />} color="amber">
-                                <p className="mb-2">
-                                    Früher bestimmten Zeitungen, worüber diskutiert wird. Während der Pandemie änderte sich das in der Schweiz:
-                                    Themen wurden oft auf Twitter und Telegram groß gemacht. Die Politik musste reagieren.
-                                </p>
-                                <div className="flex items-center text-xs text-slate-700 font-semibold mt-2">
-                                    <ArrowRight className="w-3 h-3 mr-1" />
-                                    Das nennt man "Agenda-Setting". Die Macht hat sich verschoben. <SourceBadge ids={["21"]} />
-                                </div>
-                            </InfoBox>
-
-                            {/* Regulation Section */}
-                            <div className="bg-slate-900 text-white rounded-xl p-8 mt-8">
-                                <div className="flex items-start">
-                                    <Scale className="w-8 h-8 text-green-400 mr-4 mt-1" />
-                                    <div>
-                                        <h3 className="text-xl font-bold mb-2">Was macht der Staat? (Gesetze)</h3>
-                                        <p className="text-slate-300 text-sm mb-6">
-                                            Die EU hat strenge Regeln eingeführt (DSA). Die Schweiz plant ein eigenes Gesetz (KomPG).
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                                    <div className="bg-slate-800 p-4 rounded border border-slate-700">
-                                        <strong className="text-blue-400 block mb-2">EU (DSA)</strong>
-                                        <p className="text-slate-400 mb-2">Sehr streng.</p>
-                                        <ul className="list-disc pl-4 space-y-1 text-slate-300">
-                                            <li>Plattformen müssen Risiken minimieren.</li>
-                                            <li>Sie haften schneller für illegale Inhalte.</li>
-                                        </ul>
-                                    </div>
-                                    <div className="bg-slate-800 p-4 rounded border-2 border-green-500/50">
-                                        <strong className="text-green-400 block mb-2">Schweiz (KomPG Entwurf)</strong>
-                                        <p className="text-slate-400 mb-2">Eher zurückhaltend ("Swiss Finish").</p>
-                                        <ul className="list-disc pl-4 space-y-1 text-slate-300">
-                                            <li>Fokus: Transparenz (Warum sehe ich das?).</li>
-                                            <li>Nutzer sollen sich einfacher beschweren können.</li>
-                                            <li>Keine Lösch-Pflichten (Angst vor Zensur).</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    )}
-
-                </div>
-
-                {/* Footer with Sources List */}
-                <div id="quellen" className="mt-16 border-t border-slate-300 pt-8">
-                    <h3 className="text-lg font-bold text-slate-700 mb-6 flex items-center">
-                        <ExternalLink className="w-5 h-5 mr-2" />
-                        Wissenschaftliche Quellen
-                    </h3>
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {sources.map((source) => (
-                            <div key={source.id} className="text-sm bg-white p-3 rounded shadow-sm border border-slate-200">
-                                <div className="flex items-baseline mb-1">
-                                    <span className="font-bold text-blue-600 mr-2 text-xs">[{source.id}]</span>
-                                    <span className="font-semibold text-slate-800 text-xs leading-tight">{source.text}</span>
-                                </div>
-                                <p className="text-xs text-slate-500 pl-6">{source.details}</p>
-                            </div>
-                        ))}
+                        )}
                     </div>
-                </div>
 
-            </main>
+                    {/* Footer with Sources List */}
+                    <div id="quellen" className="mt-8 border-t border-slate-200 pt-6">
+                        <h3 className="text-sm font-bold text-slate-600 mb-4 flex items-center">
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                            Wissenschaftliche Quellen
+                        </h3>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            {sources.map((source) => (
+                                <a
+                                    key={source.id}
+                                    id={`source-${source.id}`}
+                                    href={source.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block group scroll-mt-32 outline-none target:ring-2 target:ring-blue-500 target:ring-offset-2 target:rounded-xl transition-all"
+                                >
+                                    <div className="h-full text-[10px] bg-white p-2.5 rounded-xl shadow-sm border border-slate-100/50 group-hover:border-blue-200 group-hover:shadow-md transition-all">
+                                        <div className="flex items-baseline justify-between mb-1">
+                                            <div className="flex items-baseline">
+                                                <span className="font-black text-blue-600 mr-1.5 opacity-70">[{source.id}]</span>
+                                                <span className="font-bold text-slate-800 leading-[1.1] group-hover:text-blue-700 transition-colors">{source.text}</span>
+                                            </div>
+                                            <ExternalLink className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors shrink-0 ml-2" />
+                                        </div>
+                                        <p className="text-slate-500 pl-5 text-[10px] leading-relaxed italic">{source.details}</p>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+            {/* Audio Player Component */}
+            <AudioPlayer
+                audioSrc={config.audioSrc || ''}
+                directorState={directorState}
+            />
+
+            {/* Onboarding Tour for first-time users */}
+            <OnboardingTour />
         </div>
     );
 }

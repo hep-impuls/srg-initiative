@@ -1,0 +1,155 @@
+{
+  "title": "Vom Dorfplatz zum Digitalen Feed",
+  "timeline": [
+    {
+      "seconds": 0,
+      "tab": "theory",
+      "focusId": "beginning-highlight",
+      "label": "Einstieg & Überblick",
+      "isChapter": true
+    },
+    {
+      "seconds": 11,
+      "tab": "theory",
+      "focusIds": [
+        "main-tabs",
+        "theory-intro"
+      ],
+      "focusId": "theory-intro",
+      "label": "Einleitung"
+    },
+    {
+      "seconds": 16,
+      "tab": "theory",
+      "focusId": "comparison-section",
+      "label": "Lagerfeuer vs. Tunnel",
+      "isChapter": true
+    },
+    {
+      "seconds": 33,
+      "tab": "theory",
+      "focusId": "main-tabs",
+      "label": "Agenda"
+    },
+    {
+      "seconds": 43,
+      "tab": "theory",
+      "focusId": "agora-explanation",
+      "label": "Was bedeutet Agora?",
+      "isChapter": true
+    },
+    {
+      "seconds": 68,
+      "tab": "theory",
+      "focusId": "gatekeeper-infobox",
+      "label": "Gatekeeper erklärt"
+    },
+    {
+      "seconds": 91,
+      "tab": "theory",
+      "focusId": "algorithm-hypeman",
+      "label": "Algorithmus als Hype-Man"
+    },
+    {
+      "seconds": 120,
+      "tab": "theory",
+      "focusId": "attention-economy",
+      "label": "Aufmerksamkeits-Ökonomie"
+    },
+    {
+      "seconds": 135,
+      "tab": "data",
+      "focusIds": [
+        "tab-btn-data",
+        "data-overview-container"
+      ],
+      "focusId": "data-overview-container",
+      "label": "Die Datenlage",
+      "isChapter": true
+    },
+    {
+      "seconds": 145,
+      "tab": "data",
+      "focusId": "stat-deprivierte",
+      "label": "46% News-Deprivierte"
+    },
+    {
+      "seconds": 166,
+      "tab": "data",
+      "focusId": "stat-social",
+      "label": "17% nur Social Media"
+    },
+    {
+      "seconds": 178,
+      "tab": "data",
+      "focusId": "stat-tiktok",
+      "label": "TikTok Boom"
+    },
+    {
+      "seconds": 182,
+      "tab": "data",
+      "focusId": "chart-section",
+      "label": "TikTok & Bildung"
+    },
+    {
+      "seconds": 194,
+      "tab": "data",
+      "focusId": "tiktok-problem",
+      "label": "15-Sekunden-Problem"
+    },
+    {
+      "seconds": 207,
+      "tab": "data",
+      "focusId": "money-flow",
+      "label": "Der Teufelskreis"
+    },
+    {
+      "seconds": 223,
+      "tab": "consequences",
+      "focusIds": [
+        "tab-btn-consequences",
+        "consequences-intro"
+      ],
+      "focusId": "consequences-intro",
+      "label": "Folgen für Demokratie",
+      "isChapter": true
+    },
+    {
+      "seconds": 230,
+      "tab": "consequences",
+      "focusId": "slacktivism-card",
+      "label": "Slacktivism"
+    },
+    {
+      "seconds": 249,
+      "tab": "consequences",
+      "focusId": "fake-news-card",
+      "label": "Fake News Anfälligkeit"
+    },
+    {
+      "seconds": 269,
+      "tab": "consequences",
+      "focusId": "polarization-card",
+      "label": "Polarisierung"
+    },
+    {
+      "seconds": 322,
+      "tab": "consequences",
+      "focusId": "final-question",
+      "label": "Die entscheidende Frage",
+      "isChapter": true
+    },
+    {
+      "seconds": 338,
+      "tab": "consequences",
+      "focusId": "agenda-setting",
+      "label": "Agenda Setting"
+    },
+    {
+      "seconds": 349,
+      "tab": "consequences",
+      "focusId": "quellen",
+      "label": "Wissenschaftliche Quellen"
+    }
+  ]
+}

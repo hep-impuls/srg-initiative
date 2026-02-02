@@ -1,6 +1,7 @@
 import { SourceBadge } from './SourceBadge';
 
 interface StatCardProps {
+  id?: string;
   value: string;
   label: string;
   subtext?: string;
@@ -9,6 +10,7 @@ interface StatCardProps {
 }
 
 export function StatCard({
+  id,
   value,
   label,
   subtext,
@@ -23,13 +25,13 @@ export function StatCard({
   };
 
   return (
-    <div className={`p-6 rounded-xl border ${colors[color]} flex flex-col justify-between h-full hover:shadow-md transition-shadow`}>
+    <div id={id} className={`p-4 rounded-xl border ${colors[color]} flex flex-col justify-between h-full hover:shadow-md transition-shadow`}>
       <div>
-        <div className={`text-4xl font-extrabold mb-2 ${colors[color].split(' ')[0]}`}>
+        <div className={`text-3xl font-extrabold mb-1 ${colors[color].split(' ')[0]}`}>
           {value}
         </div>
-        <div className="font-bold text-gray-800 mb-2">{label}</div>
-        {subtext && <p className="text-sm text-gray-600">{subtext}</p>}
+        <div className="font-bold text-gray-800 mb-1 leading-snug">{label}</div>
+        {subtext && <p className="text-xs text-gray-600 leading-tight">{subtext}</p>}
       </div>
       <SourceBadge ids={sourceIds} />
     </div>

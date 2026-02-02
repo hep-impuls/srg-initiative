@@ -16,7 +16,7 @@ export function InfoBox({ title, children, icon, color = 'blue' }: InfoBoxProps)
   };
 
   return (
-    <div className={`${styles[color]} border-l-4 p-5 rounded-r-lg my-6`}>
+    <div className={`${styles[color]} border-l-4 p-4 rounded-r-lg my-4`}>
       <h4 className="flex items-center font-bold mb-3 text-sm uppercase tracking-wide">
         {icon || <BrainCircuit className="w-4 h-4 mr-2" />}
         {title}

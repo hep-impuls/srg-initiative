@@ -56,7 +56,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
         // Create SVG with a path that will form the "hole"
         overlay.innerHTML = `
           <svg width="100%" height="100%" style="pointer-events: none;">
-            <path d="" fill="rgba(0, 0, 0, 0.5)" fill-rule="evenodd" style="pointer-events: auto;"></path>
+            <path d="" fill="rgba(0, 0, 0, 0.2)" fill-rule="evenodd" style="pointer-events: auto;"></path>
           </svg>
         `;
         document.body.appendChild(overlay);

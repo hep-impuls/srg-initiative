@@ -1,18 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import { fileURLToPath, URL } from 'url'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  // IMPORTANT: Replace 'srg-initiative' with your actual GitHub repository name
-  base: '/srg-initiative/',
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-  server: {
-    port: 3000,
-    open: true,
-  },
+    plugins: [react()],
+    resolve: {
+        alias: {
+            '@': fileURLToPath(new URL('./src', import.meta.url))
+        }
+    }
 })
