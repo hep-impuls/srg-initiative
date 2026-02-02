@@ -9,7 +9,7 @@
       "isChapter": true
     },
     {
-      "seconds": 10,
+      "seconds": 11,
       "tab": "theory",
       "focusIds": [
         "main-tabs",
@@ -17,6 +17,13 @@
       ],
       "focusId": "theory-intro",
       "label": "Einleitung"
+    },
+    {
+      "seconds": 16,
+      "tab": "theory",
+      "focusId": "comparison-section",
+      "label": "Lagerfeuer vs. Tunnel",
+      "isChapter": true
     },
     {
       "seconds": 43,
@@ -32,7 +39,7 @@
       "label": "Gatekeeper erklärt"
     },
     {
-      "seconds": 95,
+      "seconds": 91,
       "tab": "theory",
       "focusId": "algorithm-hypeman",
       "label": "Algorithmus als Hype-Man"
@@ -44,14 +51,7 @@
       "label": "Aufmerksamkeits-Ökonomie"
     },
     {
-      "seconds": 139,
-      "tab": "theory",
-      "focusId": "comparison-section",
-      "label": "Früher vs. Heute",
-      "isChapter": true
-    },
-    {
-      "seconds": 139,
+      "seconds": 135,
       "tab": "data",
       "focusIds": [
         "tab-btn-data",
@@ -63,7 +63,7 @@
       "isChapter": true
     },
     {
-      "seconds": 144,
+      "seconds": 143,
       "tab": "data",
       "focusId": "stat-cards",
       "label": "Statistiken"
@@ -75,19 +75,19 @@
       "label": "TikTok & Bildung"
     },
     {
-      "seconds": 195,
+      "seconds": 194,
       "tab": "data",
       "focusId": "tiktok-problem",
       "label": "15-Sekunden-Problem"
     },
     {
-      "seconds": 220,
+      "seconds": 207,
       "tab": "data",
       "focusId": "money-flow",
       "label": "Der Teufelskreis"
     },
     {
-      "seconds": 243,
+      "seconds": 223,
       "tab": "consequences",
       "focusIds": [
         "tab-btn-consequences",
@@ -98,38 +98,32 @@
       "isChapter": true
     },
     {
-      "seconds": 231,
+      "seconds": 230,
       "tab": "consequences",
       "focusId": "slacktivism-card",
       "label": "Slacktivism"
     },
     {
-      "seconds": 259,
+      "seconds": 249,
       "tab": "consequences",
       "focusId": "fake-news-card",
       "label": "Fake News Anfälligkeit"
     },
     {
-      "seconds": 279,
+      "seconds": 269,
       "tab": "consequences",
       "focusId": "polarization-card",
       "label": "Polarisierung"
     },
     {
-      "seconds": 338,
+      "seconds": 322,
       "tab": "consequences",
-      "focusId": "regulation-section",
-      "label": "Verantwortung & Staat",
+      "focusId": "final-question",
+      "label": "Die entscheidende Frage",
       "isChapter": true
     },
     {
-      "seconds": 365,
-      "tab": "consequences",
-      "focusId": "final-question",
-      "label": "Die entscheidende Frage"
-    },
-    {
-      "seconds": 380,
+      "seconds": 349,
       "tab": "consequences",
       "focusId": "quellen",
       "label": "Wissenschaftliche Quellen"

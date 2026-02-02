@@ -29,6 +29,7 @@ export interface Source {
   id: string;
   text: string;
   details: string;
+  url?: string;
 }
 
 // Audio player state

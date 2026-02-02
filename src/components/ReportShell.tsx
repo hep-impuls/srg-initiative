@@ -2,6 +2,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AgoraPage } from '@/pages/AgoraPage';
 import { PageConfig } from '@/types';
+import { swissifyData } from '@/utils/textUtils';
 
 // Registry of available report pages
 const PAGE_REGISTRY: Record<string, React.ComponentType<{ config: PageConfig }>> = {
@@ -26,7 +27,7 @@ export function ReportShell() {
                 // Capitalize first letter for file name: agora -> AgoraPage.json
                 const capitalizedSlug = slug.charAt(0).toUpperCase() + slug.slice(1);
                 const config = await import(`@/data/${capitalizedSlug}Page.json`);
-                setPageConfig(config.default);
+                setPageConfig(swissifyData(config.default));
                 setError(false);
             } catch (err) {
                 console.error(`Failed to load config for slug "${slug}":`, err);

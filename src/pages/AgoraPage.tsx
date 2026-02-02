@@ -4,7 +4,6 @@ import {
     Users,
     TrendingDown,
     Vote,
-    MessageCircle,
     ExternalLink,
     BookOpen,
     BarChart3,
@@ -19,30 +18,90 @@ import {
 import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StatCard } from '@/components/StatCard';
-import { InfoBox } from '@/components/InfoBox';
 import { SourceBadge } from '@/components/SourceBadge';
 import { OnboardingTour } from '@/components/OnboardingTour';
 import { PageConfig, Source } from '@/types';
+import { swissifyData } from '@/utils/textUtils';
 
 interface AgoraPageProps {
     config: PageConfig;
 }
 
 // Sources data
-const sources: Source[] = [
-    { id: "1", text: "Reuters Institute Digital News Report 2025 (Deutschland)", details: "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen." },
-    { id: "2", text: "Reuters Institute Digital News Report 2025 (Schweiz)", details: "Verschiebung von Print/TV zu Video-Plattformen." },
-    { id: "4", text: "Reuters Institute Digital News Report 2025 (Plattformen)", details: "Wachstum von TikTok (+7%) als Nachrichtenquelle." },
-    { id: "5", text: "Marktanalyse Online-Werbung Schweiz 2024", details: "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen." },
-    { id: "8", text: "fög Jahrbuch Qualität der Medien 2024/2025", details: "News-Deprivation auf Rekordhoch von 46%." },
-    { id: "9", text: "fög Studie zu Bildungskluft", details: "Zusammenhang zwischen formaler Bildung und News-Deprivation." },
-    { id: "16", text: "Analyse 'Crowding Out' Effekt", details: "Widerlegung der These, dass SRG private Medien verdrängt." },
-    { id: "19", text: "Forschung zu politischer Partizipation", details: "'Slacktivism' und das Paradox der Social-Media-Teilnahme." },
-    { id: "21", text: "Studie zu COVID-19 Referenden", details: "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'." },
-    { id: "27", text: "Polarisierungs-Forschung 2025", details: "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau." },
-    { id: "31", text: "OECD Studie zu Desinformation", details: "Niedrige Erkennungsrate von Fake News in der Schweiz (55%)." },
-    { id: "36", text: "BAKOM Bericht zum KomPG", details: "Unterschiede zwischen Schweizer Regulierung und EU-DSA." }
-];
+const sources: Source[] = swissifyData([
+    {
+        id: "1",
+        text: "Reuters Institute Digital News Report 2025 (Deutschland)",
+        details: "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen.",
+        url: "https://leibniz-hbi.de/en/hbi-news/pressinfo/german-findings-of-the-reuters-institute-digital-news-report-2025/"
+    },
+    {
+        id: "2",
+        text: "Reuters Institute Digital News Report 2025 (Schweiz)",
+        details: "Verschiebung von Print/TV zu Video-Plattformen.",
+        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025"
+    },
+    {
+        id: "3",
+        text: "Reuters Institute Digital News Report 2025 (Plattformen)",
+        details: "Wachstum von TikTok (+7%) als Nachrichtenquelle.",
+        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/switzerland"
+    },
+    {
+        id: "4",
+        text: "Marktanalyse Online-Werbung Schweiz 2024",
+        details: "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:adbffe22-c427-4c9a-8e3f-390ef071eb9a/JB_2025_I_Main_Findings_20251030_final%20korr.pdf"
+    },
+    {
+        id: "5",
+        text: "fög Jahrbuch Qualität der Medien 2024/2025",
+        details: "News-Deprivation auf Rekordhoch von 46%.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:eaddc4bc-a0fd-4323-8c4a-2376ceeac959/Pr%C3%A4sentation_2024_final_DE.pdf"
+    },
+    {
+        id: "6",
+        text: "fög Studie zu Bildungskluft",
+        details: "Zusammenhang zwischen formaler Bildung und News-Deprivation.",
+        url: "https://www.news.uzh.ch/en/articles/media/2025/yearbook-quality-of-the-media-foeg.html"
+    },
+    {
+        id: "7",
+        text: "Analyse 'Crowding Out' Effekt",
+        details: "Widerlegung der These, dass SRG private Medien verdrängt.",
+        url: "https://www.foeg.uzh.ch/dam/jcr:85ef7b15-95f8-4815-bde8-179b0d0e1089/JB_2024_Study_I_private_Media_EN.pdf"
+    },
+    {
+        id: "8",
+        text: "Forschung zu politischer Partizipation",
+        details: "'Slacktivism' und das Paradox der Social-Media-Teilnahme.",
+        url: "https://www.mdpi.com/2673-5172/6/3/155"
+    },
+    {
+        id: "9",
+        text: "Studie zu COVID-19 Referenden",
+        details: "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'.",
+        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8242806/"
+    },
+    {
+        id: "10",
+        text: "Polarisierungs-Forschung 2025",
+        details: "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau.",
+        url: "https://www.news.uzh.ch/en/articles/news/2024/political-polarization.html"
+    },
+    {
+        id: "11",
+        text: "OECD Studie zu Desinformation",
+        details: "Niedrige Erkennungsrate von Fake News in der Schweiz (55%).",
+        url: "https://www.swissinfo.ch/eng/information-wars/swiss-found-to-be-gullible-regarding-fake-news/87475624"
+    },
+    {
+        id: "12",
+        text: "BAKOM Bericht zum KomPG",
+        details: "Unterschiede zwischen Schweizer Regulierung und EU-DSA.",
+        url: "https://www.bakom.admin.ch/dam/de/sd-web/-XQxe6i9YyQN/Erl%C3%A4uternder%20Bericht%20(VE-KomPG).pdf"
+    }
+]);
 
 export function AgoraPage({ config }: AgoraPageProps) {
     const directorState = useAudioDirector(config.timeline);
@@ -158,9 +217,57 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         <div className="aspect-video bg-slate-100 rounded-2xl overflow-hidden shadow-xl border border-slate-200 transition-transform duration-500 hover:scale-[1.02]">
                                             <img
                                                 src="img/agora1.png"
-                                                alt="Digitale Informationslandschaft"
+                                                alt="Digitale Informationslands landscapes"
                                                 className="w-full h-full object-cover"
                                             />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Comparison Grid - MOVED TO TOP */}
+                                <div id="comparison-section" className="scroll-mt-24 py-8 border-b border-slate-50">
+                                    <h3 className="text-lg font-bold mb-6 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
+                                    <div className="grid md:grid-cols-2 gap-6 relative">
+                                        <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-1.5 rounded-full shadow border border-slate-200">
+                                            <ArrowRight className="text-slate-400 w-5 h-5" />
+                                        </div>
+
+                                        {/* FRÜHER */}
+                                        <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors">
+                                            <div className="flex items-center justify-center w-10 h-10 bg-slate-200 rounded-full mb-3 mx-auto">
+                                                <Flame className="w-5 h-5 text-slate-600" />
+                                            </div>
+                                            <h4 className="text-center font-bold text-slate-700 mb-1">Das "Lagerfeuer"</h4>
+                                            <p className="text-center text-[10px] text-slate-400 uppercase font-black tracking-widest mb-4">Massenmedien</p>
+                                            <ul className="space-y-3 text-sm text-slate-600">
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
+                                                    <span>Alle sehen das Gleiche (z.B. Tagesschau um 20:00 Uhr).</span>
+                                                </li>
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Lock className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
+                                                    <span>Journalisten filtern Fakten und sortieren Gerüchte aus.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        {/* HEUTE */}
+                                        <div className="bg-blue-50/50 p-6 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors">
+                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-200 rounded-full mb-3 mx-auto">
+                                                <Smartphone className="w-5 h-5 text-blue-600" />
+                                            </div>
+                                            <h4 className="text-center font-bold text-blue-900 mb-1">Der "Eigene Tunnel"</h4>
+                                            <p className="text-center text-[10px] text-blue-400 uppercase font-black tracking-widest mb-4">Plattformen</p>
+                                            <ul className="space-y-3 text-sm text-slate-700">
+                                                <li className="flex gap-2.5 items-start">
+                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
+                                                    <span>Jeder sieht etwas anderes. Es fehlt die gemeinsame Basis.</span>
+                                                </li>
+                                                <li className="flex gap-2.5 items-start">
+                                                    <BrainCircuit className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
+                                                    <span>Algorithmen entscheiden, was dich am Bildschirm hält.</span>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +323,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <h3 className="text-xl font-bold text-emerald-900">Was bedeutet 'Gatekeeper'?</h3>
                                                 </div>
                                                 <p className="text-base text-emerald-900/80 leading-relaxed">
-                                                    Gatekeeper heißt <strong>"Torwächter"</strong>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – jeder kann alles posten, wahr oder falsch.
+                                                    Gatekeeper heisst <strong>"Torwächter"</strong>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – jeder kann alles posten, wahr oder falsch.
                                                 </p>
                                             </div>
                                         </div>
@@ -282,8 +389,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     Sein Ziel ist <strong>deine Aufmerksamkeit</strong>. Er will einfach, dass du so lange wie möglich in der App bleibst.
                                                 </p>
                                             </div>
-                                            <div className="w-full md:w-1/3">
-                                                <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100 transition-transform duration-500 hover:rotate-2">
+                                            <div className="w-full md:w-1/2">
+                                                <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100 transition-transform duration-500 hover:rotate-2">
                                                     <img
                                                         src="img/agora6.png"
                                                         alt="Aufmerksamkeits-Ökonomie Waage"
@@ -295,53 +402,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     </div>
                                 </div>
 
-                                {/* Comparison Grid */}
-                                <div id="comparison-section" className="scroll-mt-24 pt-4">
-                                    <h3 className="text-lg font-bold mb-6 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
-                                    <div className="grid md:grid-cols-2 gap-6 relative">
-                                        <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-1.5 rounded-full shadow border border-slate-200">
-                                            <ArrowRight className="text-slate-400 w-5 h-5" />
-                                        </div>
-
-                                        {/* FRÜHER */}
-                                        <div className="bg-slate-50 p-6 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors">
-                                            <div className="flex items-center justify-center w-10 h-10 bg-slate-200 rounded-full mb-3 mx-auto">
-                                                <Flame className="w-5 h-5 text-slate-600" />
-                                            </div>
-                                            <h4 className="text-center font-bold text-slate-700 mb-1">Das "Lagerfeuer"</h4>
-                                            <p className="text-center text-[10px] text-slate-400 uppercase font-black tracking-widest mb-4">Massenmedien</p>
-                                            <ul className="space-y-3 text-sm text-slate-600">
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
-                                                    <span>Alle sehen das Gleiche (z.B. Tagesschau um 20:00 Uhr).</span>
-                                                </li>
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Lock className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
-                                                    <span>Journalisten filtern Fakten und sortieren Gerüchte aus.</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        {/* HEUTE */}
-                                        <div className="bg-blue-50/50 p-6 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors">
-                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-200 rounded-full mb-3 mx-auto">
-                                                <Smartphone className="w-5 h-5 text-blue-600" />
-                                            </div>
-                                            <h4 className="text-center font-bold text-blue-900 mb-1">Der "Eigene Tunnel"</h4>
-                                            <p className="text-center text-[10px] text-blue-400 uppercase font-black tracking-widest mb-4">Plattformen</p>
-                                            <ul className="space-y-3 text-sm text-slate-700">
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
-                                                    <span>Jeder sieht etwas anderes. Es fehlt die gemeinsame Basis.</span>
-                                                </li>
-                                                <li className="flex gap-2.5 items-start">
-                                                    <BrainCircuit className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
-                                                    <span>Algorithmen entscheiden, was dich am Bildschirm hält.</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                {/* Algorithm as Hype-Man Section */}
                             </div>
                         )}
 
@@ -367,10 +428,10 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 </div>
 
                                 <div id="stat-cards" className="scroll-mt-32 grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                    <StatCard value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["8"]} />
+                                    <StatCard value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["5"]} />
                                     <StatCard value="17%" label="Nur Social" subtext="Kein Journalismus (18-24 J.)." color="purple" sourceIds={["1"]} />
-                                    <StatCard value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["4"]} />
-                                    <StatCard value="2.1 Mrd." label="Werbegeld" subtext="Abfluss zu Tech-Giganten." color="amber" sourceIds={["5"]} />
+                                    <StatCard value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["3"]} />
+                                    <StatCard value="2.1 Mrd." label="Werbegeld" subtext="Abfluss zu Tech-Giganten." color="amber" sourceIds={["4"]} />
                                 </div>
 
                                 <div id="chart-section" className="scroll-mt-32 bg-slate-50/50 rounded-3xl p-6 md:p-12 border border-slate-100 my-8">
@@ -393,18 +454,18 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             <div className="w-full bg-purple-50 rounded-full h-3 overflow-hidden">
                                                 <div className="bg-purple-600 h-full rounded-full" style={{ width: '50%' }}></div>
                                             </div>
-                                            <div className="mt-3 flex justify-end shrink-0 scale-90 origin-right"><SourceBadge ids={["1", "4"]} /></div>
+                                            <div className="mt-3 flex justify-end shrink-0 scale-90 origin-right"><SourceBadge ids={["1", "3"]} /></div>
                                         </div>
                                     </div>
                                     <div className="mt-8 grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                                         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
                                             <h4 className="font-bold text-base mb-2 text-slate-800">Die "TikTokisierung"</h4>
-                                            <p className="text-xs text-slate-600 leading-relaxed">Komplexe Politik wird oft auf 15 Sekunden Spaß reduziert. Hintergründe fehlen meist.</p>
+                                            <p className="text-xs text-slate-600 leading-relaxed">Komplexe Politik wird oft auf 15 Sekunden Spass reduziert. Hintergründe fehlen meist.</p>
                                         </div>
                                         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
                                             <h4 className="font-bold text-base mb-2 text-slate-800">Bildungskluft</h4>
                                             <p className="text-xs text-slate-600 leading-relaxed">Menschen mit niedriger formaler Bildung gehören öfter zu den News-Deprivierten.</p>
-                                            <div className="mt-2 scale-90 origin-left"><SourceBadge ids={["9"]} /></div>
+                                            <div className="mt-2 scale-90 origin-left"><SourceBadge ids={["6"]} /></div>
                                         </div>
                                     </div>
                                 </div>
@@ -449,7 +510,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     <div className="flex flex-col md:flex-row gap-8 items-center">
                                         <div className="flex-1 space-y-4">
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                Jedes Jahr fließen <strong>2,1 Milliarden Franken</strong> an Werbegeldern an globale Plattformen.
+                                                Jedes Jahr fliessen <strong>2,1 Milliarden Franken</strong> an Werbegeldern an globale Plattformen.
                                             </p>
                                             <p className="text-base text-slate-700 leading-relaxed">
                                                 Geld, das den Schweizer Medienhäusern fehlt, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.
@@ -458,8 +519,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen</p>
                                             </div>
                                         </div>
-                                        <div className="w-full md:w-2/5">
-                                            <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-red-100 hover:rotate-1 transition-transform">
+                                        <div className="w-full md:w-1/2">
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-red-100 hover:rotate-1 transition-transform">
                                                 <img
                                                     src="img/agora9.png"
                                                     alt="Der Teufelskreis der Finanzierung"
@@ -486,68 +547,20 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     <div id="slacktivism-card" className="bg-white border-t-4 border-red-500 shadow-lg p-6 rounded-2xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="bg-red-50 w-12 h-12 rounded-xl flex items-center justify-center mb-4"><Vote className="text-red-600 w-6 h-6" /></div>
                                         <h3 className="font-bold text-lg mb-2 text-slate-800">Slacktivism</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Liken statt wählen: Politische Posts fühlen sich wie Aktivität an, führen aber selten zur Urne. <SourceBadge ids={["19"]} /></p>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Liken statt wählen: Politische Posts fühlen sich wie Aktivität an, führen aber selten zur Urne. <SourceBadge ids={["8"]} /></p>
                                     </div>
                                     <div id="fake-news-card" className="bg-white border-t-4 border-amber-500 shadow-lg p-6 rounded-2xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="bg-amber-50 w-12 h-12 rounded-xl flex items-center justify-center mb-4"><BrainCircuit className="text-amber-600 w-6 h-6" /></div>
                                         <h3 className="font-bold text-lg mb-2 text-slate-800">Anfällig für Fakes</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Nur 55% der Schweizer erkennen Fakes zuverlässig. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["31"]} /></p>
-                                        <div className="mt-4 aspect-video bg-amber-50 rounded-xl overflow-hidden border border-amber-100 relative group">
-                                            <img
-                                                src="img/agora10.png"
-                                                alt="Fake News Test"
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                            />
-                                        </div>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Nur 55% der Schweizer erkennen Fakes zuverlässig. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["11"]} /></p>
                                     </div>
                                     <div id="polarization-card" className="bg-white border-t-4 border-blue-500 shadow-lg p-6 rounded-2xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="bg-blue-50 w-12 h-12 rounded-xl flex items-center justify-center mb-4"><TrendingDown className="text-blue-600 w-6 h-6" /></div>
                                         <h3 className="font-bold text-lg mb-2 text-slate-800">Affektive Polarisierung</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Wut klickt besser. Der politische Gegner wird oft nicht mehr als falsch, sondern als böse gesehen. <SourceBadge ids={["27"]} /></p>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Wut klickt besser. Der politische Gegner wird oft nicht mehr als falsch, sondern als böse gesehen. <SourceBadge ids={["10"]} /></p>
                                     </div>
                                 </div>
 
-                                <div className="max-w-4xl mx-auto py-6">
-                                    <InfoBox title="Beispiel: Covid-Abstimmungen" icon={<MessageCircle className="w-4 h-4 mr-2" />} color="amber">
-                                        <p className="text-sm mb-3">Agenda-Setting Machtverschiebung: Themen wurden oft auf Telegram groß gemacht, die Politik musste reagieren. <SourceBadge ids={["21"]} /></p>
-                                    </InfoBox>
-                                </div>
-
-                                {/* Regulation Section */}
-                                <div id="regulation-section" className="scroll-mt-32 bg-slate-900 text-white rounded-[2rem] p-8 md:p-12 my-6 shadow-2xl relative overflow-hidden">
-                                    <div className="relative z-10">
-                                        <div className="flex items-start mb-8">
-                                            <div className="bg-green-500/20 p-3 rounded-2xl mr-4"><Scale className="w-8 h-8 text-green-400" /></div>
-                                            <div>
-                                                <h3 className="text-2xl font-bold mb-1 tracking-tight">Was macht der Staat?</h3>
-                                                <p className="text-slate-400 text-base max-w-xl">Die EU nutzt den DSA, die Schweiz plant das KomPG Gesetz.</p>
-                                            </div>
-                                        </div>
-                                        <div className="grid md:grid-cols-2 gap-6 text-sm">
-                                            <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-3xl border border-slate-700">
-                                                <div className="flex items-center gap-2.5 mb-4">
-                                                    <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
-                                                    <strong className="text-blue-400 font-bold uppercase tracking-wider text-xs">EU (DSA)</strong>
-                                                </div>
-                                                <ul className="space-y-3 text-slate-300 text-xs">
-                                                    <li className="flex gap-2"><span>•</span><span>Plattformen müssen gesellschaftliche Risiken minimieren.</span></li>
-                                                    <li className="flex gap-2"><span>•</span><span>Haftung für illegale Inhalte (Hate Speech).</span></li>
-                                                </ul>
-                                            </div>
-                                            <div className="bg-slate-800/50 backdrop-blur-sm p-6 rounded-3xl border border-green-500/30">
-                                                <div className="flex items-center gap-2.5 mb-4">
-                                                    <div className="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
-                                                    <strong className="text-green-400 font-bold uppercase tracking-wider text-xs">Schweiz (KomPG)</strong>
-                                                </div>
-                                                <ul className="space-y-3 text-slate-300 text-xs">
-                                                    <li className="flex gap-2"><span>•</span><span>Fokus auf Transparenz (Warum sehe ich das?).</span></li>
-                                                    <li className="flex gap-2 text-slate-400 italic"><span>•</span><span>Keine Lösch-Pflichten aus Angst vor Zensur.</span></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
-                                </div>
 
                                 {/* Final Responsibility Question Section */}
                                 <div id="final-question" className="scroll-mt-32 bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-8 md:p-12 my-8 border-2 border-slate-200 relative overflow-hidden">
@@ -602,13 +615,24 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         </h3>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {sources.map((source) => (
-                                <div key={source.id} className="text-[10px] bg-white p-2.5 rounded-xl shadow-sm border border-slate-100/50 hover:border-slate-200 transition-colors">
-                                    <div className="flex items-baseline mb-1">
-                                        <span className="font-black text-blue-600 mr-1.5 opacity-70">[{source.id}]</span>
-                                        <span className="font-bold text-slate-800 leading-[1.1]">{source.text}</span>
+                                <a
+                                    key={source.id}
+                                    href={source.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block group"
+                                >
+                                    <div className="h-full text-[10px] bg-white p-2.5 rounded-xl shadow-sm border border-slate-100/50 group-hover:border-blue-200 group-hover:shadow-md transition-all">
+                                        <div className="flex items-baseline justify-between mb-1">
+                                            <div className="flex items-baseline">
+                                                <span className="font-black text-blue-600 mr-1.5 opacity-70">[{source.id}]</span>
+                                                <span className="font-bold text-slate-800 leading-[1.1] group-hover:text-blue-700 transition-colors">{source.text}</span>
+                                            </div>
+                                            <ExternalLink className="w-3 h-3 text-slate-300 group-hover:text-blue-500 transition-colors shrink-0 ml-2" />
+                                        </div>
+                                        <p className="text-slate-500 pl-5 text-[10px] leading-relaxed italic">{source.details}</p>
                                     </div>
-                                    <p className="text-slate-500 pl-5 text-[10px] leading-relaxed italic">{source.details}</p>
-                                </div>
+                                </a>
                             ))}
                         </div>
                     </div>
