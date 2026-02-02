@@ -411,29 +411,31 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         {/* TAB 2: DATEN */}
                         {activeTab === 'data' && (
                             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                                <div className="flex flex-col lg:flex-row gap-10 items-center py-6">
-                                    <div id="data-intro" className="scroll-mt-32 flex-1">
-                                        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Die Zahlen: Eine gespaltene Gesellschaft</h2>
-                                        <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
-                                            Die Daten aus 2024 und 2025 zeigen ein klares Bild: Wir driften beim Medienkonsum massiv auseinander.
-                                        </p>
-                                    </div>
-                                    <div id="data-intro-image" className="w-full lg:w-2/5 group">
-                                        <div className="aspect-video bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 transition-all duration-500 hover:shadow-purple-200/50">
-                                            <img
-                                                src="img/agora4.png"
-                                                alt="Digitale Nachrichtennutzung Visual"
-                                                className="w-full h-full object-cover"
-                                            />
+                                <div id="data-overview-container" className="scroll-mt-24 p-2 -m-2 rounded-3xl">
+                                    <div className="flex flex-col lg:flex-row gap-10 items-center py-6">
+                                        <div id="data-intro" className="scroll-mt-32 flex-1">
+                                            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 leading-tight">Die Zahlen: Eine gespaltene Gesellschaft</h2>
+                                            <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                                                Die Daten aus 2024 und 2025 zeigen ein klares Bild: Wir driften beim Medienkonsum massiv auseinander.
+                                            </p>
+                                        </div>
+                                        <div id="data-intro-image" className="w-full lg:w-2/5 group">
+                                            <div className="aspect-video bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 transition-all duration-500 hover:shadow-purple-200/50">
+                                                <img
+                                                    src="img/agora4.png"
+                                                    alt="Digitale Nachrichtennutzung Visual"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div id="stat-cards" className="scroll-mt-32 grid grid-cols-2 lg:grid-cols-4 gap-4">
-                                    <StatCard value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["5"]} />
-                                    <StatCard value="17%" label="Nur Social" subtext="Kein Journalismus (18-24 J.)." color="purple" sourceIds={["1"]} />
-                                    <StatCard value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["3"]} />
-                                    <StatCard value="2.1 Mrd." label="Werbegeld" subtext="Abfluss zu Tech-Giganten." color="amber" sourceIds={["4"]} />
+                                    <div id="stat-cards" className="scroll-mt-32 grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <StatCard value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["5"]} />
+                                        <StatCard value="17%" label="Nur Social" subtext="Kein Journalismus (18-24 J.)." color="purple" sourceIds={["1"]} />
+                                        <StatCard value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["3"]} />
+                                        <StatCard value="2.1 Mrd." label="Werbegeld" subtext="Abfluss zu Tech-Giganten." color="amber" sourceIds={["4"]} />
+                                    </div>
                                 </div>
 
                                 <div id="chart-section" className="scroll-mt-32 bg-slate-50/50 rounded-3xl p-6 md:p-12 border border-slate-100 my-8">

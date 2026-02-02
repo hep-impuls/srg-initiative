@@ -26,6 +26,12 @@
       "isChapter": true
     },
     {
+      "seconds": 33,
+      "tab": "theory",
+      "focusId": "main-tabs",
+      "label": "Agenda"
+    },
+    {
       "seconds": 43,
       "tab": "theory",
       "focusId": "agora-explanation",
@@ -55,15 +61,14 @@
       "tab": "data",
       "focusIds": [
         "tab-btn-data",
-        "data-intro",
-        "data-intro-image"
+        "data-overview-container"
       ],
-      "focusId": "data-intro",
+      "focusId": "data-overview-container",
       "label": "Die Datenlage",
       "isChapter": true
     },
     {
-      "seconds": 143,
+      "seconds": 145,
       "tab": "data",
       "focusId": "stat-cards",
       "label": "Statistiken"
