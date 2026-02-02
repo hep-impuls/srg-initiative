@@ -4,6 +4,8 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react()],
+  // IMPORTANT: Replace 'srg-initiative' with your actual GitHub repository name
+  base: '/srg-initiative/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

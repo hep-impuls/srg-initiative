@@ -7,7 +7,7 @@ const config = tourConfig as TourConfig;
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         {/* Root redirects to agora */}
         <Route path="/" element={<Navigate to="/report/agora" replace />} />
