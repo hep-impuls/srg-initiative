@@ -234,6 +234,8 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
     const handlePause = () => {
       setAudioState(prev => ({ ...prev, isPlaying: false }));
+      // Clear spotlight and release "lock" when paused
+      clearFocus();
     };
 
     audio.addEventListener('timeupdate', handleTimeUpdate);
@@ -284,7 +286,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
   // Keep overlay hole synced with active element position (for scroll/resize)
   useEffect(() => {
-    if (activeElementIds.length === 0) return;
+    if (activeElementIds.length === 0 || !audioState.isPlaying) return;
 
     let animationFrameId: number;
 
@@ -302,8 +304,8 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
   }, [activeElementIds, updateOverlayHole]);
   // Handle auto-scrolling when active elements change or tab changes
   useEffect(() => {
-    // Only scroll if we have targets and user isn't manually intervening
-    if (activeElementIds.length > 0 && !isUserScrolling) {
+    // Only scroll if we have targets, user isn't manually intervening, and audio is PLAYING
+    if (activeElementIds.length > 0 && !isUserScrolling && audioState.isPlaying) {
       // Use a timeout to ensure React has finished rendering the new tab content
       // This solves the issue where the element doesn't exist yet immediately after state change
       const timer = setTimeout(() => {
@@ -312,7 +314,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
       return () => clearTimeout(timer);
     }
-  }, [activeElementIds, isUserScrolling, scrollToElements, currentTab]); // Dependency on currentTab helps re-trigger if needed, though activeElementIds update usually suffices
+  }, [activeElementIds, isUserScrolling, scrollToElements, currentTab, audioState.isPlaying]); // Added audioState.isPlaying
 
   return {
     currentTab,
