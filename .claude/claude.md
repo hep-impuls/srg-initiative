@@ -500,3 +500,46 @@ npm run build
 **Version:** 1.0.0
 **Letztes Update:** Februar 2026
 **Status:** Production Ready ✅
+
+---
+
+## Changelog v1.1.0 (Februar 2026)
+
+### Neue Features
+
+#### 1. Playback Speed Control
+Es wurde eine Steuerung für die Wiedergabeschwindigkeit hinzugefügt.
+- **Cycle:** 0.8x -> 1.0x -> 1.2x -> 1.5x -> 2.0x
+- **Implementierung:**
+    - `AudioControls.tsx`: Button neben Progress Bar
+    - `useAudioDirector.ts`: State management für `playbackRate`
+
+#### 2. Verbesserter Dimming-Effekt (SVG Hole-Punch)
+Der ursprüngliche Z-Index-basierte Dimming-Effekt hatte Probleme mit komplexen Layouts (Stacking Contexts).
+- **Lösung:** Ein SVG-basiertes Overlay, das über **alles** gelegt wird.
+- **Technik:** Ein SVG Pfad mit `fill-rule="evenodd"` erstellt ein transparentes "Loch" um das fokussierte Element.
+- **Vorteil:** Funktioniert unabhängig von Z-Index Hierarchien der Eltern-Elemente.
+- **Performance:** Nutzt `requestAnimationFrame` für flüssige Updates bei Scroll/Resize.
+
+### Deployment Updates (GitHub Pages)
+
+Das Projekt wurde für das Hosting auf GitHub Pages konfiguriert.
+
+#### 1. Routing Strategy
+- Umstellung von `BrowserRouter` auf `HashRouter`
+- **Grund:** GitHub Pages unterstützt kein history-API Fallback (SPA routing). `HashRouter` (`/#/route`) funktioniert ohne Server-Konfiguration.
+- **URL:** `https://hep-impuls.github.io/srg-initiative/#/report/agora`
+
+#### 2. Build Configuration
+- `vite.config.ts`: `base` path auf Repo-Namen gesetzt (`/srg-initiative/` ist jetzt via Auto-Detection in GitHub Actions gelöst, aber HashRouter macht es robust).
+- `.gitignore`: Optimiert für Vite/React.
+- `vite-env.d.ts`: Hinzugefügt für TypeScript Support von `import.meta.env`.
+
+#### 3. Automation (GitHub Actions)
+- Workflow Datei: `.github/workflows/deploy.yml`
+- Baut und deployed das Projekt automatisch bei jedem Push auf `main`.
+- Umgeht Pathfinder-Probleme von Windows (`ENAMETOOLONG`) bei lokalem Deployment.
+
+#### 4. Asset Handling
+- Audio-Datei umbenannt: `mobilität.mp3` -> `mobilitaet.mp3` (Vermeidung von Encoding-Fehlern auf Linux-Build-Servern).
+- Pfad in `tourConfig.json` auf relativen Pfad angepasst (`audio/mobilitaet.mp3`).
