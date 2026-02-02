@@ -232,6 +232,69 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     </div>
                                 </div>
 
+                                {/* Algorithm as Hype-Man Section */}
+                                <div id="algorithm-hypeman" className="scroll-mt-32 py-12 bg-gradient-to-br from-blue-50/30 to-white rounded-3xl border border-blue-100/50 p-6 md:p-10 relative overflow-hidden">
+                                    <div className="relative z-10 w-full">
+                                        <h3 className="text-xl font-bold text-blue-900 mb-6 flex items-center">
+                                            <BrainCircuit className="w-5 h-5 mr-3 text-blue-600" />
+                                            Der Algorithmus als dein persönlicher "Ja-Sager"
+                                        </h3>
+                                        <div className="grid md:grid-cols-2 gap-10 items-center">
+                                            <div className="space-y-4">
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    Ein Algorithmus will dich nicht herausfordern – er will dich <strong>bestätigen</strong>.
+                                                </p>
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    Man könnte sagen, er ist dein persönlicher <strong>Hype-Man</strong>. Wie ein Ja-Sager, der dir nur das zeigt, was du hören willst.
+                                                </p>
+                                                <p className="text-base text-slate-700 leading-relaxed">
+                                                    Warum? Weil <strong>Wut oder Freude</strong> dich viel länger auf der Plattform halten als eine neutrale, vielleicht etwas trockene Tatsache.
+                                                </p>
+                                                <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-xl">
+                                                    <p className="text-sm text-blue-900 font-semibold">Es geht um Verweildauer, nicht um Wahrheit.</p>
+                                                </div>
+                                            </div>
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-indigo-100 transition-transform duration-500 hover:scale-[1.02]">
+                                                <img
+                                                    src="img/agora5.png"
+                                                    alt="Der Algorithmus als Hype-Man"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/5 rounded-full -ml-24 -mb-24 blur-3xl"></div>
+                                </div>
+
+                                {/* Attention Economy Section */}
+                                <div id="attention-economy" className="scroll-mt-32 py-12">
+                                    <div className="bg-amber-50/50 border border-amber-100 rounded-3xl p-6 md:p-10">
+                                        <div className="flex flex-col md:flex-row gap-10 items-center">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <div className="bg-amber-500 p-1.5 rounded-lg"><BrainCircuit className="w-5 h-5 text-white" /></div>
+                                                    <h3 className="text-xl font-bold text-amber-900">Die Aufmerksamkeits-Ökonomie</h3>
+                                                </div>
+                                                <p className="text-base text-amber-900/80 leading-relaxed mb-4">
+                                                    Das Ziel eines Algorithmus ist <strong>nicht</strong>, dich umfassend und neutral zu informieren.
+                                                </p>
+                                                <p className="text-base text-amber-900/80 leading-relaxed">
+                                                    Sein Ziel ist <strong>deine Aufmerksamkeit</strong>. Er will einfach, dass du so lange wie möglich in der App bleibst.
+                                                </p>
+                                            </div>
+                                            <div className="w-full md:w-1/3">
+                                                <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-amber-100 transition-transform duration-500 hover:rotate-2">
+                                                    <img
+                                                        src="img/agora6.png"
+                                                        alt="Aufmerksamkeits-Ökonomie Waage"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {/* Comparison Grid */}
                                 <div id="comparison-section" className="scroll-mt-24 pt-4">
                                     <h3 className="text-lg font-bold mb-6 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
@@ -345,6 +408,67 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* 15-Second Video Problem Section */}
+                                <div id="tiktok-problem" className="scroll-mt-32 bg-purple-50/30 rounded-3xl p-6 md:p-12 border border-purple-100 my-8">
+                                    <h3 className="font-bold text-2xl mb-8 text-center text-purple-900 tracking-tight">Das 15-Sekunden-Problem</h3>
+                                    <div className="grid md:grid-cols-2 gap-8 items-center">
+                                        <div className="space-y-4">
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Kannst du eine <strong>Rentenreform</strong> wirklich in einem 15-Sekunden-Video verstehen?
+                                            </p>
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Du kriegst die <strong>Emotion</strong>, den schnellen <strong>Slogan</strong>, aber die Details, die du für die Stimmabgabe brauchst, fallen weg.
+                                            </p>
+                                            <div className="bg-purple-100 border-l-4 border-purple-500 p-4 rounded-r-xl">
+                                                <p className="text-sm text-purple-900 font-semibold">Komplexe Politik wird auf Unterhaltung reduziert. Hintergründe fehlen meist.</p>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
+                                                <img
+                                                    src="img/agora7.png"
+                                                    alt="Komplexität vs. 15 Sekunden"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                            <div className="aspect-[4/3] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
+                                                <img
+                                                    src="img/agora8.png"
+                                                    alt="Information Loss Funnel"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Money Flow Section */}
+                                <div id="money-flow" className="scroll-mt-32 bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl p-6 md:p-10 border border-red-100 my-8">
+                                    <h3 className="font-bold text-2xl mb-6 text-center text-red-900 tracking-tight">Der Teufelskreis</h3>
+                                    <div className="flex flex-col md:flex-row gap-8 items-center">
+                                        <div className="flex-1 space-y-4">
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Jedes Jahr fließen <strong>2,1 Milliarden Franken</strong> an Werbegeldern an globale Plattformen.
+                                            </p>
+                                            <p className="text-base text-slate-700 leading-relaxed">
+                                                Geld, das den Schweizer Medienhäusern fehlt, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.
+                                            </p>
+                                            <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-xl">
+                                                <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen</p>
+                                            </div>
+                                        </div>
+                                        <div className="w-full md:w-2/5">
+                                            <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-red-100 hover:rotate-1 transition-transform">
+                                                <img
+                                                    src="img/agora9.png"
+                                                    alt="Der Teufelskreis der Finanzierung"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -367,7 +491,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     <div id="fake-news-card" className="bg-white border-t-4 border-amber-500 shadow-lg p-6 rounded-2xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="bg-amber-50 w-12 h-12 rounded-xl flex items-center justify-center mb-4"><BrainCircuit className="text-amber-600 w-6 h-6" /></div>
                                         <h3 className="font-bold text-lg mb-2 text-slate-800">Anfällig für Fakes</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Nur 55% der Schweizer erkennen Fakes. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["31"]} /></p>
+                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed">Nur 55% der Schweizer erkennen Fakes zuverlässig. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["31"]} /></p>
+                                        <div className="mt-4 aspect-video bg-amber-50 rounded-xl overflow-hidden border border-amber-100 relative group">
+                                            <img
+                                                src="img/agora10.png"
+                                                alt="Fake News Test"
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        </div>
                                     </div>
                                     <div id="polarization-card" className="bg-white border-t-4 border-blue-500 shadow-lg p-6 rounded-2xl hover:-translate-y-1 transition-all duration-300">
                                         <div className="bg-blue-50 w-12 h-12 rounded-xl flex items-center justify-center mb-4"><TrendingDown className="text-blue-600 w-6 h-6" /></div>
@@ -416,6 +547,48 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                     <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl"></div>
+                                </div>
+
+                                {/* Final Responsibility Question Section */}
+                                <div id="final-question" className="scroll-mt-32 bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-8 md:p-12 my-8 border-2 border-slate-200 relative overflow-hidden">
+                                    <div className="relative z-10">
+                                        <h3 className="text-2xl md:text-3xl font-bold mb-6 text-slate-900 text-center">Die entscheidende Frage</h3>
+                                        <div className="grid md:grid-cols-2 gap-8 items-center">
+                                            <div className="space-y-6">
+                                                <p className="text-lg text-slate-700 leading-relaxed">
+                                                    Die alten Gatekeeper – die Chefredakteure – sind weg. Der <strong>Algorithmus</strong> ist der neue Torwächter.
+                                                </p>
+                                                <p className="text-lg text-slate-700 leading-relaxed">
+                                                    Wenn sein oberstes Ziel ist, dich in der App zu halten und <em>nicht</em> dich zu informieren...
+                                                </p>
+                                                <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-blue-200">
+                                                    <p className="text-base font-bold text-blue-900 mb-4">Wer trägt dann die Verantwortung dafür, dass du ein informierter Bürger bist?</p>
+                                                    <ul className="space-y-3 text-sm text-slate-600">
+                                                        <li className="flex items-center gap-3">
+                                                            <span className="text-2xl">🏢</span>
+                                                            <span><strong>Die Plattformen?</strong></span>
+                                                        </li>
+                                                        <li className="flex items-center gap-3">
+                                                            <span className="text-2xl">🏛️</span>
+                                                            <span><strong>Der Staat?</strong></span>
+                                                        </li>
+                                                        <li className="flex items-center gap-3">
+                                                            <span className="text-2xl">🪞</span>
+                                                            <span className="text-blue-700 font-bold">Oder liegt diese Verantwortung jetzt vielleicht zum ersten Mal in der Geschichte ganz allein bei dir?</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-3 transition-transform hover:rotate-0 duration-500">
+                                                <img
+                                                    src="img/agora11.png"
+                                                    alt="Die Entscheidung liegt bei dir"
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                                 </div>
                             </div>
                         )}

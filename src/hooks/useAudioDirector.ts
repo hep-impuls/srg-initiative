@@ -16,6 +16,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
   const { isUserScrolling, resumeAutoScroll } = useScrollLock();
   const currentCueIndex = useRef<number>(-1);
+  const lastFocusedIds = useRef<string[]>([]);
   const overlayRef = useRef<HTMLDivElement | null>(null);
 
   // Extract chapters from timeline
@@ -125,8 +126,15 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
     if (validIds.length === 0) return;
 
-    // Clear previous focus
-    clearFocus();
+    // Check for duplicate focus to prevent flashing
+    const areSameIds = validIds.length === lastFocusedIds.current.length &&
+      validIds.every((id, i) => id === lastFocusedIds.current[i]);
+
+    if (!areSameIds) {
+      // Clear previous focus only if targets changed
+      clearFocus();
+      lastFocusedIds.current = validIds;
+    }
 
     // Scroll to the first element (or improved logic: center of bounding box of all elements?)
     // For now, simple approach: scroll to the first valid element
@@ -143,20 +151,32 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
       const el = document.getElementById(id);
       if (el) {
         el.classList.add('audio-director-focused');
-        el.classList.add('ring-2', 'ring-blue-400', 'ring-offset-2');
-        // Remove ring after animation
-        setTimeout(() => {
-          el.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2');
-        }, 2000);
+
+        // Only add pulse ring for new targets
+        if (!areSameIds) {
+          el.classList.add('ring-2', 'ring-blue-400', 'ring-offset-2');
+          // Remove ring after animation
+          setTimeout(() => {
+            el.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2');
+          }, 2000);
+        }
       }
     });
 
     // Show dimming overlay
     const overlay = getDimmingOverlay();
-    setTimeout(() => {
+
+    if (!areSameIds) {
+      // Delay for new elements to allow transition
+      setTimeout(() => {
+        overlay.style.opacity = '1';
+        updateOverlayHole(validIds);
+      }, 100);
+    } else {
+      // Instant update for same elements (e.g. resume auto-scroll)
       overlay.style.opacity = '1';
       updateOverlayHole(validIds);
-    }, 100);
+    }
 
   }, [getDimmingOverlay, clearFocus, updateOverlayHole]);
 

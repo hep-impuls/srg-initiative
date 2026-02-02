@@ -32,7 +32,19 @@
       "label": "Gatekeeper erklärt"
     },
     {
-      "seconds": 90,
+      "seconds": 95,
+      "tab": "theory",
+      "focusId": "algorithm-hypeman",
+      "label": "Algorithmus als Hype-Man"
+    },
+    {
+      "seconds": 120,
+      "tab": "theory",
+      "focusId": "attention-economy",
+      "label": "Aufmerksamkeits-Ökonomie"
+    },
+    {
+      "seconds": 139,
       "tab": "theory",
       "focusId": "comparison-section",
       "label": "Früher vs. Heute",
@@ -63,7 +75,19 @@
       "label": "TikTok & Bildung"
     },
     {
-      "seconds": 223,
+      "seconds": 195,
+      "tab": "data",
+      "focusId": "tiktok-problem",
+      "label": "15-Sekunden-Problem"
+    },
+    {
+      "seconds": 220,
+      "tab": "data",
+      "focusId": "money-flow",
+      "label": "Der Teufelskreis"
+    },
+    {
+      "seconds": 243,
       "tab": "consequences",
       "focusIds": [
         "tab-btn-consequences",
@@ -99,7 +123,13 @@
       "isChapter": true
     },
     {
-      "seconds": 349,
+      "seconds": 365,
+      "tab": "consequences",
+      "focusId": "final-question",
+      "label": "Die entscheidende Frage"
+    },
+    {
+      "seconds": 380,
       "tab": "consequences",
       "focusId": "quellen",
       "label": "Wissenschaftliche Quellen"
