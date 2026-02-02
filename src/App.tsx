@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AgoraPage } from '@/pages/AgoraPage';
 import tourConfig from '@/data/tourConfig.json';
 import { TourConfig } from '@/types';
@@ -7,7 +7,7 @@ const config = tourConfig as TourConfig;
 
 export default function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <Routes>
         {/* Root redirects to agora */}
         <Route path="/" element={<Navigate to="/report/agora" replace />} />
@@ -24,6 +24,6 @@ export default function App() {
         {/* 404 fallback */}
         <Route path="*" element={<Navigate to="/report/agora" replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
