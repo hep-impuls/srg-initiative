@@ -2,7 +2,7 @@
   "pages": {
     "agora": {
       "title": "Vom Dorfplatz zum Digitalen Feed",
-      "audioSrc": "/audio/mobilität.mp3",
+      "audioSrc": "audio/mobilitaet.mp3",
       "timeline": [
         {
           "seconds": 0,
