@@ -98,6 +98,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                     <div id="main-tabs" className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
                         <button
                             onClick={() => setManualTab('theory')}
+                            id="tab-btn-theory"
                             className={`flex-1 py-4 px-6 text-left flex items-center transition-all ${activeTab === 'theory' ? 'bg-white border-b-4 border-blue-500 text-blue-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
                         >
                             <div className={`p-2.5 rounded-full mr-4 ${activeTab === 'theory' ? 'bg-blue-100' : 'bg-slate-200'}`}>
@@ -111,6 +112,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                         <button
                             onClick={() => setManualTab('data')}
+                            id="tab-btn-data"
                             className={`flex-1 py-4 px-6 text-left flex items-center transition-all ${activeTab === 'data' ? 'bg-white border-b-4 border-purple-500 text-purple-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
                         >
                             <div className={`p-2.5 rounded-full mr-4 ${activeTab === 'data' ? 'bg-purple-100' : 'bg-slate-200'}`}>
@@ -124,6 +126,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                         <button
                             onClick={() => setManualTab('consequences')}
+                            id="tab-btn-consequences"
                             className={`flex-1 py-4 px-6 text-left flex items-center transition-all ${activeTab === 'consequences' ? 'bg-white border-b-4 border-amber-500 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
                         >
                             <div className={`p-2.5 rounded-full mr-4 ${activeTab === 'consequences' ? 'bg-amber-100' : 'bg-slate-200'}`}>
@@ -289,7 +292,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             Die Daten aus 2024 und 2025 zeigen ein klares Bild: Wir driften beim Medienkonsum massiv auseinander.
                                         </p>
                                     </div>
-                                    <div className="w-full lg:w-2/5 group">
+                                    <div id="data-intro-image" className="w-full lg:w-2/5 group">
                                         <div className="aspect-video bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 transition-all duration-500 hover:shadow-purple-200/50">
                                             <img
                                                 src="img/agora4.png"

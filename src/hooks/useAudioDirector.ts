@@ -193,10 +193,10 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
         setActiveElementIds(targets);
 
-        // Auto-scroll only if user isn't manually scrolling
-        if (!isUserScrolling && targets.length > 0) {
-          scrollToElements(targets);
-        }
+        // Auto-scroll logic is handled by useEffect now to ensure DOM is ready
+        // if (!isUserScrolling && targets.length > 0) {
+        //   scrollToElements(targets);
+        // }
       }
     };
 
@@ -280,6 +280,19 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
       cancelAnimationFrame(animationFrameId);
     };
   }, [activeElementIds, updateOverlayHole]);
+  // Handle auto-scrolling when active elements change or tab changes
+  useEffect(() => {
+    // Only scroll if we have targets and user isn't manually intervening
+    if (activeElementIds.length > 0 && !isUserScrolling) {
+      // Use a timeout to ensure React has finished rendering the new tab content
+      // This solves the issue where the element doesn't exist yet immediately after state change
+      const timer = setTimeout(() => {
+        scrollToElements(activeElementIds);
+      }, 100); // 100ms should be enough for the tab animation/render
+
+      return () => clearTimeout(timer);
+    }
+  }, [activeElementIds, isUserScrolling, scrollToElements, currentTab]); // Dependency on currentTab helps re-trigger if needed, though activeElementIds update usually suffices
 
   return {
     currentTab,

@@ -41,6 +41,11 @@
     {
       "seconds": 139,
       "tab": "data",
+      "focusIds": [
+        "tab-btn-data",
+        "data-intro",
+        "data-intro-image"
+      ],
       "focusId": "data-intro",
       "label": "Die Datenlage",
       "isChapter": true
@@ -60,6 +65,10 @@
     {
       "seconds": 223,
       "tab": "consequences",
+      "focusIds": [
+        "tab-btn-consequences",
+        "consequences-intro"
+      ],
       "focusId": "consequences-intro",
       "label": "Folgen für Demokratie",
       "isChapter": true
