@@ -521,6 +521,17 @@ Der ursprüngliche Z-Index-basierte Dimming-Effekt hatte Probleme mit komplexen 
 - **Vorteil:** Funktioniert unabhängig von Z-Index Hierarchien der Eltern-Elemente.
 - **Performance:** Nutzt `requestAnimationFrame` für flüssige Updates bei Scroll/Resize.
 
+#### 3. Multi-Element Highlighting
+Unterstützung für das gleichzeitige Hervorheben mehrerer Elemente.
+- **Problem:** Manche logischen Einheiten (z.B. "Tabs" + "Intro Content") sind im DOM nicht gruppiert.
+- **Lösung:** `useAudioDirector` akzeptiert nun ein Array von IDs (`focusIds`).
+- **Implementierung:** Der SVG Mask Generator iteriert über alle aktiven IDs und schneidet entsprechende Löcher in das Overlay.
+
+#### 4. Scroll-Optimierung
+Bugfix für das initiale Scroll-Verhalten.
+- `beginning-highlight` wurde auf den Header verschoben, um das Scrollen zur Mitte einer zu großen Sektion zu verhindern.
+- Einführung granularerer Schritte im Intro (10s Marke) für besseren Flow.
+
 ### Deployment Updates (GitHub Pages)
 
 Das Projekt wurde für das Hosting auf GitHub Pages konfiguriert.

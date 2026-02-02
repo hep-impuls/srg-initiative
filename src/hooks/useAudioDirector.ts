@@ -5,7 +5,7 @@ import { useScrollLock } from './useScrollLock';
 export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentTab, setCurrentTab] = useState<'theory' | 'data' | 'consequences'>('theory');
-  const [activeElementId, setActiveElementId] = useState<string | null>(null);
+  const [activeElementIds, setActiveElementIds] = useState<string[]>([]);
   const [audioState, setAudioState] = useState<AudioPlayerState>({
     isPlaying: false,
     currentTime: 0,
@@ -66,42 +66,42 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
   }, []);
 
   // Update the overlay hole position
-  const updateOverlayHole = useCallback((elementId: string | null) => {
+  const updateOverlayHole = useCallback((elementIds: string[]) => {
     const overlay = getDimmingOverlay();
     const path = overlay.querySelector('path');
 
-    if (!elementId || !path) {
+    if (!elementIds.length || !path) {
       if (path) path.setAttribute('d', '');
       return;
     }
 
-    const element = document.getElementById(elementId);
-    if (element) {
-      const rect = element.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
 
-      // Define path: Full screen rect + Element rect (counter-clockwise for hole)
-      // Using fill-rule="evenodd", we just need the two shapes.
-      // Outer rect (clockwise): M0,0 H w V h H 0 Z
-      // Inner rect (counter-clockwise): M x,y v h h w v -h z ?? 
-      // Actually for evenodd, just drawing both rects is enough usually, but let's be explicit
+    // Start with the full screen rectangle (clockwise)
+    let d = `M0,0 H${windowWidth} V${windowHeight} H0 Z`;
 
-      const d = `
-          M0,0 H${windowWidth} V${windowHeight} H0 Z
-          M${rect.left},${rect.top} V${rect.bottom} H${rect.right} V${rect.top} Z
-        `;
+    // Process each element to create holes
+    elementIds.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        // Add hole path (counter-clockwise logic handled by evenodd rule, just drawing rect implies hole)
+        d += ` M${rect.left},${rect.top} V${rect.bottom} H${rect.right} V${rect.top} Z`;
+      }
+    });
 
-      path.setAttribute('d', d);
-    }
+    path.setAttribute('d', d);
   }, [getDimmingOverlay]);
 
-  // Remove focus from previous element
+  // Remove focus from previous elements
   const clearFocus = useCallback(() => {
-    const previousFocused = document.querySelector('.audio-director-focused');
-    if (previousFocused) {
-      previousFocused.classList.remove('audio-director-focused');
-    }
+    const previousFocused = document.querySelectorAll('.audio-director-focused');
+    previousFocused.forEach(el => el.classList.remove('audio-director-focused'));
+
+    // Remove pulse rings
+    const previousRings = document.querySelectorAll('.ring-2.ring-blue-400');
+    previousRings.forEach(el => el.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2'));
 
     // Reset elevated parent z-indexes (cleanup legacy if any)
     const elevatedParents = document.querySelectorAll('[data-elevated="true"]');
@@ -118,37 +118,46 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
   }, [getDimmingOverlay]);
 
-  // Scroll to element smoothly with spotlight effect
-  const scrollToElement = useCallback((elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      // Clear previous focus
-      clearFocus();
+  // Scroll to elements smoothly with spotlight effect
+  const scrollToElements = useCallback((elementIds: string[]) => {
+    // Filter out invalid IDs
+    const validIds = elementIds.filter(id => document.getElementById(id));
 
-      // Scroll to element
-      element.scrollIntoView({
+    if (validIds.length === 0) return;
+
+    // Clear previous focus
+    clearFocus();
+
+    // Scroll to the first element (or improved logic: center of bounding box of all elements?)
+    // For now, simple approach: scroll to the first valid element
+    const firstElement = document.getElementById(validIds[0]);
+    if (firstElement) {
+      firstElement.scrollIntoView({
         behavior: 'smooth',
         block: 'center',
       });
-
-      // NOTE: We no longer elevate parents. We use the SVG hole method instead.
-
-      // Add focused class for spotlight effect (visuals only)
-      element.classList.add('audio-director-focused');
-
-      // Show dimming overlay
-      const overlay = getDimmingOverlay();
-      setTimeout(() => {
-        overlay.style.opacity = '1';
-        updateOverlayHole(elementId);
-      }, 100);
-
-      // Add pulse ring effect
-      element.classList.add('ring-2', 'ring-blue-400', 'ring-offset-2');
-      setTimeout(() => {
-        element.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2');
-      }, 2000);
     }
+
+    // Add focused class and pulse ring to all elements
+    validIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('audio-director-focused');
+        el.classList.add('ring-2', 'ring-blue-400', 'ring-offset-2');
+        // Remove ring after animation
+        setTimeout(() => {
+          el.classList.remove('ring-2', 'ring-blue-400', 'ring-offset-2');
+        }, 2000);
+      }
+    });
+
+    // Show dimming overlay
+    const overlay = getDimmingOverlay();
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      updateOverlayHole(validIds);
+    }, 100);
+
   }, [getDimmingOverlay, clearFocus, updateOverlayHole]);
 
   // Handle time updates from audio
@@ -174,12 +183,19 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
           setCurrentTab(cue.tab);
         }
 
-        // Update active element
-        setActiveElementId(cue.focusId);
+        // Determine targets: use focusIds array if present, otherwise fall back to single focusId
+        let targets: string[] = [];
+        if (cue.focusIds && cue.focusIds.length > 0) {
+          targets = cue.focusIds;
+        } else if (cue.focusId) {
+          targets = [cue.focusId];
+        }
+
+        setActiveElementIds(targets);
 
         // Auto-scroll only if user isn't manually scrolling
-        if (!isUserScrolling && cue.focusId) {
-          scrollToElement(cue.focusId);
+        if (!isUserScrolling && targets.length > 0) {
+          scrollToElements(targets);
         }
       }
     };
@@ -211,7 +227,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
     };
-  }, [timeline, currentTab, isUserScrolling, findCurrentCue, scrollToElement]);
+  }, [timeline, currentTab, isUserScrolling, findCurrentCue, scrollToElements]);
 
   // Audio controls
   const play = useCallback(() => {
@@ -248,12 +264,12 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
   // Keep overlay hole synced with active element position (for scroll/resize)
   useEffect(() => {
-    if (!activeElementId) return;
+    if (activeElementIds.length === 0) return;
 
     let animationFrameId: number;
 
     const updateLoop = () => {
-      updateOverlayHole(activeElementId);
+      updateOverlayHole(activeElementIds);
       animationFrameId = requestAnimationFrame(updateLoop);
     };
 
@@ -263,11 +279,12 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [activeElementId, updateOverlayHole]);
+  }, [activeElementIds, updateOverlayHole]);
 
   return {
     currentTab,
-    activeElementId,
+    activeElementId: activeElementIds.length > 0 ? activeElementIds[0] : null, // Backward compatibility
+    activeElementIds,
     isUserInteracting: isUserScrolling,
     resumeAutoScroll,
     audioState,

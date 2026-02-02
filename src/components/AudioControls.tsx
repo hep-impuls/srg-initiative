@@ -45,66 +45,62 @@ export function AudioControls({
   };
 
   return (
-    <div className="px-4 py-3">
-      <div className="flex items-center gap-4">
-        {/* Play/Pause Button */}
+    <div className="px-1.5 py-1.5">
+      <div className="flex items-center gap-2">
+        {/* Play/Pause Button - Compact */}
         <button
           onClick={isPlaying ? onPause : onPlay}
           disabled={isLoading}
-          className="w-10 h-10 flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded-full transition-colors shrink-0"
+          className="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-400 disabled:bg-slate-700 text-white rounded-full transition-all shrink-0 shadow-lg shadow-blue-500/10 active:scale-90"
         >
-          {isPlaying ? <Pause size={20} /> : <Play size={20} className="ml-1" />}
+          {isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" className="ml-0.5" />}
         </button>
 
-        {/* Time - Compact */}
-        <span className="text-xs font-mono text-slate-500 w-[80px] text-center hidden sm:block">
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </span>
+        <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex justify-between items-baseline px-0.5 mb-1">
+            <span className="text-[9px] font-bold font-mono text-slate-500 tabular-nums">
+              {formatTime(currentTime)}
+            </span>
+            <button
+              onClick={togglePlaybackRate}
+              className="text-[9px] font-black text-slate-500 hover:text-white transition-colors"
+            >
+              {playbackRate}x
+            </button>
+          </div>
 
-        {/* Progress Bar */}
-        <div className="flex-1 relative group">
+          {/* Progress Bar - Ultra thin Hairline */}
           <div
-            className="w-full bg-slate-200 rounded-full h-1.5 cursor-pointer group-hover:h-2.5 transition-all"
+            className="w-full bg-white/5 rounded-full h-[2px] cursor-pointer group relative"
             onClick={handleProgressClick}
           >
             <div
-              className="bg-blue-600 h-full rounded-full transition-all relative"
+              className="bg-blue-400 h-full rounded-full transition-all relative"
               style={{ width: `${(currentTime / duration) * 100}%` }}
             >
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white border border-slate-300 rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-white rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </div>
 
-        {/* Controls Group */}
-        <div className="flex items-center gap-1">
-          {/* Speed */}
-          <button
-            onClick={togglePlaybackRate}
-            className="px-2 py-1 min-w-[3rem] text-xs font-bold text-slate-600 hover:text-blue-600 hover:bg-slate-100 rounded transition-colors"
-            title="Geschwindigkeit"
-          >
-            {playbackRate}x
-          </button>
-
-          {/* Chapters Toggle */}
+        {/* Navigation Actions */}
+        <div className="flex items-center gap-0.5">
           {onToggleChapters && (
             <button
               onClick={onToggleChapters}
-              className={`p-2 rounded transition-colors ${showChapters ? 'text-blue-600 bg-blue-50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
-              title="Kapitel anzeigen"
+              className={`p-1.5 rounded-lg transition-all ${showChapters ? 'text-blue-400 bg-blue-400/10' : 'text-slate-500 hover:text-white hover:bg-white/10'}`}
+              title="Kapitel"
             >
-              <List size={18} />
+              <List size={14} />
             </button>
           )}
 
-          {/* Restart */}
           <button
             onClick={() => onSeek(0)}
-            className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded transition-colors"
+            className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-all"
             title="Neustart"
           >
-            <RotateCcw size={18} />
+            <RotateCcw size={14} />
           </button>
         </div>
       </div>

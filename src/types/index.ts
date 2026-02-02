@@ -5,6 +5,7 @@ export interface TimelineEntry {
   seconds: number;
   tab: 'theory' | 'data' | 'consequences';
   focusId: string;
+  focusIds?: string[];
   label: string;
   isChapter?: boolean; // Optional: marks this as a chapter marker
 }
@@ -43,6 +44,7 @@ export interface AudioPlayerState {
 export interface AudioDirectorState {
   currentTab: 'theory' | 'data' | 'consequences';
   activeElementId: string | null;
+  activeElementIds?: string[] | null;
   isUserInteracting: boolean;
   resumeAutoScroll: () => void;
   audioState: AudioPlayerState;

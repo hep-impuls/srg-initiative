@@ -9,6 +9,16 @@
       "isChapter": true
     },
     {
+      "seconds": 10,
+      "tab": "theory",
+      "focusIds": [
+        "main-tabs",
+        "theory-intro"
+      ],
+      "focusId": "theory-intro",
+      "label": "Einleitung"
+    },
+    {
       "seconds": 43,
       "tab": "theory",
       "focusId": "agora-explanation",
@@ -29,20 +39,20 @@
       "isChapter": true
     },
     {
-      "seconds": 136,
+      "seconds": 139,
       "tab": "data",
       "focusId": "data-intro",
       "label": "Die Datenlage",
       "isChapter": true
     },
     {
-      "seconds": 145,
+      "seconds": 144,
       "tab": "data",
       "focusId": "stat-cards",
       "label": "Statistiken"
     },
     {
-      "seconds": 182,
+      "seconds": 161,
       "tab": "data",
       "focusId": "chart-section",
       "label": "TikTok & Bildung"
@@ -55,25 +65,25 @@
       "isChapter": true
     },
     {
-      "seconds": 232,
+      "seconds": 231,
       "tab": "consequences",
       "focusId": "slacktivism-card",
       "label": "Slacktivism"
     },
     {
-      "seconds": 260,
+      "seconds": 259,
       "tab": "consequences",
       "focusId": "fake-news-card",
       "label": "Fake News Anfälligkeit"
     },
     {
-      "seconds": 280,
+      "seconds": 279,
       "tab": "consequences",
       "focusId": "polarization-card",
       "label": "Polarisierung"
     },
     {
-      "seconds": 325,
+      "seconds": 338,
       "tab": "consequences",
       "focusId": "regulation-section",
       "label": "Verantwortung & Staat",
