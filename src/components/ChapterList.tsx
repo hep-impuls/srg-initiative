@@ -25,43 +25,39 @@ export function ChapterList({ chapters, currentTime, onSeek }: ChapterListProps)
   };
 
   return (
-    <div className="border-t border-slate-200 bg-slate-50 px-4 py-3">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-2 mb-2 text-sm font-semibold text-slate-700">
-          <BookOpen size={16} />
-          <span>Kapitel</span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {chapters.map((chapter, idx) => {
-            const isActive = idx === activeChapterIndex;
-            const isPast = currentTime > chapter.seconds;
+    <div className="bg-white max-h-[60vh] overflow-y-auto">
+      <div className="sticky top-0 bg-white border-b border-slate-100 px-4 py-2 flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider z-10">
+        <BookOpen size={14} />
+        <span>Kapitel</span>
+      </div>
+      <div className="p-2 space-y-1">
+        {chapters.map((chapter, idx) => {
+          const isActive = idx === activeChapterIndex;
 
-            return (
-              <button
-                key={chapter.seconds}
-                onClick={() => onSeek(chapter.seconds)}
-                className={`
-                  px-3 py-1.5 rounded-lg text-xs font-medium transition-all
-                  ${isActive
-                    ? 'bg-blue-600 text-white shadow-md scale-105'
-                    : isPast
-                    ? 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-                  }
-                `}
-                title={`Springe zu ${chapter.label}`}
-              >
-                <div className="flex items-center gap-1.5">
-                  <span className="font-mono text-[10px] opacity-70">
-                    {formatTime(chapter.seconds)}
-                  </span>
-                  <span>•</span>
-                  <span>{chapter.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
+          return (
+            <button
+              key={chapter.seconds}
+              onClick={() => onSeek(chapter.seconds)}
+              className={`
+                w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-left transition-colors
+                ${isActive
+                  ? 'bg-blue-50 text-blue-700 font-medium'
+                  : 'text-slate-600 hover:bg-slate-50'
+                }
+              `}
+            >
+              <span className={`font-mono text-xs w-10 text-right ${isActive ? 'text-blue-500' : 'text-slate-400'}`}>
+                {formatTime(chapter.seconds)}
+              </span>
+              <span className="flex-1 truncate">
+                {chapter.label}
+              </span>
+              {isActive && (
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

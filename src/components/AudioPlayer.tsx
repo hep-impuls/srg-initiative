@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AudioControls } from './AudioControls';
 import { ChapterList } from './ChapterList';
 import { AlertTriangle } from 'lucide-react';
@@ -9,6 +10,8 @@ interface AudioPlayerProps {
 }
 
 export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
+  const [showChapters, setShowChapters] = useState(false);
+
   const {
     audioState,
     audioRef,
@@ -22,43 +25,58 @@ export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
   } = directorState;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50">
-      {/* User Interaction Warning */}
+    <>
+      {/* User Interaction Warning - Floating Toast */}
       {isUserInteracting && (
-        <div className="bg-amber-100 border-t border-amber-300 px-4 py-2">
-          <div className="max-w-5xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2 text-amber-800 text-sm">
-              <AlertTriangle size={16} />
-              <span>Auto-Navigation pausiert (du scrollst selbst)</span>
-            </div>
+        <div className="fixed bottom-32 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4">
+          <div className="bg-amber-100 border border-amber-300 text-amber-800 px-4 py-2 rounded-full shadow-lg flex items-center gap-3 text-sm">
+            <AlertTriangle size={16} />
+            <span>Auto-Navigation pausiert</span>
             <button
               onClick={resumeAutoScroll}
-              className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-sm rounded transition-colors"
+              className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-full transition-colors"
             >
-              Navigation fortsetzen
+              Fortsetzen
             </button>
           </div>
         </div>
       )}
 
-      {/* Audio Element */}
-      <audio ref={audioRef} src={audioSrc} preload="metadata" />
+      {/* Floating Audio Player Container */}
+      <div className="fixed bottom-6 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-3xl z-50 flex flex-col items-end md:items-center pointer-events-none">
 
-      {/* Chapter Navigation */}
-      <ChapterList
-        chapters={chapters}
-        currentTime={audioState.currentTime}
-        onSeek={seek}
-      />
+        {/* Audio Element */}
+        <audio ref={audioRef} src={audioSrc} preload="metadata" />
 
-      {/* Controls */}
-      <AudioControls
-        audioState={audioState}
-        onPlay={play}
-        onPause={pause}
-        onSeek={seek}
-        onRateChange={setPlaybackRate}
-      />
-    </div>
+        <div className="w-full pointer-events-auto relative">
+          {/* Chapter Popover */}
+          {showChapters && (
+            <div className="absolute bottom-full left-0 right-0 mb-2 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden animate-in fade-in slide-in-from-bottom-2">
+              <ChapterList
+                chapters={chapters}
+                currentTime={audioState.currentTime}
+                onSeek={(time) => {
+                  seek(time);
+                  setShowChapters(false); // Close on selection
+                }}
+              />
+            </div>
+          )}
+
+          {/* Main Control Bar */}
+          <div className="bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xl rounded-2xl overflow-hidden">
+            <AudioControls
+              audioState={audioState}
+              onPlay={play}
+              onPause={pause}
+              onSeek={seek}
+              onRateChange={setPlaybackRate}
+              showChapters={showChapters}
+              onToggleChapters={() => setShowChapters(!showChapters)}
+            />
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
