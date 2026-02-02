@@ -1,0 +1,89 @@
+{
+  "title": "Vom Dorfplatz zum Digitalen Feed",
+  "timeline": [
+    {
+      "seconds": 0,
+      "tab": "theory",
+      "focusId": "beginning-highlight",
+      "label": "Einstieg & Überblick",
+      "isChapter": true
+    },
+    {
+      "seconds": 43,
+      "tab": "theory",
+      "focusId": "agora-explanation",
+      "label": "Was bedeutet Agora?",
+      "isChapter": true
+    },
+    {
+      "seconds": 68,
+      "tab": "theory",
+      "focusId": "gatekeeper-infobox",
+      "label": "Gatekeeper erklärt"
+    },
+    {
+      "seconds": 90,
+      "tab": "theory",
+      "focusId": "comparison-section",
+      "label": "Früher vs. Heute",
+      "isChapter": true
+    },
+    {
+      "seconds": 136,
+      "tab": "data",
+      "focusId": "data-intro",
+      "label": "Die Datenlage",
+      "isChapter": true
+    },
+    {
+      "seconds": 145,
+      "tab": "data",
+      "focusId": "stat-cards",
+      "label": "Statistiken"
+    },
+    {
+      "seconds": 182,
+      "tab": "data",
+      "focusId": "chart-section",
+      "label": "TikTok & Bildung"
+    },
+    {
+      "seconds": 223,
+      "tab": "consequences",
+      "focusId": "consequences-intro",
+      "label": "Folgen für Demokratie",
+      "isChapter": true
+    },
+    {
+      "seconds": 232,
+      "tab": "consequences",
+      "focusId": "slacktivism-card",
+      "label": "Slacktivism"
+    },
+    {
+      "seconds": 260,
+      "tab": "consequences",
+      "focusId": "fake-news-card",
+      "label": "Fake News Anfälligkeit"
+    },
+    {
+      "seconds": 280,
+      "tab": "consequences",
+      "focusId": "polarization-card",
+      "label": "Polarisierung"
+    },
+    {
+      "seconds": 325,
+      "tab": "consequences",
+      "focusId": "regulation-section",
+      "label": "Verantwortung & Staat",
+      "isChapter": true
+    },
+    {
+      "seconds": 349,
+      "tab": "consequences",
+      "focusId": "quellen",
+      "label": "Wissenschaftliche Quellen"
+    }
+  ]
+}

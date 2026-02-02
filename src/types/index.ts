@@ -12,7 +12,7 @@ export interface TimelineEntry {
 // Page configuration
 export interface PageConfig {
   title: string;
-  audioSrc: string;
+  audioSrc?: string; // Optional: will default to audio/[slug].mp3
   timeline: TimelineEntry[];
 }
 

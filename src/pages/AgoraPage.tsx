@@ -66,89 +66,103 @@ export function AgoraPage({ config }: AgoraPageProps) {
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
 
-            {/* Header */}
-            <header id="header-intro" className="scroll-mt-24 bg-slate-900 text-white pt-12 pb-24 px-4 shadow-lg relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-12 opacity-10">
-                    <Globe size={300} />
-                </div>
-                <div className="max-w-5xl mx-auto relative z-10">
-                    <div className="inline-flex items-center space-x-2 bg-slate-800 rounded-full px-4 py-1 mb-6 border border-slate-700">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        <span className="text-xs font-semibold tracking-wider text-slate-300">INTERAKTIVER REPORT 2026</span>
+            {/* Unified Beginning Section (Header, Tabs, Intro) */}
+            <div id="beginning-highlight" className="scroll-mt-24">
+                {/* Header */}
+                <header className="bg-slate-900 text-white pt-12 pb-24 px-4 shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-12 opacity-10">
+                        <Globe size={300} />
                     </div>
-                    <h1 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
-                        Vom Dorfplatz zum<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
-                            Digitalen Feed
-                        </span>
-                    </h1>
-                    <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
-                        Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen. Eine Analyse der Situation in Deutschland und der Schweiz.
-                    </p>
-                </div>
-            </header>
-
-            {/* Main Content Area */}
-            <main className="max-w-5xl mx-auto px-4 -mt-12 relative z-20 pb-20">
-
-                {/* Navigation Tabs */}
-                <div className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
-                    <button
-                        onClick={() => setManualTab('theory')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'theory' ? 'bg-white border-b-4 border-blue-500 text-blue-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'theory' ? 'bg-blue-100' : 'bg-slate-200'}`}>
-                            <BookOpen size={24} />
+                    <div className="max-w-5xl mx-auto relative z-10">
+                        <div className="inline-flex items-center space-x-2 bg-slate-800 rounded-full px-4 py-1 mb-6 border border-slate-700">
+                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                            <span className="text-xs font-semibold tracking-wider text-slate-300">INTERAKTIVER REPORT 2026</span>
                         </div>
-                        <div>
-                            <div className="font-bold text-lg">1. Theorie</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Verstehen</div>
-                        </div>
-                    </button>
+                        <h1 className="text-3xl md:text-5xl font-extrabold mb-6 leading-tight">
+                            Vom Dorfplatz zum<br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                                Digitalen Feed
+                            </span>
+                        </h1>
+                        <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
+                            Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen. Eine Analyse der Situation in Deutschland und der Schweiz.
+                        </p>
+                    </div>
+                </header>
 
-                    <button
-                        onClick={() => setManualTab('data')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'data' ? 'bg-white border-b-4 border-purple-500 text-purple-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'data' ? 'bg-purple-100' : 'bg-slate-200'}`}>
-                            <BarChart3 size={24} />
-                        </div>
-                        <div>
-                            <div className="font-bold text-lg">2. Datenlage</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Erkennen</div>
-                        </div>
-                    </button>
+                {/* Main Content Area */}
+                <main className="max-w-5xl mx-auto px-4 -mt-12 relative z-20 pb-20">
 
-                    <button
-                        onClick={() => setManualTab('consequences')}
-                        className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'consequences' ? 'bg-white border-b-4 border-amber-500 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
-                    >
-                        <div className={`p-3 rounded-full mr-4 ${activeTab === 'consequences' ? 'bg-amber-100' : 'bg-slate-200'}`}>
-                            <Scale size={24} />
-                        </div>
-                        <div>
-                            <div className="font-bold text-lg">3. Folgen</div>
-                            <div className="text-xs uppercase tracking-wide opacity-80">Handeln</div>
-                        </div>
-                    </button>
-                </div>
+                    {/* Navigation Tabs */}
+                    <div className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
+                        <button
+                            onClick={() => setManualTab('theory')}
+                            className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'theory' ? 'bg-white border-b-4 border-blue-500 text-blue-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-3 rounded-full mr-4 ${activeTab === 'theory' ? 'bg-blue-100' : 'bg-slate-200'}`}>
+                                <BookOpen size={24} />
+                            </div>
+                            <div>
+                                <div className="font-bold text-lg">1. Theorie</div>
+                                <div className="text-xs uppercase tracking-wide opacity-80">Verstehen</div>
+                            </div>
+                        </button>
 
-                {/* Tab Content Container */}
-                <div className="bg-white rounded-b-2xl shadow-xl p-6 md:p-12 min-h-[600px]">
+                        <button
+                            onClick={() => setManualTab('data')}
+                            className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'data' ? 'bg-white border-b-4 border-purple-500 text-purple-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-3 rounded-full mr-4 ${activeTab === 'data' ? 'bg-purple-100' : 'bg-slate-200'}`}>
+                                <BarChart3 size={24} />
+                            </div>
+                            <div>
+                                <div className="font-bold text-lg">2. Datenlage</div>
+                                <div className="text-xs uppercase tracking-wide opacity-80">Erkennen</div>
+                            </div>
+                        </button>
 
-                    {/* TAB 1: THEORIE */}
+                        <button
+                            onClick={() => setManualTab('consequences')}
+                            className={`flex-1 py-6 px-6 text-left flex items-center transition-all ${activeTab === 'consequences' ? 'bg-white border-b-4 border-amber-500 text-amber-700' : 'bg-slate-50 text-slate-500 hover:bg-slate-100'}`}
+                        >
+                            <div className={`p-3 rounded-full mr-4 ${activeTab === 'consequences' ? 'bg-amber-100' : 'bg-slate-200'}`}>
+                                <Scale size={24} />
+                            </div>
+                            <div>
+                                <div className="font-bold text-lg">3. Folgen</div>
+                                <div className="text-xs uppercase tracking-wide opacity-80">Handeln</div>
+                            </div>
+                        </button>
+                    </div>
+
+                    {/* Tab Content Container */}
+                    <div className="bg-white rounded-b-2xl shadow-xl p-6 md:p-12 min-h-[600px]">
+
+                        {/* TAB 1: THEORIE */}
+                        {activeTab === 'theory' && (
+                            <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+                                {/* Intro Text */}
+                                <div id="theory-intro" className="scroll-mt-24 max-w-3xl">
+                                    <h2 className="text-3xl font-bold text-slate-900 mb-4">Wie wir miteinander reden</h2>
+                                    <p className="text-lg text-slate-600 mb-2">
+                                        Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </main>
+            </div>
+
+            {/* Rest of the Content */}
+            <main className="max-w-5xl mx-auto px-4 relative z-20 pb-20 -mt-20">
+                <div className="bg-white rounded-b-2xl shadow-xl p-6 md:p-12 min-h-[500px] border-t border-slate-100">
+
+                    {/* TAB 1: THEORIE - REST */}
                     {activeTab === 'theory' && (
                         <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
-                            {/* Intro Text */}
-                            <div className="max-w-3xl">
-                                <h2 className="text-3xl font-bold text-slate-900 mb-4">Wie wir miteinander reden</h2>
-                                <p className="text-lg text-slate-600 mb-6">
-                                    Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert.
-                                </p>
-                            </div>
-
-                            {/* Agora Box */}
                             <div id="agora-explanation" className="scroll-mt-24 bg-gradient-to-br from-indigo-50 to-white border border-indigo-100 rounded-2xl p-6 md:p-8 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 -mr-4 -mt-4 bg-indigo-100 rounded-full w-24 h-24 opacity-50"></div>
                                 <div className="relative z-10">
@@ -181,6 +195,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* Gatekeeper InfoBox - moved before comparison to match audio flow */}
+                            <div id="gatekeeper-infobox" className="scroll-mt-24">
+                                <InfoBox title="Was bedeutet 'Gatekeeper'?" icon={<Lock className="w-4 h-4 mr-2" />} color="emerald">
+                                    Gatekeeper heißt übersetzt <strong>"Torwächter"</strong>. <br />
+                                    Stell dir einen Club vor. Der Türsteher entscheidet, wer reinkommt. Bei Nachrichten war das früher die Chefredaktion. Sie sortierte: "Das ist ein Gerücht (kommt nicht rein)" und "Das ist ein Fakt (kommt rein)". <br />
+                                    <strong>Das Problem heute:</strong> Auf Social Media gibt es keinen Türsteher. Jeder kann alles posten, ob wahr oder falsch.
+                                </InfoBox>
                             </div>
 
                             {/* Comparison Grid */}
@@ -235,14 +258,6 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 </div>
                             </div>
 
-                            <div id="gatekeeper-infobox" className="scroll-mt-24">
-                                <InfoBox title="Was bedeutet 'Gatekeeper'?" icon={<Lock className="w-4 h-4 mr-2" />} color="emerald">
-                                    Gatekeeper heißt übersetzt <strong>"Torwächter"</strong>. <br />
-                                    Stell dir einen Club vor. Der Türsteher entscheidet, wer reinkommt. Bei Nachrichten war das früher die Chefredaktion. Sie sortierte: "Das ist ein Gerücht (kommt nicht rein)" und "Das ist ein Fakt (kommt rein)". <br />
-                                    <strong>Das Problem heute:</strong> Auf Social Media gibt es keinen Türsteher. Jeder kann alles posten, ob wahr oder falsch.
-                                </InfoBox>
-                            </div>
-
                         </div>
                     )}
 
@@ -273,18 +288,18 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     sourceIds={["1"]}
                                 />
                                 <StatCard
-                                    value="2.1 Mrd."
-                                    label="Werbegeld weg"
-                                    subtext="CHF pro Jahr gehen an Google/Meta statt an Schweizer Medien."
-                                    color="amber"
-                                    sourceIds={["5"]}
-                                />
-                                <StatCard
                                     value="+7%"
                                     label="TikTok Boom"
                                     subtext="Starker Anstieg der TikTok-Nutzung für News bei jungen Schweizern."
                                     color="blue"
                                     sourceIds={["4"]}
+                                />
+                                <StatCard
+                                    value="2.1 Mrd."
+                                    label="Werbegeld weg"
+                                    subtext="CHF pro Jahr gehen an Google/Meta statt an Schweizer Medien."
+                                    color="amber"
+                                    sourceIds={["5"]}
                                 />
                             </div>
 
@@ -420,7 +435,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         <ul className="list-disc pl-4 space-y-1 text-slate-300">
                                             <li>Fokus: Transparenz (Warum sehe ich das?).</li>
                                             <li>Nutzer sollen sich einfacher beschweren können.</li>
-                                            <li>Keine Lösch-Pflichten (Angst vor Zensur).</li>
+                                            <li>Keine Lösch-Pflichten (Angst von Zensur).</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -428,7 +443,6 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                         </div>
                     )}
-
                 </div>
 
                 {/* Footer with Sources List */}
@@ -454,7 +468,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
             {/* Audio Player Component */}
             <AudioPlayer
-                audioSrc={config.audioSrc}
+                audioSrc={config.audioSrc || ''}
                 directorState={directorState}
             />
         </div>
