@@ -1,16 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-    Newspaper,
     Smartphone,
-    Tv,
     Users,
     TrendingDown,
-    AlertTriangle,
     Vote,
     MessageCircle,
-    Info,
     ExternalLink,
-    ShieldCheck,
     BookOpen,
     BarChart3,
     Scale,

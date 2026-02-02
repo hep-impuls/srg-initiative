@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 
 export function useScrollLock(sensitivity: number = 50) {
   const [isUserScrolling, setIsUserScrolling] = useState(false);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollTop = useRef(0);
 
   useEffect(() => {
