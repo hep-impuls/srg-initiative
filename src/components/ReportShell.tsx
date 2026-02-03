@@ -1,7 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AgoraPage } from '@/pages/AgoraPage';
-import { PublicMediaPage } from '@/pages/public_media';
+import { PublicMediaPage } from '@/pages/PublicMediaPage';
 import { PageConfig } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 

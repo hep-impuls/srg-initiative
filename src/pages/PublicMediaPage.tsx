@@ -496,7 +496,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
     const directorState = useAudioDirector(config.timeline);
 
     // Fallback to manual control if no audio or audio paused
-    const [manualTab, setManualTab] = useState('map');
+    const [manualTab, setManualTab] = useState<'intro' | 'map' | 'compare' | 'analysis'>('intro');
     const activeTab = directorState.audioState.isPlaying
         ? (directorState.currentTab || manualTab)
         : manualTab;
@@ -506,15 +506,26 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
     // Sync manual tab when director changes tab
     useEffect(() => {
         if (directorState.currentTab && directorState.audioState.isPlaying) {
-            setManualTab(directorState.currentTab);
+            setManualTab(directorState.currentTab as any);
         }
     }, [directorState.currentTab, directorState.audioState.isPlaying]);
+
+    // Sync selected country with audio focus
+    useEffect(() => {
+        if (directorState.activeElementId && directorState.activeElementId.startsWith('country_')) {
+            const countryId = directorState.activeElementId.replace('country_', '');
+            const country = countryData.find(c => c.id === countryId);
+            if (country) {
+                setSelectedCountry(country);
+            }
+        }
+    }, [directorState.activeElementId]);
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-24">
 
             {/* Header */}
-            <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 shadow-xl">
+            <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 shadow-xl sticky top-0 z-30">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
                     <FocusRegion id="public_media__header" label="Kopfbereich" className="flex items-center gap-4">
                         <div className="bg-blue-600 p-3 rounded-lg shadow-lg">
@@ -528,13 +539,14 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
 
                     <FocusRegion id="public_media__nav" label="Hauptnavigation" as="nav" className="flex bg-slate-700/50 p-1 rounded-lg backdrop-blur-sm">
                         {[
+                            { id: 'intro', label: 'Einstieg', icon: Info },
                             { id: 'map', label: 'Länder-Übersicht', icon: Globe },
                             { id: 'compare', label: 'Vergleich', icon: TrendingUp },
                             { id: 'analysis', label: 'Folgen & Analyse', icon: BookOpen }
                         ].map((tab) => (
                             <button
                                 key={tab.id}
-                                onClick={() => setManualTab(tab.id)}
+                                onClick={() => setManualTab(tab.id as any)}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === tab.id
                                     ? 'bg-blue-600 text-white shadow-md'
                                     : 'text-slate-300 hover:text-white hover:bg-slate-700'
@@ -550,34 +562,105 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
 
             <main className="max-w-7xl mx-auto p-6 space-y-6">
 
+                {/* VIEW: INTRO / HERO */}
+                {activeTab === 'intro' && (
+                    <div className="animate-in fade-in duration-700">
+                        {/* Hero Section */}
+                        <FocusRegion id="public_media__hero" label="Intro-Bereich" className="relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
+                            <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay"></div>
+                            <div className="grid md:grid-cols-2 gap-12 p-12 relative z-10">
+                                <div className="flex flex-col justify-center space-y-6">
+                                    <div className="inline-block px-4 py-2 bg-blue-600/20 text-blue-300 rounded-full text-xs font-bold uppercase tracking-widest w-fit border border-blue-500/30">
+                                        Ein Globaler Vergleich
+                                    </div>
+                                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
+                                        Wer <span className="text-blue-500">finanziert</span> unsere Wahrheit?
+                                    </h2>
+                                    <p className="text-lg text-slate-400 max-w-lg leading-relaxed">
+                                        Eine Reise durch die Mediensysteme der Welt. Von unabhängigen Stiftungen bis zum Staatsfunk – und was das für unser Vertrauen bedeutet.
+                                    </p>
+                                </div>
+                                <div className="flex items-center justify-center">
+                                    <div className="w-full h-64 md:h-80 bg-slate-800 rounded-2xl border-2 border-slate-700 border-dashed flex items-center justify-center text-slate-500 group cursor-pointer hover:border-blue-500 hover:text-blue-400 transition-all">
+                                        <div className="text-center space-y-4">
+                                            <Globe size={64} className="mx-auto opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
+                                            <p className="font-medium text-sm">Visualisierung Globaler Medienströme</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </FocusRegion>
+
+                        {/* Navigation Cards */}
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <FocusRegion id="public_media__hero__card_map" label="Karte-Karte" className="group cursor-pointer">
+                                <div onClick={() => setManualTab('map')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all hover:-translate-y-1">
+                                    <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                        <Globe size={24} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Reise um die Welt</h3>
+                                    <p className="text-slate-600 leading-relaxed">
+                                        Wie funktionieren Mediensysteme in Finnland, den USA oder Griechenland? Ein direkter Vergleich der Modelle.
+                                    </p>
+                                </div>
+                            </FocusRegion>
+
+                            <FocusRegion id="public_media__hero__card_compare" label="Muster-Karte" className="group cursor-pointer">
+                                <div onClick={() => setManualTab('compare')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all hover:-translate-y-1">
+                                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                        <TrendingUp size={24} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Muster erkennen</h3>
+                                    <p className="text-slate-600 leading-relaxed">
+                                        Gibt es einen Zusammenhang zwischen Finanzierung und Vertrauen? Die Daten zeigen ein klares Bild.
+                                    </p>
+                                </div>
+                            </FocusRegion>
+
+                            <FocusRegion id="public_media__hero__card_analysis" label="Folgen-Karte" className="group cursor-pointer">
+                                <div onClick={() => setManualTab('analysis')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all hover:-translate-y-1">
+                                    <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                                        <BookOpen size={24} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Konsequenzen</h3>
+                                    <p className="text-slate-600 leading-relaxed">
+                                        Was passiert, wenn Systeme kippen? Fallstudien zu Privatisierung und staatlicher Einflussnahme.
+                                    </p>
+                                </div>
+                            </FocusRegion>
+                        </div>
+                    </div>
+                )}
+
                 {/* VIEW: LÄNDER MONITOR */}
                 {activeTab === 'map' && (
                     <FocusRegion id="public_media__map" label="Länder-Übersicht" className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
                         {/* Sidebar List */}
-                        <FocusRegion id="public_media__map__sidebar" label="Länder-Liste" className="lg:col-span-4 flex flex-col gap-4 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
+                        <FocusRegion id="public_media__map__sidebar" label="Länder-Liste" className="lg:col-span-4 flex flex-col gap-2 h-full">
                             <h3 className="text-slate-500 uppercase text-xs font-bold tracking-wider mb-2">Wähle ein Land</h3>
-                            {countryData.map((c) => (
-                                <button
-                                    key={c.id}
-                                    onClick={() => setSelectedCountry(c)}
-                                    className={`group p-4 rounded-xl border text-left transition-all hover:shadow-md relative overflow-hidden ${selectedCountry.id === c.id
-                                        ? 'bg-white border-blue-500 ring-1 ring-blue-500 shadow-lg'
-                                        : 'bg-white border-slate-200 hover:border-blue-300'
-                                        }`}
-                                >
-                                    <div className="flex justify-between items-start mb-2">
-                                        <span className="font-bold text-lg text-slate-800">{c.name}</span>
-                                        <span className={`h-2 w-2 rounded-full mt-2 ${c.status === 'sicher' ? 'bg-emerald-500' :
+                            <div className="flex flex-col gap-2">
+                                {countryData.map((c) => (
+                                    <button
+                                        key={c.id}
+                                        onClick={() => setSelectedCountry(c)}
+                                        className={`group px-3 py-3 rounded-lg border text-left transition-all hover:shadow-md relative shrink-0 h-fit flex items-center justify-between ${selectedCountry.id === c.id
+                                            ? 'bg-white border-blue-500 ring-1 ring-blue-500 shadow-md transform scale-[1.02]'
+                                            : 'bg-white border-slate-200 hover:border-blue-300'
+                                            }`}
+                                    >
+                                        <div className="flex flex-col">
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-bold text-slate-800">{c.name}</span>
+                                                <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded leading-none">{c.model}</span>
+                                            </div>
+                                        </div>
+                                        <span className={`h-2 w-2 rounded-full shrink-0 ${c.status === 'sicher' ? 'bg-emerald-500' :
                                             c.status === 'stabil' ? 'bg-blue-500' :
                                                 c.status === 'risiko' ? 'bg-amber-500' : 'bg-red-500'
                                             }`} />
-                                    </div>
-                                    <div className="text-xs text-slate-500 mb-2">{c.model}</div>
-                                    <div className="flex items-center gap-2 text-xs font-medium text-slate-400 group-hover:text-blue-600 transition-colors">
-                                        <span>Vertrauen: {c.trustScore}%</span>
-                                    </div>
-                                </button>
-                            ))}
+                                    </button>
+                                ))}
+                            </div>
                         </FocusRegion>
 
                         {/* Detail View */}
@@ -669,7 +752,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                 {/* VIEW: DATEN VERGLEICH */}
                 {activeTab === 'compare' && (
                     <FocusRegion id="public_media__compare" label="Vergleich" className="space-y-8 animate-in fade-in duration-500">
-                        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+                        <FocusRegion id="public_media__compare__main_visual" label="Vergleich: Visualisierung" className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
                             <FocusRegion id="public_media__compare__intro" label="Einführung" className="max-w-3xl mb-8">
                                 <h2 className="text-2xl font-bold text-slate-900 mb-4">Je unabhängiger, desto mehr Vertrauen</h2>
                                 <p className="text-slate-600 text-lg">
@@ -705,7 +788,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                         </div>
                                     ))}
                             </FocusRegion>
-                        </div>
+                        </FocusRegion>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FocusRegion id="public_media__compare__myth" label="Mythos-Check" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">

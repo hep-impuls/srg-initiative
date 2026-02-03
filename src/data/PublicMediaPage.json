@@ -1,5 +1,131 @@
 {
     "title": "Medien-Check Global",
     "audioSrc": "audio/PublicMediaPage.mp3",
-    "timeline": []
+    "timeline": [
+        {
+            "seconds": 0,
+            "tab": "intro",
+            "focusId": "public_media__hero",
+            "label": "Einstieg: Intro",
+            "isChapter": true
+        },
+        {
+            "seconds": 21,
+            "tab": "intro",
+            "focusId": "public_media__hero__card_map",
+            "label": "Etappe 1: Reise um die Welt"
+        },
+        {
+            "seconds": 39,
+            "tab": "intro",
+            "focusId": "public_media__hero__card_compare",
+            "label": "Etappe 2: Muster erkennen"
+        },
+        {
+            "seconds": 50,
+            "tab": "intro",
+            "focusId": "public_media__hero__card_analysis",
+            "label": "Etappe 3: Konsequenzen"
+        },
+        {
+            "seconds": 58,
+            "tab": "map",
+            "focusId": "public_media__map",
+            "label": "Start: Länder-Übersicht",
+            "isChapter": true
+        },
+        {
+            "seconds": 60,
+            "tab": "map",
+            "focusId": "country_deutschland",
+            "label": "Deutschland: Haushaltsbeitrag"
+        },
+        {
+            "seconds": 156,
+            "tab": "map",
+            "focusId": "country_finnland",
+            "label": "Finnland: Yle-Steuer"
+        },
+        {
+            "seconds": 242,
+            "tab": "map",
+            "focusId": "country_uk",
+            "label": "UK: BBC & Druck"
+        },
+        {
+            "seconds": 300,
+            "tab": "map",
+            "focusId": "country_daenemark",
+            "label": "Dänemark: Staatsbudget"
+        },
+        {
+            "seconds": 323,
+            "tab": "map",
+            "focusId": "country_griechenland",
+            "label": "Griechenland: Shutdown"
+        },
+        {
+            "seconds": 340,
+            "tab": "map",
+            "focusId": "country_usa",
+            "label": "USA: Spendenmodell"
+        },
+        {
+            "seconds": 375,
+            "tab": "compare",
+            "focusId": "public_media__compare",
+            "label": "Muster & Vergleich",
+            "isChapter": true
+        },
+        {
+            "seconds": 378,
+            "tab": "compare",
+            "focusId": "public_media__compare__main_visual",
+            "label": "Unabhängigkeit & Vertrauen"
+        },
+        {
+            "seconds": 415,
+            "tab": "compare",
+            "focusId": "public_media__compare__myth",
+            "label": "Mythos: Konkurrenz"
+        },
+        {
+            "seconds": 460,
+            "tab": "compare",
+            "focusId": "public_media__compare__gap",
+            "label": "Die Wissenslücke"
+        },
+        {
+            "seconds": 496,
+            "tab": "analysis",
+            "focusId": "public_media__analysis",
+            "label": "Folgen & Analyse",
+            "isChapter": true
+        },
+        {
+            "seconds": 502,
+            "tab": "analysis",
+            "focusId": "public_media__analysis__privatization",
+            "label": "Die Privatisierungs-Falle"
+        },
+        {
+            "seconds": 549,
+            "tab": "analysis",
+            "focusId": "public_media__analysis__intervention",
+            "label": "Der Einschüchterungseffekt"
+        },
+        {
+            "seconds": 564,
+            "tab": "analysis",
+            "focusId": "public_media__analysis__cohesion",
+            "label": "Zusammenhalt vs. Spaltung"
+        },
+        {
+            "seconds": 630,
+            "tab": "analysis",
+            "focusId": "quellen",
+            "label": "Quellenverzeichnis",
+            "isChapter": false
+        }
+    ]
 }
