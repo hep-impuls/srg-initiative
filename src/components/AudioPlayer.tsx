@@ -21,6 +21,10 @@ export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
     chapters
   } = directorState;
 
+  const handleHelp = () => {
+    window.dispatchEvent(new CustomEvent('open-audio-onboarding'));
+  };
+
   return (
     <>
       {/* User Interaction Warning - Floating Toast */}
@@ -57,6 +61,7 @@ export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
               onRateChange={setPlaybackRate}
               showChapters={showChapters}
               onToggleChapters={() => setShowChapters(!showChapters)}
+              onHelp={handleHelp}
             />
           </div>
         </div>

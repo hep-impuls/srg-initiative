@@ -1,4 +1,4 @@
-import { Play, Pause, RotateCcw, List } from 'lucide-react';
+import { Play, Pause, RotateCcw, List, HelpCircle } from 'lucide-react';
 import { AudioPlayerState } from '@/types';
 
 interface AudioControlsProps {
@@ -9,6 +9,7 @@ interface AudioControlsProps {
   onRateChange: (rate: number) => void;
   showChapters?: boolean;
   onToggleChapters?: () => void;
+  onHelp?: () => void;
 }
 
 export function AudioControls({
@@ -18,7 +19,8 @@ export function AudioControls({
   onSeek,
   onRateChange,
   showChapters,
-  onToggleChapters
+  onToggleChapters,
+  onHelp
 }: AudioControlsProps) {
   const { isPlaying, currentTime, duration, isLoading, playbackRate } = audioState;
 
@@ -102,6 +104,16 @@ export function AudioControls({
           >
             <RotateCcw size={14} />
           </button>
+
+          {onHelp && (
+            <button
+              onClick={onHelp}
+              className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-all"
+              title="Hilfe & Intro"
+            >
+              <HelpCircle size={14} />
+            </button>
+          )}
         </div>
       </div>
     </div>

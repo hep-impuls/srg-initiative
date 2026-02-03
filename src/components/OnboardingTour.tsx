@@ -5,14 +5,22 @@ export function OnboardingTour() {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        const handleOpenTour = () => setIsVisible(true);
+        window.addEventListener('open-audio-onboarding', handleOpenTour);
+
         const hasSeenTour = localStorage.getItem('hasSeenAudioTour');
         if (!hasSeenTour) {
             // Delay slightly to ensure layout is ready and for better UX
             const timer = setTimeout(() => {
                 setIsVisible(true);
             }, 1500);
-            return () => clearTimeout(timer);
+            return () => {
+                clearTimeout(timer);
+                window.removeEventListener('open-audio-onboarding', handleOpenTour);
+            };
         }
+
+        return () => window.removeEventListener('open-audio-onboarding', handleOpenTour);
     }, []);
 
     const dismissTour = () => {

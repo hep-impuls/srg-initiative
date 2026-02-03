@@ -56,7 +56,7 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
         // Create SVG with a path that will form the "hole"
         overlay.innerHTML = `
           <svg width="100%" height="100%" style="pointer-events: none;">
-            <path d="" fill="rgba(0, 0, 0, 0.2)" fill-rule="evenodd" style="pointer-events: auto;"></path>
+            <path d="" fill="rgba(0, 0, 0, 0.2)" fill-rule="evenodd" style="pointer-events: none;"></path>
           </svg>
         `;
         document.body.appendChild(overlay);
@@ -113,9 +113,15 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
 
     const overlay = getDimmingOverlay();
     overlay.style.opacity = '0';
+    // Ensure clicks pass through when hidden
+    overlay.style.pointerEvents = 'none';
+
     // Clear the hole
     const path = overlay.querySelector('path');
-    if (path) path.setAttribute('d', '');
+    if (path) {
+      path.setAttribute('d', '');
+      path.style.pointerEvents = 'none';
+    }
 
   }, [getDimmingOverlay]);
 
@@ -163,8 +169,20 @@ export function useAudioDirector(timeline: TimelineEntry[]): AudioDirectorState 
       }
     });
 
+
     // Show dimming overlay
     const overlay = getDimmingOverlay();
+    // Enable pointer events on the path for valid holes (blocking interaction outside hole)
+    const path = overlay.querySelector('path');
+    if (path) path.style.pointerEvents = 'auto';
+    overlay.style.pointerEvents = 'auto'; // Container needs to be auto to catch clicks if we want to block? Or just path (SVGs overlap). 
+    // Actually the logic is: path has fill with pointer-events: auto to block clicks on the "dark" part.
+    // The "hole" is just empty space.
+    // The container is pointer-events: none usually so we can click THROUGH the hole.
+    // So we reset container to none (just to be safe) and ensure path is auto.
+    overlay.style.pointerEvents = 'none';
+    if (path) path.style.pointerEvents = 'auto';
+
 
     if (!areSameIds) {
       // Delay for new elements to allow transition
