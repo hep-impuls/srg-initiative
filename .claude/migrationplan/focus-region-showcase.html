@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocusRegion System — Visual Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --text-primary: #f0f0f5;
+            --text-muted: #6b6b80;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-green: #10b981;
+            --accent-cyan: #06b6d4;
+            --focus-glow: rgba(59, 130, 246, 0.4);
+            --depth-0: #3b82f6;
+            --depth-1: #8b5cf6;
+            --depth-2: #ec4899;
+            --depth-3: #f97316;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Focus Region Base Styles */
+        [data-focus-region] {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-focus-region]::before {
+            content: attr(data-focus-label);
+            position: absolute;
+            top: -8px;
+            left: 12px;
+            font-family: 'Space Mono', monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        [data-focus-region]:hover::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Depth-based coloring */
+        [data-depth="0"] { --region-color: var(--depth-0); }
+        [data-depth="1"] { --region-color: var(--depth-1); }
+        [data-depth="2"] { --region-color: var(--depth-2); }
+        [data-depth="3"] { --region-color: var(--depth-3); }
+
+        [data-focus-region]::before {
+            background: var(--region-color);
+            color: white;
+        }
+
+        [data-focus-region]:hover {
+            outline: 2px solid var(--region-color);
+            outline-offset: 4px;
+        }
+
+        /* Active focus state */
+        [data-focus-region].focused {
+            outline: 3px solid var(--region-color);
+            outline-offset: 6px;
+            box-shadow: 0 0 40px color-mix(in srgb, var(--region-color) 30%, transparent);
+        }
+
+        [data-focus-region].focused::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                var(--bg-dark);
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .depth-legend {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .depth-legend span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .depth-legend span::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .depth-legend .d0::before { background: var(--depth-0); }
+        .depth-legend .d1::before { background: var(--depth-1); }
+        .depth-legend .d2::before { background: var(--depth-2); }
+        .depth-legend .d3::before { background: var(--depth-3); }
+
+        /* Section styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-family: 'Space Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-heading {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Example 1: Hero-Text Layout */
+        .example-hero-text {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .example-hero-text {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .example-hero-text .visual {
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .example-hero-text .content {
+            padding: 1rem;
+        }
+
+        .example-hero-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .example-hero-text p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Example 2: Comparison Split */
+        .example-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .example-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comparison-card.left {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.02) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .comparison-card.right {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0.02) 100%);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+        }
+
+        .comparison-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-card.left .icon { background: rgba(59, 130, 246, 0.2); }
+        .comparison-card.right .icon { background: rgba(236, 72, 153, 0.2); }
+
+        .comparison-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-card .subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .comparison-card ul {
+            list-style: none;
+        }
+
+        .comparison-card li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-card li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-card li span {
+            opacity: 0.5;
+        }
+
+        /* Example 3: Stats Grid */
+        .example-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .example-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.blue::after { background: var(--accent-blue); }
+        .stat-card.purple::after { background: var(--accent-purple); }
+        .stat-card.orange::after { background: var(--accent-orange); }
+
+        .stat-card .value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card.blue .value { color: var(--accent-blue); }
+        .stat-card.purple .value { color: var(--accent-purple); }
+        .stat-card.orange .value { color: var(--accent-orange); }
+
+        .stat-card .label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .description {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Example 4: Nested Content Block */
+        .example-nested {
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nested-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nested-header .icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .nested-header h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .nested-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nested-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .nested-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .nested-text strong {
+            color: var(--text-primary);
+        }
+
+        .nested-highlight {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .nested-highlight p {
+            font-style: italic;
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        /* Example 5: Text-Only Focus */
+        .example-text-focus {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .text-block {
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .text-block h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-block p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .text-highlight {
+            display: inline;
+            padding: 0.1em 0.4em;
+            background: rgba(249, 115, 22, 0.15);
+            border-radius: 4px;
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        .text-keyword {
+            display: inline;
+            padding: 0.1em 0.4em;
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 4px;
+            color: var(--accent-purple);
+            font-weight: 600;
+        }
+
+        /* Example 6: Multi-Focus Demo */
+        .example-multi-focus {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .example-multi-focus {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .multi-card {
+            aspect-ratio: 1;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .multi-card .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .multi-card .title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Example 7: Timeline/Process */
+        .example-timeline {
+            display: flex;
+            gap: 0;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .example-timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-orange));
+        }
+
+        @media (max-width: 768px) {
+            .example-timeline {
+                flex-direction: column;
+            }
+            .example-timeline::before {
+                width: 2px;
+                height: 100%;
+                top: 0;
+                left: 40px;
+                background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple), var(--accent-pink), var(--accent-orange));
+            }
+        }
+
+        .timeline-step {
+            flex: 1;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .timeline-step .number {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-step:nth-child(1) .number { background: var(--accent-blue); }
+        .timeline-step:nth-child(2) .number { background: var(--accent-purple); }
+        .timeline-step:nth-child(3) .number { background: var(--accent-pink); }
+        .timeline-step:nth-child(4) .number { background: var(--accent-orange); }
+
+        .timeline-step h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-step p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Manifest Preview */
+        .manifest-preview {
+            background: #1a1a24;
+            border-radius: 1rem;
+            padding: 2rem;
+            overflow-x: auto;
+            margin-top: 4rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .manifest-preview pre {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .manifest-preview .key { color: var(--accent-blue); }
+        .manifest-preview .string { color: var(--accent-green); }
+        .manifest-preview .number { color: var(--accent-orange); }
+
+        /* Interactive Controls */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 1000;
+        }
+
+        .controls button {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 1rem;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .controls button.primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .controls button.primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .controls button.secondary {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .controls button.secondary:hover {
+            background: #1a1a24;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* Animation for demo */
+        @keyframes pulse-focus {
+            0%, 100% { 
+                outline-offset: 6px;
+                box-shadow: 0 0 40px color-mix(in srgb, var(--region-color) 30%, transparent);
+            }
+            50% { 
+                outline-offset: 10px;
+                box-shadow: 0 0 60px color-mix(in srgb, var(--region-color) 50%, transparent);
+            }
+        }
+
+        [data-focus-region].focused {
+            animation: pulse-focus 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <header class="hero">
+        <h1>FocusRegion<br>System</h1>
+        <p>A visual architecture for audio-guided storytelling. Hover over any colored region to see its focus label. Click "Demo Tour" to simulate the audio director.</p>
+        
+        <div class="depth-legend">
+            <span class="d0">Depth 0 — Section</span>
+            <span class="d1">Depth 1 — Block</span>
+            <span class="d2">Depth 2 — Element</span>
+            <span class="d3">Depth 3 — Detail</span>
+        </div>
+    </header>
+
+    <!-- Example 1: Hero-Text Layout -->
+    <section>
+        <div class="section-title">Layout Pattern 01</div>
+        <h2 class="section-heading">Hero + Text Split</h2>
+        
+        <div 
+            class="example-hero-text" 
+            data-focus-region 
+            data-focus-label="intro" 
+            data-depth="0"
+            id="intro"
+        >
+            <div 
+                class="visual" 
+                data-focus-region 
+                data-focus-label="intro__visual" 
+                data-depth="1"
+                id="intro__visual"
+            >
+                🌍
+            </div>
+            <div 
+                class="content" 
+                data-focus-region 
+                data-focus-label="intro__content" 
+                data-depth="1"
+                id="intro__content"
+            >
+                <h3 
+                    data-focus-region 
+                    data-focus-label="intro__content__headline" 
+                    data-depth="2"
+                    id="intro__content__headline"
+                >Wie wir miteinander reden</h3>
+                <p 
+                    data-focus-region 
+                    data-focus-label="intro__content__text" 
+                    data-depth="2"
+                    id="intro__content__text"
+                >
+                    Früher bestimmten Zeitungsredaktionen, was wichtig war. 
+                    Heute entscheidet oft ein Algorithmus auf deinem Handy.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 2: Comparison Split -->
+    <section>
+        <div class="section-title">Layout Pattern 02</div>
+        <h2 class="section-heading">Side-by-Side Comparison</h2>
+        
+        <div 
+            class="example-comparison" 
+            data-focus-region 
+            data-focus-label="comparison" 
+            data-depth="0"
+            id="comparison"
+        >
+            <div 
+                class="comparison-card left" 
+                data-focus-region 
+                data-focus-label="comparison__left" 
+                data-depth="1"
+                id="comparison__left"
+            >
+                <div class="icon">🔥</div>
+                <h4 
+                    data-focus-region 
+                    data-focus-label="comparison__left__title" 
+                    data-depth="2"
+                    id="comparison__left__title"
+                >Das "Lagerfeuer"</h4>
+                <div class="subtitle">Massenmedien — Früher</div>
+                <ul 
+                    data-focus-region 
+                    data-focus-label="comparison__left__points" 
+                    data-depth="2"
+                    id="comparison__left__points"
+                >
+                    <li><span>→</span> Alle sehen das Gleiche</li>
+                    <li><span>→</span> Gemeinsame Basis für Diskussion</li>
+                    <li><span>→</span> Journalisten als Torwächter</li>
+                </ul>
+            </div>
+            
+            <div 
+                class="comparison-card right" 
+                data-focus-region 
+                data-focus-label="comparison__right" 
+                data-depth="1"
+                id="comparison__right"
+            >
+                <div class="icon">📱</div>
+                <h4 
+                    data-focus-region 
+                    data-focus-label="comparison__right__title" 
+                    data-depth="2"
+                    id="comparison__right__title"
+                >Der "Eigene Tunnel"</h4>
+                <div class="subtitle">Plattformen — Heute</div>
+                <ul 
+                    data-focus-region 
+                    data-focus-label="comparison__right__points" 
+                    data-depth="2"
+                    id="comparison__right__points"
+                >
+                    <li><span>→</span> Jeder sieht etwas anderes</li>
+                    <li><span>→</span> Keine gemeinsame Realität</li>
+                    <li><span>→</span> Algorithmus entscheidet</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 3: Stats Grid -->
+    <section>
+        <div class="section-title">Layout Pattern 03</div>
+        <h2 class="section-heading">Statistics Dashboard</h2>
+        
+        <div 
+            class="example-stats" 
+            data-focus-region 
+            data-focus-label="stats" 
+            data-depth="0"
+            id="stats"
+        >
+            <div 
+                class="stat-card blue" 
+                data-focus-region 
+                data-focus-label="stats__deprivierte" 
+                data-depth="1"
+                id="stats__deprivierte"
+            >
+                <div class="value">46%</div>
+                <div class="label">News Deprivierte</div>
+                <div class="description">Fast die Hälfte meidet aktiv harte Nachrichten.</div>
+            </div>
+            
+            <div 
+                class="stat-card purple" 
+                data-focus-region 
+                data-focus-label="stats__social" 
+                data-depth="1"
+                id="stats__social"
+            >
+                <div class="value">17%</div>
+                <div class="label">Nur Social Media</div>
+                <div class="description">Kein klassischer Journalismus mehr (18-24 J.).</div>
+            </div>
+            
+            <div 
+                class="stat-card orange" 
+                data-focus-region 
+                data-focus-label="stats__tiktok" 
+                data-depth="1"
+                id="stats__tiktok"
+            >
+                <div class="value">+7%</div>
+                <div class="label">TikTok Boom</div>
+                <div class="description">Wachstum als Nachrichtenquelle.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 4: Nested Content Block -->
+    <section>
+        <div class="section-title">Layout Pattern 04</div>
+        <h2 class="section-heading">Info Box with Nested Focus</h2>
+        
+        <div 
+            class="example-nested" 
+            data-focus-region 
+            data-focus-label="gatekeeper" 
+            data-depth="0"
+            id="gatekeeper"
+        >
+            <div 
+                class="nested-header" 
+                data-focus-region 
+                data-focus-label="gatekeeper__header" 
+                data-depth="1"
+                id="gatekeeper__header"
+            >
+                <div class="icon">🔐</div>
+                <h3>Was bedeutet "Gatekeeper"?</h3>
+            </div>
+            
+            <div class="nested-body">
+                <div 
+                    class="nested-text" 
+                    data-focus-region 
+                    data-focus-label="gatekeeper__explanation" 
+                    data-depth="1"
+                    id="gatekeeper__explanation"
+                >
+                    <p>Gatekeeper heisst <strong>"Torwächter"</strong>. Früher entschieden Chefredaktionen, was wichtig genug ist.</p>
+                    <p>Heute sortieren Algorithmen oder gar niemand mehr — <strong>jeder kann alles posten</strong>, wahr oder falsch.</p>
+                </div>
+                
+                <div 
+                    class="nested-highlight" 
+                    data-focus-region 
+                    data-focus-label="gatekeeper__quote" 
+                    data-depth="1"
+                    id="gatekeeper__quote"
+                >
+                    <p>"Wer ist eigentlich heute der Gatekeeper in deinem Feed?"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 5: Text-Only Focus -->
+    <section>
+        <div class="section-title">Layout Pattern 05</div>
+        <h2 class="section-heading">Inline Text Highlighting</h2>
+        
+        <div class="example-text-focus">
+            <div 
+                class="text-block" 
+                data-focus-region 
+                data-focus-label="algorithm" 
+                data-depth="0"
+                id="algorithm"
+            >
+                <h3 
+                    data-focus-region 
+                    data-focus-label="algorithm__title" 
+                    data-depth="1"
+                    id="algorithm__title"
+                >Der Algorithmus als Ja-Sager</h3>
+                
+                <p 
+                    data-focus-region 
+                    data-focus-label="algorithm__para1" 
+                    data-depth="1"
+                    id="algorithm__para1"
+                >
+                    Der Algorithmus will dich nicht informieren, sondern 
+                    <span 
+                        class="text-highlight" 
+                        data-focus-region 
+                        data-focus-label="algorithm__keyword__bestaetigen" 
+                        data-depth="2"
+                        id="algorithm__keyword__bestaetigen"
+                    >bestätigen</span>. 
+                    Er zeigt dir, was du sehen willst — nicht was du wissen solltest.
+                </p>
+                
+                <p 
+                    data-focus-region 
+                    data-focus-label="algorithm__para2" 
+                    data-depth="1"
+                    id="algorithm__para2"
+                >
+                    <span 
+                        class="text-keyword" 
+                        data-focus-region 
+                        data-focus-label="algorithm__keyword__wut" 
+                        data-depth="2"
+                        id="algorithm__keyword__wut"
+                    >Wut</span> und 
+                    <span 
+                        class="text-keyword" 
+                        data-focus-region 
+                        data-focus-label="algorithm__keyword__freude" 
+                        data-depth="2"
+                        id="algorithm__keyword__freude"
+                    >Freude</span> 
+                    binden dich stärker als neutrale Fakten. Es geht um Verweildauer, nicht um Wahrheit.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 6: Multi-Focus Demo -->
+    <section>
+        <div class="section-title">Layout Pattern 06</div>
+        <h2 class="section-heading">Multi-Focus (Simultaneous Highlight)</h2>
+        
+        <div 
+            class="example-multi-focus" 
+            data-focus-region 
+            data-focus-label="problems" 
+            data-depth="0"
+            id="problems"
+        >
+            <div 
+                class="multi-card" 
+                data-focus-region 
+                data-focus-label="problems__slacktivism" 
+                data-depth="1"
+                id="problems__slacktivism"
+            >
+                <div class="emoji">👍</div>
+                <div class="title">Slacktivism</div>
+            </div>
+            
+            <div 
+                class="multi-card" 
+                data-focus-region 
+                data-focus-label="problems__fakenews" 
+                data-depth="1"
+                id="problems__fakenews"
+            >
+                <div class="emoji">🎭</div>
+                <div class="title">Fake News</div>
+            </div>
+            
+            <div 
+                class="multi-card" 
+                data-focus-region 
+                data-focus-label="problems__polarisierung" 
+                data-depth="1"
+                id="problems__polarisierung"
+            >
+                <div class="emoji">⚡</div>
+                <div class="title">Polarisierung</div>
+            </div>
+            
+            <div 
+                class="multi-card" 
+                data-focus-region 
+                data-focus-label="problems__agenda" 
+                data-depth="1"
+                id="problems__agenda"
+            >
+                <div class="emoji">📣</div>
+                <div class="title">Agenda Setting</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example 7: Timeline/Process -->
+    <section>
+        <div class="section-title">Layout Pattern 07</div>
+        <h2 class="section-heading">Sequential Process Flow</h2>
+        
+        <div 
+            class="example-timeline" 
+            data-focus-region 
+            data-focus-label="workflow" 
+            data-depth="0"
+            id="workflow"
+        >
+            <div 
+                class="timeline-step" 
+                data-focus-region 
+                data-focus-label="workflow__step1" 
+                data-depth="1"
+                id="workflow__step1"
+            >
+                <div class="number">1</div>
+                <h4>Deep Search</h4>
+                <p>AI-gestützte Recherche</p>
+            </div>
+            
+            <div 
+                class="timeline-step" 
+                data-focus-region 
+                data-focus-label="workflow__step2" 
+                data-depth="1"
+                id="workflow__step2"
+            >
+                <div class="number">2</div>
+                <h4>Draft React</h4>
+                <p>Erste Seiten-Version</p>
+            </div>
+            
+            <div 
+                class="timeline-step" 
+                data-focus-region 
+                data-focus-label="workflow__step3" 
+                data-depth="1"
+                id="workflow__step3"
+            >
+                <div class="number">3</div>
+                <h4>Audio Guide</h4>
+                <p>NotebookLM Narration</p>
+            </div>
+            
+            <div 
+                class="timeline-step" 
+                data-focus-region 
+                data-focus-label="workflow__step4" 
+                data-depth="1"
+                id="workflow__step4"
+            >
+                <div class="number">4</div>
+                <h4>Sync Timeline</h4>
+                <p>AI matches audio to page</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generated Manifest Preview -->
+    <section>
+        <div class="section-title">Auto-Generated Output</div>
+        <h2 class="section-heading">Focus Manifest JSON</h2>
+        
+        <div class="manifest-preview">
+            <pre>
+<span class="key">"focusRegions"</span>: [
+  { <span class="key">"id"</span>: <span class="string">"intro"</span>, <span class="key">"label"</span>: <span class="string">"Einleitung"</span>, <span class="key">"depth"</span>: <span class="number">0</span> },
+  { <span class="key">"id"</span>: <span class="string">"intro__visual"</span>, <span class="key">"label"</span>: <span class="string">"Hero Bild"</span>, <span class="key">"depth"</span>: <span class="number">1</span> },
+  { <span class="key">"id"</span>: <span class="string">"intro__content"</span>, <span class="key">"label"</span>: <span class="string">"Intro Text"</span>, <span class="key">"depth"</span>: <span class="number">1</span> },
+  { <span class="key">"id"</span>: <span class="string">"intro__content__headline"</span>, <span class="key">"label"</span>: <span class="string">"Headline"</span>, <span class="key">"depth"</span>: <span class="number">2</span> },
+  { <span class="key">"id"</span>: <span class="string">"comparison"</span>, <span class="key">"label"</span>: <span class="string">"Vergleich"</span>, <span class="key">"depth"</span>: <span class="number">0</span> },
+  { <span class="key">"id"</span>: <span class="string">"comparison__left"</span>, <span class="key">"label"</span>: <span class="string">"Früher"</span>, <span class="key">"depth"</span>: <span class="number">1</span> },
+  { <span class="key">"id"</span>: <span class="string">"comparison__right"</span>, <span class="key">"label"</span>: <span class="string">"Heute"</span>, <span class="key">"depth"</span>: <span class="number">1</span> },
+  { <span class="key">"id"</span>: <span class="string">"stats"</span>, <span class="key">"label"</span>: <span class="string">"Statistiken"</span>, <span class="key">"depth"</span>: <span class="number">0</span> },
+  { <span class="key">"id"</span>: <span class="string">"stats__deprivierte"</span>, <span class="key">"label"</span>: <span class="string">"46% Card"</span>, <span class="key">"depth"</span>: <span class="number">1</span> },
+  { <span class="key">"id"</span>: <span class="string">"algorithm__keyword__wut"</span>, <span class="key">"label"</span>: <span class="string">"Keyword: Wut"</span>, <span class="key">"depth"</span>: <span class="number">2</span> },
+  ...
+]
+            </pre>
+        </div>
+    </section>
+
+    <!-- Interactive Controls -->
+    <div class="controls">
+        <button class="primary" id="demoBtn">
+            ▶ Demo Tour
+        </button>
+        <button class="secondary" id="resetBtn">
+            ↺ Reset
+        </button>
+    </div>
+
+    <footer>
+        <p>FocusRegion System — Part of the <a href="#">SRG Audio-Guided Reports</a> Project</p>
+    </footer>
+
+    <script>
+        // Demo tour sequence
+        const tourSequence = [
+            { ids: ['intro'], duration: 2000 },
+            { ids: ['intro__visual'], duration: 1500 },
+            { ids: ['intro__content__headline'], duration: 1500 },
+            { ids: ['intro__content__text'], duration: 2000 },
+            { ids: ['comparison'], duration: 1500 },
+            { ids: ['comparison__left'], duration: 2000 },
+            { ids: ['comparison__left__points'], duration: 1500 },
+            { ids: ['comparison__right'], duration: 2000 },
+            { ids: ['comparison__left', 'comparison__right'], duration: 2500 }, // Multi-focus!
+            { ids: ['stats'], duration: 1500 },
+            { ids: ['stats__deprivierte'], duration: 1500 },
+            { ids: ['stats__social'], duration: 1500 },
+            { ids: ['stats__tiktok'], duration: 1500 },
+            { ids: ['stats__deprivierte', 'stats__social', 'stats__tiktok'], duration: 2000 }, // All stats
+            { ids: ['gatekeeper'], duration: 1500 },
+            { ids: ['gatekeeper__explanation'], duration: 2000 },
+            { ids: ['gatekeeper__quote'], duration: 2000 },
+            { ids: ['algorithm'], duration: 1500 },
+            { ids: ['algorithm__keyword__bestaetigen'], duration: 1500 },
+            { ids: ['algorithm__keyword__wut', 'algorithm__keyword__freude'], duration: 2000 },
+            { ids: ['problems'], duration: 1500 },
+            { ids: ['problems__slacktivism', 'problems__fakenews'], duration: 2000 },
+            { ids: ['problems__polarisierung', 'problems__agenda'], duration: 2000 },
+            { ids: ['workflow'], duration: 1500 },
+            { ids: ['workflow__step1'], duration: 1200 },
+            { ids: ['workflow__step2'], duration: 1200 },
+            { ids: ['workflow__step3'], duration: 1200 },
+            { ids: ['workflow__step4'], duration: 1500 },
+        ];
+
+        let tourRunning = false;
+        let tourTimeout = null;
+
+        function clearAllFocus() {
+            document.querySelectorAll('[data-focus-region]').forEach(el => {
+                el.classList.remove('focused');
+            });
+        }
+
+        function focusElements(ids) {
+            clearAllFocus();
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.add('focused');
+                    // Scroll first element into view
+                    if (ids.indexOf(id) === 0) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            });
+        }
+
+        async function runTour() {
+            if (tourRunning) return;
+            tourRunning = true;
+            
+            const demoBtn = document.getElementById('demoBtn');
+            demoBtn.textContent = '⏸ Running...';
+            demoBtn.disabled = true;
+
+            for (const step of tourSequence) {
+                if (!tourRunning) break;
+                
+                focusElements(step.ids);
+                await new Promise(resolve => {
+                    tourTimeout = setTimeout(resolve, step.duration);
+                });
+            }
+
+            clearAllFocus();
+            tourRunning = false;
+            demoBtn.textContent = '▶ Demo Tour';
+            demoBtn.disabled = false;
+        }
+
+        function resetTour() {
+            tourRunning = false;
+            if (tourTimeout) clearTimeout(tourTimeout);
+            clearAllFocus();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            const demoBtn = document.getElementById('demoBtn');
+            demoBtn.textContent = '▶ Demo Tour';
+            demoBtn.disabled = false;
+        }
+
+        document.getElementById('demoBtn').addEventListener('click', runTour);
+        document.getElementById('resetBtn').addEventListener('click', resetTour);
+    </script>
+</body>
+</html>
