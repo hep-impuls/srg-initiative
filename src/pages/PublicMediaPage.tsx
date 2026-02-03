@@ -539,7 +539,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
             {/* Header */}
             <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 shadow-xl sticky top-0 z-30">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-                    <FocusRegion id="public_media__header" label="Kopfbereich" className="flex items-center gap-4">
+                    <FocusRegion id="public_media__header" label="Kopfbereich" className="flex items-center gap-4 !bg-transparent">
                         <div className="bg-blue-600 p-3 rounded-lg shadow-lg">
                             <Globe className="text-white" size={32} />
                         </div>
@@ -578,7 +578,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                 {activeTab === 'intro' && (
                     <div className="animate-in fade-in duration-700">
                         {/* Hero Section */}
-                        <FocusRegion id="public_media__hero" label="Intro-Bereich" className="relative bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
+                        <FocusRegion id="public_media__hero" label="Intro-Bereich" className="relative bg-slate-900 !bg-slate-900 rounded-3xl overflow-hidden shadow-2xl mb-12">
                             <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay"></div>
                             <div className="grid md:grid-cols-2 gap-12 p-12 relative z-10">
                                 <div className="flex flex-col justify-center space-y-6">
@@ -593,11 +593,12 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     </p>
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <div className="w-full h-64 md:h-80 bg-slate-800 rounded-2xl border-2 border-slate-700 border-dashed flex items-center justify-center text-slate-500 group cursor-pointer hover:border-blue-500 hover:text-blue-400 transition-all">
-                                        <div className="text-center space-y-4">
-                                            <Globe size={64} className="mx-auto opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
-                                            <p className="font-medium text-sm">Visualisierung Globaler Medienströme</p>
-                                        </div>
+                                    <div className="w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-700/50 group hover:border-blue-500/50 transition-all duration-500 hover:rotate-1">
+                                        <img
+                                            src="img/public_media/0.png"
+                                            alt="Visualisierung Globaler Medienströme"
+                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
                                     </div>
                                 </div>
                             </div>
