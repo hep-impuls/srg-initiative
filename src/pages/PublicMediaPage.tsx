@@ -586,7 +586,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                         Ein Globaler Vergleich
                                     </div>
                                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
-                                        Wer <span className="text-blue-500">finanziert</span> unsere Wahrheit?
+                                        Wer <span className="text-blue-500">finanziert</span> die öffentlichen Medien?
                                     </h2>
                                     <p className="text-lg text-slate-400 max-w-lg leading-relaxed">
                                         Eine Reise durch die Mediensysteme der Welt. Von unabhängigen Stiftungen bis zum Staatsfunk – und was das für unser Vertrauen bedeutet.

@@ -67,7 +67,19 @@ Visuelles Chapter-Menu über den Audio Controls.
 - Zeigt alle Timeline-Entries mit `isChapter: true`
 - Farbcodierung: Aktiv (blau), Vergangen (grau), Zukünftig (weiß)
 - Click-to-Jump zu jedem Chapter
-- Zeit-Display für jeden Marker
+- Time-Display für jeden Marker
+
+#### 5. ReportShell (`src/components/ReportShell.tsx`)
+Der zentrale Container für alle Report-Seiten.
+- Lädt Seiten-Konfigurationen dynamisch basierend auf URL Slug.
+- **Onboarding Tour Integration:** Inkludiert automatisch die `OnboardingTour` für alle Seiten.
+
+#### 6. Onboarding Tour (`src/components/OnboardingTour.tsx`)
+Eine Info-Tour für Erstbesucher.
+- Prüft `localStorage` ("hasSeenAudioTour").
+- Zeigt Pop-up nach kurzer Verzögerung.
+- Erklärt Audio-Funktionalität.
+
 
 ---
 
@@ -517,3 +529,8 @@ Das Projekt wurde für das Hosting auf GitHub Pages konfiguriert.
 #### 4. Asset Handling
 - Audio-Datei umbenannt: `mobilität.mp3` -> `mobilitaet.mp3` (Vermeidung von Encoding-Fehlern auf Linux-Build-Servern).
 - Pfad in `tourConfig.json` auf relativen Pfad angepasst (`audio/mobilitaet.mp3`).
+
+### Onboarding Tour (Refactor)
+- **Automatische Integration:** Die `OnboardingTour` wurde in die `ReportShell` verschoben.
+- **Vorteil:** Neue Seiten erhalten die Tour automatisch, ohne manuellen Code.
+- **Status:** Aktiviert für alle Reports.

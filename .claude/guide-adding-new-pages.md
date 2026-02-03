@@ -62,6 +62,8 @@ export function MyPage({ config }: MyPageProps) {
     return (
         <div className="pb-24"> {/* Padding for Audio Player */}
             
+            {/* Note: OnboardingTour is automatically handled by ReportShell. Do not add it here. */}
+            
             {/* 3. Wrap content in FocusRegions */}
             <FocusRegion id="my_section" label="My Section">
                 <h1>Title</h1>
