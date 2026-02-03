@@ -24,13 +24,19 @@ const CONFIG_REGISTRY: Record<string, PageConfig> = {
 export function ReportShell() {
     const { slug } = useParams<{ slug: string }>();
 
-    if (!slug || !PAGE_REGISTRY[slug] || !CONFIG_REGISTRY[slug]) {
-        console.warn(`Report shell: slug "${slug}" not found in registry.`);
+    // Normalize slug lookup to be case-insensitive
+    // This allows /report/PublicMedia to match 'publicMedia' key
+    const registryKey = Object.keys(PAGE_REGISTRY).find(key =>
+        key.toLowerCase() === slug?.toLowerCase()
+    );
+
+    if (!slug || !registryKey || !PAGE_REGISTRY[registryKey] || !CONFIG_REGISTRY[registryKey]) {
+        console.warn(`Report shell: slug "${slug}" (normalized: "${registryKey}") not found in registry.`);
         return <Navigate to="/report/agora" replace />;
     }
 
-    const PageComponent = PAGE_REGISTRY[slug];
-    const pageConfig = CONFIG_REGISTRY[slug];
+    const PageComponent = PAGE_REGISTRY[registryKey];
+    const pageConfig = CONFIG_REGISTRY[registryKey];
 
     // Convention over configuration for audio source
     // slug: agora -> /audio/AgoraPage.mp3
