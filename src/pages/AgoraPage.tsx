@@ -487,7 +487,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <h4 className="font-bold text-sm mb-1 text-slate-800">Die "TikTokisierung"</h4>
                                                     <p className="text-[10px] text-slate-600 leading-relaxed"><strong>Komplexe Politik wird oft auf 15 Sekunden Spass reduziert.</strong> Hintergründe fehlen meist.</p>
                                                 </div>
-                                                <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                                                <div id="bildungskluft-card" className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
                                                     <h4 className="font-bold text-sm mb-1 text-slate-800">Bildungskluft</h4>
                                                     <p className="text-[10px] text-slate-600 leading-relaxed">Menschen mit niedriger formaler Bildung gehören öfter zu den News-Deprivierten.</p>
                                                     <div className="mt-1 scale-90 origin-left"><SourceBadge ids={["6"]} /></div>
@@ -515,15 +515,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             <div className="bg-purple-100 border-l-4 border-purple-500 p-4 rounded-r-xl">
                                                 <p className="text-sm text-purple-900 font-semibold">Komplexe Politik wird auf Unterhaltung reduziert. Hintergründe fehlen meist.</p>
                                             </div>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
+                                            <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow mt-4">
                                                 <img
                                                     src="img/agora7.png"
                                                     alt="Komplexität vs. 15 Sekunden"
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
+                                        </div>
+                                        <div className="space-y-4">
                                             <div className="aspect-[4/3] bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow">
                                                 <img
                                                     src="img/agora8.png"

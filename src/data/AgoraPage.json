@@ -110,7 +110,7 @@
     {
       "seconds": 331,
       "tab": "data",
-      "focusId": "stat-social",
+      "focusId": "bildungskluft-card",
       "label": "Bildungskluft"
     },
     {
@@ -137,13 +137,13 @@
       "label": "Slacktivism"
     },
     {
-      "seconds": 425,
+      "seconds": 430,
       "tab": "consequences",
       "focusId": "fake-news-card",
       "label": "Fake News Anfälligkeit"
     },
     {
-      "seconds": 449,
+      "seconds": 455,
       "tab": "consequences",
       "focusId": "polarization-card",
       "label": "Polarisierung"
@@ -162,7 +162,7 @@
       "isChapter": true
     },
     {
-      "seconds": 585,
+      "seconds": 587,
       "tab": "consequences",
       "focusId": "quellen",
       "label": "Wissenschaftliche Quellen"
