@@ -212,7 +212,7 @@ const sources: Source[] = swissifyData([
     {
         id: "31",
         text: "Amnesty: Greece Broadcaster",
-        details: "Stellungnahme von Amnesty International zur Schließung des griechischen Staatsfunks.",
+        details: "Stellungnahme von Amnesty International zur Schliessung des griechischen Staatsfunks.",
         url: "https://www.amnesty.org/fr/wp-content/uploads/2021/06/eur250092013en.pdf"
     },
     {
@@ -455,7 +455,7 @@ const countryData = swissifyData([
         ),
         risks: (
             <>
-                Die Menschen vertrauen dem Sender kaum noch, weil jeder weiß: Die Regierung ist der Boss.
+                Die Menschen vertrauen dem Sender kaum noch, weil jeder weiss: Die Regierung ist der Boss.
             </>
         ),
         status: 'kritisch',
@@ -776,7 +776,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     <FocusRegion id="public_media__map__detail__risks" label="Risiko-Analyse" className={`p-5 rounded-xl border ${selectedCountry.status === 'sicher' ? 'bg-emerald-50 border-emerald-100' : 'bg-red-50 border-red-100'
                                         }`}>
                                         <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider mb-2 text-slate-900">
-                                            {selectedCountry.status === 'sicher' ? 'Warum es gut funktioniert:' : 'Das größte Problem:'}
+                                            {selectedCountry.status === 'sicher' ? 'Warum es gut funktioniert:' : 'Das grösste Problem:'}
                                         </h3>
                                         <p className={`text-sm ${selectedCountry.status === 'sicher' ? 'text-emerald-800' : 'text-red-800'}`}>
                                             {selectedCountry.risks}
