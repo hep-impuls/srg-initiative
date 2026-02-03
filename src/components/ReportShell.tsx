@@ -1,12 +1,14 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AgoraPage } from '@/pages/AgoraPage';
+import { PublicMediaPage } from '@/pages/public_media';
 import { PageConfig } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 
 // Registry of available report pages
 const PAGE_REGISTRY: Record<string, React.ComponentType<{ config: PageConfig }>> = {
     'agora': AgoraPage,
+    'publicMedia': PublicMediaPage,
     // Future pages:
     // 'climate': ClimatePage,
 };

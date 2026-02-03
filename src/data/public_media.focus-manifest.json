@@ -1,0 +1,108 @@
+{
+  "source": "public_media.tsx",
+  "generated": "2026-02-03T08:46:39.226Z",
+  "totalRegions": 19,
+  "depthBreakdown": {
+    "depth0": 0,
+    "depth1": 5,
+    "depth2": 9,
+    "depth3": 5
+  },
+  "regions": [
+    {
+      "id": "public_media__analysis",
+      "label": "Folgen & Analyse",
+      "depth": 1
+    },
+    {
+      "id": "public_media__compare",
+      "label": "Vergleich",
+      "depth": 1
+    },
+    {
+      "id": "public_media__header",
+      "label": "Kopfbereich",
+      "depth": 1
+    },
+    {
+      "id": "public_media__map",
+      "label": "Länder-Übersicht",
+      "depth": 1
+    },
+    {
+      "id": "public_media__nav",
+      "label": "Hauptnavigation",
+      "depth": 1
+    },
+    {
+      "id": "public_media__analysis__cohesion",
+      "label": "Zusammenhalt",
+      "depth": 2
+    },
+    {
+      "id": "public_media__analysis__intervention",
+      "label": "Fallstudie Staatsdruck",
+      "depth": 2
+    },
+    {
+      "id": "public_media__analysis__privatization",
+      "label": "Fallstudie Privatisierung",
+      "depth": 2
+    },
+    {
+      "id": "public_media__compare__chart",
+      "label": "Vertrauens-Chart",
+      "depth": 2
+    },
+    {
+      "id": "public_media__compare__gap",
+      "label": "Wissens-Lücke",
+      "depth": 2
+    },
+    {
+      "id": "public_media__compare__intro",
+      "label": "Einführung",
+      "depth": 2
+    },
+    {
+      "id": "public_media__compare__myth",
+      "label": "Mythos-Check",
+      "depth": 2
+    },
+    {
+      "id": "public_media__map__detail",
+      "label": "Detail-Ansicht",
+      "depth": 2
+    },
+    {
+      "id": "public_media__map__sidebar",
+      "label": "Länder-Liste",
+      "depth": 2
+    },
+    {
+      "id": "public_media__map__detail__desc",
+      "label": "Beschreibung",
+      "depth": 3
+    },
+    {
+      "id": "public_media__map__detail__funding",
+      "label": "Finanzierung",
+      "depth": 3
+    },
+    {
+      "id": "public_media__map__detail__header",
+      "label": "Länder-Header",
+      "depth": 3
+    },
+    {
+      "id": "public_media__map__detail__risks",
+      "label": "Risiko-Analyse",
+      "depth": 3
+    },
+    {
+      "id": "public_media__map__detail__stats",
+      "label": "Statistik",
+      "depth": 3
+    }
+  ]
+}

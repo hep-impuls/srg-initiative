@@ -10,7 +10,10 @@ The audioguide system synchronizes an audio track with visual elements on the pa
 1.  **React Component (`SrcPage.tsx`)**: Defines the visual structure and marks focusable areas.
 2.  **Manifest (`*.focus-manifest.json`)**: Auto-generated list of all focusable IDs.
 3.  **Timeline Configuration (`*.json`)**: Maps audio timestamps to these IDs.
+3.  **Timeline Configuration (`*.json`)**: Maps audio timestamps to these IDs.
 4.  **Audio File (`*.mp3`)**: The actual narration.
+
+> **Technical Prerequisites:** Before creating the content, ensure the page is correctly registered in the system. See **[guide-adding-new-pages.md](./guide-adding-new-pages.md)** for the technical setup.
 
 ---
 

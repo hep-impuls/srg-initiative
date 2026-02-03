@@ -8,6 +8,8 @@ Ein interaktives Reportage-System, bei dem Audio-Narration automatisch durch den
 
 > **Neu (Februar 2026):** Das Projekt nutzt jetzt das **FocusRegion System** für strukturierte, selbstdokumentierende Fokus-Elemente. Siehe [focusregion-system.md](./focusregion-system.md) für Details.
 
+> **Wichtig:** Für das Hinzufügen neuer Seiten bitte unbedingt [guide-adding-new-pages.md](./guide-adding-new-pages.md) konsultieren, da sich die Routing-Architektur geändert hat.
+
 ---
 
 ## Architektur
@@ -181,78 +183,9 @@ srg-initiative/
 
 ## Workflow: Neue Seite hinzufügen
 
-### Schritt 1: React Component erstellen
+Siehe **[guide-adding-new-pages.md](./guide-adding-new-pages.md)** für eine detaillierte technische Anleitung.
 
-**Template:** Kopiere `src/pages/AgoraPage.tsx`
-
-**Wichtig: IDs hinzufügen!**
-```tsx
-<div id="unique-section-id" className="scroll-mt-24">
-  {/* Content */}
-</div>
-```
-
-**Klasse `scroll-mt-24`:** Sorgt für Scroll-Offset (Header-Höhe)
-
-### Schritt 2: Audio erstellen
-
-**Optionen:**
-1. **AI TTS:** ElevenLabs oder OpenAI TTS
-2. **Manuelle Aufnahme:** Authentischer "Indie-Vibe"
-
-**Datei ablegen:** `public/audio/meine-seite.mp3`
-
-### Schritt 3: Timeline in tourConfig.json
-
-```json
-{
-  "pages": {
-    "meine-neue-seite": {
-      "title": "Mein neuer Report",
-      "audioSrc": "/audio/meine-seite.mp3",
-      "timeline": [
-        {
-          "seconds": 0,
-          "tab": "theory",
-          "focusId": "intro-section",
-          "label": "Einleitung",
-          "isChapter": true
-        },
-        {
-          "seconds": 30,
-          "tab": "theory",
-          "focusId": "hauptthema",
-          "label": "Hauptthema"
-        },
-        {
-          "seconds": 120,
-          "tab": "data",
-          "focusId": "statistiken",
-          "label": "Die Daten",
-          "isChapter": true
-        }
-      ]
-    }
-  }
-}
-```
-
-**Timing finden:**
-1. Audio abspielen und Notizen machen wann was passieren soll
-2. Zeitpunkte in `seconds` eintragen
-3. Mit `isChapter: true` wichtige Abschnitte markieren
-
-### Schritt 4: Route hinzufügen
-
-**In `src/App.tsx`:**
-```tsx
-<Route
-  path="/report/meine-neue-seite"
-  element={<MeineNeueSeitePage config={config.pages['meine-neue-seite']} />}
-/>
-```
-
-**Fertig!** Keine Code-Änderungen an Hooks oder Core-Logik nötig.
+Die Architektur nutzt jetzt eine `ReportShell` für dynamisches Routing. Bitte folge dem neuen Guide, da die alte Anleitung (App.tsx Routing) veraltet ist.
 
 ---
 
