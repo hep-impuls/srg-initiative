@@ -312,7 +312,7 @@ const countryData = swissifyData([
         fundingDetail: 'Abhängig vom Einkommen (wer mehr verdient, zahlt mehr).',
         description: (
             <>
-                Finnland nutzt eine spezielle Steuer. Das ist <strong>sozial gerecht</strong>: Wer wenig verdient, zahlt nichts. Wer viel verdient, zahlt mehr. Der Clou: Das Geld kommt in einen <strong>extra Topf</strong> (Fonds). Die Politiker können dieses Geld nicht für andere Dinge (wie Straßenbau) wegnehmen.
+                Finnland nutzt eine spezielle Steuer. Das ist <strong>sozial gerecht</strong>: Wer wenig verdient, zahlt nichts. Wer viel verdient, zahlt mehr. Der Clou: Das Geld kommt in einen <strong>extra Topf</strong> (Fonds). Die Politiker können dieses Geld nicht für andere Dinge (wie Strassenbau) wegnehmen.
             </>
         ),
         risks: 'Das System ist sehr sicher. Es gibt kaum Risiken, weil alle Parteien zustimmen.',
@@ -323,7 +323,7 @@ const countryData = swissifyData([
     },
     {
         id: 'uk',
-        name: 'Großbritannien',
+        name: 'Grossbritannien',
         region: 'Europa',
         model: 'Lizenzgebühr',
         stability: 'Sinkend',
@@ -332,7 +332,7 @@ const countryData = swissifyData([
         fundingDetail: 'Gebühr für Live-TV Nutzung.',
         description: (
             <>
-                Die BBC ist berühmt, hat aber Probleme. Die Regierung hat den Preis für die Lizenz lange Zeit eingefroren. Das ist real eine <strong>Budget-Kürzung</strong> von 30%. Außerdem muss die BBC alle paar Jahre neu mit der Regierung verhandeln (die "Royal Charter"). Das nutzen Politiker oft als <strong>Druckmittel</strong>.
+                Die BBC ist berühmt, hat aber Probleme. Die Regierung hat den Preis für die Lizenz lange Zeit eingefroren. Das ist real eine <strong>Budget-Kürzung</strong> von 30%. Ausserdem muss die BBC alle paar Jahre neu mit der Regierung verhandeln (die "Royal Charter"). Das nutzen Politiker oft als <strong>Druckmittel</strong>.
             </>
         ),
         risks: (

@@ -38,6 +38,7 @@ Create your component in `src/pages/`.
 2.  Accept `config: PageConfig` as a prop.
 3.  Initialize `useAudioDirector`.
 4.  Render `FocusRegion` components for all interactive elements.
+5.  **MANDATORY:** Wrap any hardcoded arrays or objects containing text with `swissifyData()`.
 
 **Template:**
 
@@ -47,10 +48,16 @@ import { PageConfig } from '@/types';
 import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { FocusRegion } from '@/components/FocusRegion';
+import { swissifyData } from '@/utils/textUtils';
 
 interface MyPageProps {
     config: PageConfig;
 }
+
+// Example: Handling hardcoded text
+const localData = swissifyData([
+    { id: 1, text: "Grossbritannien" } // No 'ß' allowed!
+]);
 
 export function MyPage({ config }: MyPageProps) {
     // 1. Initialize Audio Director
@@ -67,6 +74,10 @@ export function MyPage({ config }: MyPageProps) {
             {/* 3. Wrap content in FocusRegions */}
             <FocusRegion id="my_section" label="My Section">
                 <h1>Title</h1>
+                <p>
+                    {/* Ensure JSX text also complies (use 'ss' manually or check via swissifyData if dynamic) */}
+                    Wer weiss eigentlich...
+                </p>
             </FocusRegion>
 
             {/* 4. Audio Player (Must be present) */}

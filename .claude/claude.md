@@ -12,6 +12,16 @@ Ein interaktives Reportage-System, bei dem Audio-Narration automatisch durch den
 
 ---
 
+## Swiss German Text Support
+
+**IMPORTANT:** This application strictly enforces Swiss German orthography, meaning the letter `ß` is replaced by `ss`.
+
+*   **Automatic:** `ReportShell` automatically processes all imported JSON configuration files using `swissifyData`.
+*   **Manual:** Any text hardcoded in components (arrays, objects, or JSX) must be manually verified or wrapped with `swissifyData`.
+*   **Strict Rule:** No `ß` should appear in the rendered output.
+
+---
+
 ## Architektur
 
 ### Technologie-Stack

@@ -2,7 +2,7 @@
  * Replaces all occurrences of 'ß' with 'ss' to comply with Swiss German orthography.
  */
 export function toSwiss(text: string): string {
-    return text.replace(/ß/g, 'ss');
+    return text.replace(/\u00DF/g, 'ss');
 }
 
 /**

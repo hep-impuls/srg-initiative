@@ -10,7 +10,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "manifest": "ts-node scripts/generate-focus-manifest.ts",
-    "manifest:agora": "ts-node scripts/generate-focus-manifest.ts src/pages/AgoraPage.tsx"
+    "manifest:agora": "ts-node scripts/generate-focus-manifest.ts src/pages/AgoraPage.tsx",
+    "lint:swiss": "node scripts/check-swiss.cjs"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
