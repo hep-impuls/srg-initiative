@@ -11,7 +11,6 @@ import {
     Scale,
     BrainCircuit,
     Lock,
-    Globe,
     ArrowRight,
     Flame,
     LayoutGrid
@@ -129,33 +128,25 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
             {/* Unified Beginning Section (Header, Tabs, Intro) */}
             <div>
-                {/* Header */}
-                <header id="beginning-highlight" className="scroll-mt-24 bg-slate-900 text-white pt-6 pb-8 px-4 shadow-lg relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-6 opacity-10">
-                        <Globe size={200} />
-                    </div>
-                    <div className="max-w-5xl mx-auto relative z-10">
-                        <div className="inline-flex items-center space-x-2 bg-slate-800 rounded-full px-4 py-1 mb-6 border border-slate-700">
-                            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                            <span className="text-xs font-semibold tracking-wider text-slate-300">INTERAKTIVER REPORT 2026</span>
+                {/* Header - Compact & Light */}
+                <header id="beginning-highlight" className="scroll-mt-24 bg-white text-slate-900 pt-8 pb-8 px-4 border-b border-slate-100 relative overflow-hidden">
+                    <div className="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                        <div className="max-w-3xl">
+                            <h1 className="text-3xl md:text-4xl font-extrabold leading-tight text-slate-900 mb-2">
+                                Vom Dorfplatz zum <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">Digitalen Feed</span>
+                            </h1>
                         </div>
-                        <h1 className="text-2xl md:text-4xl font-extrabold mb-4 leading-tight">
-                            Vom Dorfplatz zum<br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
-                                Digitalen Feed
-                            </span>
-                        </h1>
-                        <p className="text-base text-slate-300 max-w-2xl leading-relaxed">
-                            Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen. Eine Analyse der Situation in Deutschland und der Schweiz.
+                        <p className="text-sm text-slate-500 max-w-sm leading-relaxed md:text-right">
+                            Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen.
                         </p>
                     </div>
                 </header>
 
                 {/* Main Content Area */}
-                <main className="max-w-5xl mx-auto px-4 -mt-6 relative z-20 pb-16">
+                <main className="max-w-5xl mx-auto px-4 mt-8 relative z-20 pb-16">
 
                     {/* Navigation Tabs */}
-                    <div id="main-tabs" className="bg-white rounded-t-2xl shadow-sm border-b border-slate-200 flex flex-col md:flex-row overflow-hidden">
+                    <div id="main-tabs" className="bg-white rounded-t-2xl shadow-sm border border-slate-200 border-b-0 flex flex-col md:flex-row overflow-hidden">
                         <button
                             onClick={() => setManualTab('theory')}
                             id="tab-btn-theory"
