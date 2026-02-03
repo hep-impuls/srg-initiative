@@ -9,7 +9,7 @@
       "isChapter": true
     },
     {
-      "seconds": 11,
+      "seconds": 35,
       "tab": "theory",
       "focusIds": [
         "main-tabs",
@@ -19,51 +19,57 @@
       "label": "Einleitung"
     },
     {
-      "seconds": 16,
+      "seconds": 81,
       "tab": "theory",
       "focusId": "theory__comparison",
       "label": "Lagerfeuer vs. Tunnel",
       "isChapter": true
     },
     {
-      "seconds": 33,
+      "seconds": 97,
       "tab": "theory",
-      "focusId": "main-tabs",
-      "label": "Agenda"
+      "focusId": "theory__comparison__right",
+      "label": "Der eigene Tunnel"
     },
     {
-      "seconds": 43,
+      "seconds": 112,
+      "tab": "theory",
+      "focusId": "theory__comparison",
+      "label": "Vergleich: Zusammenfassung"
+    },
+    {
+      "seconds": 133,
       "tab": "theory",
       "focusId": "theory__agora",
       "label": "Was bedeutet Agora?",
       "isChapter": true
     },
     {
-      "seconds": 68,
+      "seconds": 179,
       "tab": "theory",
       "focusId": "theory__gatekeeper",
       "label": "Gatekeeper erklärt"
     },
     {
-      "seconds": 71,
+      "seconds": 182,
       "tab": "theory",
       "focusId": "theory__gatekeeper__word__gatekeeper",
       "label": "Begriff: Gatekeeper"
     },
     {
-      "seconds": 73,
+      "seconds": 184,
       "tab": "theory",
       "focusId": "theory__gatekeeper__word__torwaechter",
       "label": "Begriff: Torwächter"
     },
     {
-      "seconds": 91,
+      "seconds": 207,
       "tab": "theory",
       "focusId": "theory__algorithm",
       "label": "Algorithmus als Hype-Man"
     },
     {
-      "seconds": 115,
+      "seconds": 236,
       "tab": "theory",
       "focusIds": [
         "theory__algorithm",
@@ -73,7 +79,7 @@
       "label": "Aufmerksamkeits-Ökonomie"
     },
     {
-      "seconds": 135,
+      "seconds": 255,
       "tab": "data",
       "focusIds": [
         "tab-btn-data",
@@ -84,43 +90,37 @@
       "isChapter": true
     },
     {
-      "seconds": 145,
+      "seconds": 264,
+      "tab": "data",
+      "focusId": "chart-section",
+      "label": "TV vs. Social Stats"
+    },
+    {
+      "seconds": 285,
       "tab": "data",
       "focusId": "stat-deprivierte",
       "label": "46% News-Deprivierte"
     },
     {
-      "seconds": 166,
-      "tab": "data",
-      "focusId": "stat-social",
-      "label": "17% nur Social Media"
-    },
-    {
-      "seconds": 178,
-      "tab": "data",
-      "focusId": "stat-tiktok",
-      "label": "TikTok Boom"
-    },
-    {
-      "seconds": 182,
-      "tab": "data",
-      "focusId": "chart-section",
-      "label": "TikTok & Bildung"
-    },
-    {
-      "seconds": 194,
+      "seconds": 293,
       "tab": "data",
       "focusId": "data__tiktok",
       "label": "15-Sekunden-Problem"
     },
     {
-      "seconds": 207,
+      "seconds": 331,
+      "tab": "data",
+      "focusId": "stat-social",
+      "label": "Bildungskluft"
+    },
+    {
+      "seconds": 349,
       "tab": "data",
       "focusId": "data__money",
       "label": "Der Teufelskreis"
     },
     {
-      "seconds": 223,
+      "seconds": 397,
       "tab": "consequences",
       "focusIds": [
         "tab-btn-consequences",
@@ -131,38 +131,38 @@
       "isChapter": true
     },
     {
-      "seconds": 230,
+      "seconds": 411,
       "tab": "consequences",
       "focusId": "slacktivism-card",
       "label": "Slacktivism"
     },
     {
-      "seconds": 249,
+      "seconds": 425,
       "tab": "consequences",
       "focusId": "fake-news-card",
       "label": "Fake News Anfälligkeit"
     },
     {
-      "seconds": 269,
+      "seconds": 449,
       "tab": "consequences",
       "focusId": "polarization-card",
       "label": "Polarisierung"
     },
     {
-      "seconds": 288,
+      "seconds": 499,
       "tab": "consequences",
       "focusId": "consequences__agenda",
       "label": "Agenda Setting"
     },
     {
-      "seconds": 322,
+      "seconds": 543,
       "tab": "consequences",
       "focusId": "consequences__final",
       "label": "Die entscheidende Frage",
       "isChapter": true
     },
     {
-      "seconds": 349,
+      "seconds": 585,
       "tab": "consequences",
       "focusId": "quellen",
       "label": "Wissenschaftliche Quellen"
