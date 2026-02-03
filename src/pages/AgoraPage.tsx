@@ -19,7 +19,6 @@ import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { StatCard } from '@/components/StatCard';
 import { SourceBadge } from '@/components/SourceBadge';
-import { OnboardingTour } from '@/components/OnboardingTour';
 import { FocusRegion } from '@/components/FocusRegion';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
@@ -725,9 +724,6 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 audioSrc={config.audioSrc || ''}
                 directorState={directorState}
             />
-
-            {/* Onboarding Tour for first-time users */}
-            < OnboardingTour />
         </div >
     );
 }

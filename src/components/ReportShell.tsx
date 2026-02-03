@@ -2,6 +2,7 @@ import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { AgoraPage } from '@/pages/AgoraPage';
 import { PublicMediaPage } from '@/pages/PublicMediaPage';
+import { OnboardingTour } from '@/components/OnboardingTour';
 import { PageConfig } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 
@@ -70,5 +71,10 @@ export function ReportShell() {
         audioSrc: pageConfig.audioSrc || `audio/${capitalizedSlug}Page.mp3`
     };
 
-    return <PageComponent config={resolvedConfig} />;
+    return (
+        <>
+            <PageComponent config={resolvedConfig} />
+            <OnboardingTour />
+        </>
+    );
 }

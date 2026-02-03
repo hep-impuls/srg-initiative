@@ -297,7 +297,9 @@ const countryData = [
             </>
         ),
         status: 'sicher',
-        refs: ["6", "11", "12"]
+        refs: ["6", "11", "12"],
+        image: 'img/public_media/1.png',
+        imageAlt: 'Mauer zwischen Politik und Geld'
     },
     {
         id: 'finnland',
@@ -315,7 +317,9 @@ const countryData = [
         ),
         risks: 'Das System ist sehr sicher. Es gibt kaum Risiken, weil alle Parteien zustimmen.',
         status: 'sicher',
-        refs: ["11", "16", "39"]
+        refs: ["11", "16", "39"],
+        image: 'img/public_media/2.png',
+        imageAlt: 'Der gesicherte Geld-Topf'
     },
     {
         id: 'uk',
@@ -337,7 +341,9 @@ const countryData = [
             </>
         ),
         status: 'risiko',
-        refs: ["7", "8", "9", "10"]
+        refs: ["7", "8", "9", "10"],
+        image: 'img/public_media/3.png',
+        imageAlt: 'Das schmelzende Budget'
     },
     {
         id: 'japan',
@@ -381,7 +387,9 @@ const countryData = [
             </>
         ),
         status: 'risiko',
-        refs: ["1", "3", "17", "18"]
+        refs: ["1", "3", "17", "18"],
+        image: 'img/public_media/4.png',
+        imageAlt: 'Das Budget als Waffe'
     },
     {
         id: 'frankreich',
@@ -425,7 +433,9 @@ const countryData = [
             </>
         ),
         status: 'gefaehrdet',
-        refs: ["2", "21", "22", "40"]
+        refs: ["2", "21", "22", "40"],
+        image: 'img/public_media/5.png',
+        imageAlt: 'Nachrichten-Wüste'
     },
     {
         id: 'griechenland',
@@ -447,7 +457,9 @@ const countryData = [
             </>
         ),
         status: 'kritisch',
-        refs: ["30", "31", "32", "41"]
+        refs: ["30", "31", "32", "41"],
+        image: 'img/public_media/6.png',
+        imageAlt: 'Schwarzer Bildschirm'
     },
     {
         id: 'neuseeland',
@@ -728,10 +740,28 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                             <Info size={20} className="text-blue-500" />
                                             So funktioniert das System
                                         </h3>
-                                        <p className="text-slate-700 leading-relaxed text-lg">
-                                            {selectedCountry.description}
-                                        </p>
-                                        <SourceBadge ids={selectedCountry.refs} />
+                                        <div className="flex flex-col md:flex-row gap-6 items-start">
+                                            <div className="flex-1">
+                                                <p className="text-slate-700 leading-relaxed text-lg mb-3">
+                                                    {selectedCountry.description}
+                                                </p>
+                                                <SourceBadge ids={selectedCountry.refs} />
+                                            </div>
+                                            {/* @ts-ignore - image property is added dynamically */}
+                                            {selectedCountry.image && (
+                                                <div className="w-full md:w-2/5 shrink-0">
+                                                    <div className="aspect-video bg-slate-100 rounded-xl overflow-hidden shadow-md border border-slate-200">
+                                                        <img
+                                                            /* @ts-ignore */
+                                                            src={selectedCountry.image}
+                                                            /* @ts-ignore */
+                                                            alt={selectedCountry.imageAlt || ''}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </FocusRegion>
 
                                     <FocusRegion id="public_media__map__detail__risks" label="Risiko-Analyse" className={`p-5 rounded-xl border ${selectedCountry.status === 'sicher' ? 'bg-emerald-50 border-emerald-100' : 'bg-red-50 border-red-100'
