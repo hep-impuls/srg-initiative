@@ -20,6 +20,7 @@ import { AudioPlayer } from '@/components/AudioPlayer';
 import { StatCard } from '@/components/StatCard';
 import { SourceBadge } from '@/components/SourceBadge';
 import { OnboardingTour } from '@/components/OnboardingTour';
+import { FocusRegion } from '@/components/FocusRegion';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 
@@ -129,7 +130,12 @@ export function AgoraPage({ config }: AgoraPageProps) {
             {/* Unified Beginning Section (Header, Tabs, Intro) */}
             <div>
                 {/* Header - Compact & Light */}
-                <header id="beginning-highlight" className="scroll-mt-24 bg-white text-slate-900 pt-8 pb-8 px-4 border-b border-slate-100 relative overflow-hidden">
+                <FocusRegion
+                    id="beginning-highlight"
+                    label="Einstieg & Überblick"
+                    as="header"
+                    className="bg-white text-slate-900 pt-8 pb-8 px-4 border-b border-slate-100 relative overflow-hidden"
+                >
                     <div className="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                         <div className="max-w-3xl">
                             <h1 className="text-3xl md:text-4xl font-extrabold leading-tight text-slate-900 mb-2">
@@ -140,7 +146,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                             Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen.
                         </p>
                     </div>
-                </header>
+                </FocusRegion>
 
                 {/* Main Content Area */}
                 <main className="max-w-5xl mx-auto px-4 mt-8 relative z-20 pb-16">
@@ -198,14 +204,26 @@ export function AgoraPage({ config }: AgoraPageProps) {
                             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
 
                                 {/* Intro Text Section */}
-                                <div id="theory-intro" className="scroll-mt-24 flex flex-col lg:flex-row gap-6 items-center py-4 border-b border-slate-50 pb-8">
-                                    <div className="flex-1">
+                                <FocusRegion
+                                    id="theory__intro"
+                                    label="Einleitung: Wie wir miteinander reden"
+                                    className="flex flex-col lg:flex-row gap-6 items-center py-4 border-b border-slate-50 pb-8"
+                                >
+                                    <FocusRegion
+                                        id="theory__intro__text"
+                                        label="Intro Text"
+                                        className="flex-1"
+                                    >
                                         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Wie wir miteinander reden</h2>
                                         <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
                                             <strong>Früher bestimmten Zeitungsredaktionen</strong>, was wichtig war. <strong>Heute entscheidet oft ein Algorithmus</strong> auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert. <SourceBadge ids={["1", "2"]} />
                                         </p>
-                                    </div>
-                                    <div className="w-full lg:w-2/5 group">
+                                    </FocusRegion>
+                                    <FocusRegion
+                                        id="theory__intro__image"
+                                        label="Intro Bild"
+                                        className="w-full lg:w-2/5 group"
+                                    >
                                         <div className="aspect-video bg-slate-100 rounded-2xl overflow-hidden shadow-xl border border-slate-200 transition-transform duration-500 hover:scale-[1.02]">
                                             <img
                                                 src="img/agora1.png"
@@ -213,11 +231,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 className="w-full h-full object-cover"
                                             />
                                         </div>
-                                    </div>
-                                </div>
+                                    </FocusRegion>
+                                </FocusRegion>
 
                                 {/* Comparison Grid - MOVED TO TOP */}
-                                <div id="comparison-section" className="scroll-mt-24 py-6 border-b border-slate-50">
+                                <FocusRegion
+                                    id="theory__comparison"
+                                    label="Der Wandel: Ein Vergleich"
+                                    className="py-6 border-b border-slate-50"
+                                >
                                     <h3 className="text-lg font-bold mb-4 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
                                     <div className="grid md:grid-cols-2 gap-4 relative">
                                         <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-1.5 rounded-full shadow border border-slate-200">
@@ -225,7 +247,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
 
                                         {/* FRÜHER */}
-                                        <div className="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors">
+                                        <FocusRegion
+                                            id="theory__comparison__left"
+                                            label="Das Lagerfeuer (Früher)"
+                                            className="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors"
+                                        >
                                             <div className="flex items-center justify-center w-8 h-8 bg-slate-200 rounded-full mb-2 mx-auto">
                                                 <Flame className="w-4 h-4 text-slate-600" />
                                             </div>
@@ -241,10 +267,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <span>Journalisten filtern Fakten und sortieren Gerüchte aus.</span>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </FocusRegion>
 
                                         {/* HEUTE */}
-                                        <div className="bg-blue-50/50 p-4 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors">
+                                        <FocusRegion
+                                            id="theory__comparison__right"
+                                            label="Der eigene Tunnel (Heute)"
+                                            className="bg-blue-50/50 p-4 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors"
+                                        >
                                             <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mb-2 mx-auto">
                                                 <Smartphone className="w-4 h-4 text-blue-600" />
                                             </div>
@@ -260,12 +290,16 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <span>Algorithmen entscheiden, was dich am Bildschirm hält.</span>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </FocusRegion>
                                     </div>
-                                </div>
+                                </FocusRegion>
 
                                 {/* Agora Box Section */}
-                                <div id="agora-explanation" className="scroll-mt-24 py-8 bg-gradient-to-br from-indigo-50/30 to-white rounded-3xl border border-indigo-100/50 p-4 md:p-8 relative overflow-hidden">
+                                <FocusRegion
+                                    id="theory__agora"
+                                    label="Was bedeutet Agora?"
+                                    className="py-8 bg-gradient-to-br from-indigo-50/30 to-white rounded-3xl border border-indigo-100/50 p-4 md:p-8 relative overflow-hidden"
+                                >
                                     <div className="relative z-10 w-full">
                                         <h3 className="text-lg font-bold text-indigo-900 mb-4 flex items-center">
                                             <LayoutGrid className="w-5 h-5 mr-3 text-indigo-600" />
@@ -304,10 +338,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                     <div className="absolute top-0 right-0 w-48 h-48 bg-indigo-500/5 rounded-full -mr-24 -mt-24 blur-3xl"></div>
-                                </div>
+                                </FocusRegion>
 
                                 {/* Gatekeeper Section */}
-                                <div id="gatekeeper-infobox" className="scroll-mt-24 py-8">
+                                <FocusRegion
+                                    id="theory__gatekeeper"
+                                    label="Gatekeeper erklärt"
+                                    className="py-8"
+                                >
                                     <div className="flex flex-col md:flex-row gap-6 items-center w-full">
                                         <div className="flex-1">
                                             <div className="bg-emerald-50/50 border border-emerald-100 rounded-3xl p-4 md:p-8">
@@ -316,7 +354,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <h3 className="text-lg font-bold text-emerald-900">Was bedeutet 'Gatekeeper'?</h3>
                                                 </div>
                                                 <p className="text-base text-emerald-900/80 leading-relaxed">
-                                                    Gatekeeper heisst <strong>"Torwächter"</strong>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – <strong>jeder kann alles posten</strong>, wahr oder falsch.
+                                                    <FocusRegion id="theory__gatekeeper__word__gatekeeper" label="Wort: Gatekeeper" as="span" className="font-bold px-1 rounded transition-colors inline-block">Gatekeeper</FocusRegion> heisst <FocusRegion id="theory__gatekeeper__word__torwaechter" label="Wort: Torwächter" as="span" className="font-bold px-1 rounded transition-colors inline-block">"Torwächter"</FocusRegion>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – <strong>jeder kann alles posten</strong>, wahr oder falsch.
                                                 </p>
                                             </div>
                                         </div>
@@ -330,14 +368,18 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </FocusRegion>
 
                                 {/* Unified Algorithm & Attention Section */}
                                 <div className="scroll-mt-24 py-4">
                                     <div className="bg-gradient-to-br from-blue-50 to-amber-50 rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
                                         <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
                                             {/* Left: Hype Man */}
-                                            <div id="algorithm-hypeman" className="p-6 md:p-8 scroll-mt-24">
+                                            <FocusRegion
+                                                id="theory__algorithm"
+                                                label="Algorithmus als Hype-Man"
+                                                className="p-6 md:p-8"
+                                            >
                                                 <div className="flex items-center gap-2 mb-3">
                                                     <BrainCircuit className="w-5 h-5 text-blue-600" />
                                                     <h3 className="font-bold text-blue-900">Der Ja-Sager</h3>
@@ -348,10 +390,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-blue-100/50">
                                                     <img src="img/agora5.png" alt="Algorithm Hype-Man" className="w-full h-full object-cover" />
                                                 </div>
-                                            </div>
+                                            </FocusRegion>
 
                                             {/* Right: Attention */}
-                                            <div id="attention-economy" className="p-6 md:p-8 scroll-mt-24 bg-white/50">
+                                            <FocusRegion
+                                                id="theory__attention"
+                                                label="Aufmerksamkeits-Ökonomie"
+                                                className="p-6 md:p-8 bg-white/50"
+                                            >
                                                 <div className="flex items-center gap-2 mb-3">
                                                     <div className="bg-amber-100 p-1 rounded"><BrainCircuit className="w-4 h-4 text-amber-600" /></div>
                                                     <h3 className="font-bold text-amber-900">Die Währung</h3>
@@ -362,7 +408,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-amber-100/50">
                                                     <img src="img/agora6.png" alt="Attention Economy" className="w-full h-full object-cover" />
                                                 </div>
-                                            </div>
+                                            </FocusRegion>
                                         </div>
                                     </div>
                                 </div>
@@ -372,15 +418,27 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         {/* TAB 2: DATEN */}
                         {activeTab === 'data' && (
                             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                                <div id="data-overview-container" className="scroll-mt-24 p-2 -m-2 rounded-3xl">
+                                <FocusRegion
+                                    id="data__overview"
+                                    label="Die Zahlen: Eine gespaltene Gesellschaft"
+                                    className="p-2 -m-2 rounded-3xl"
+                                >
                                     <div className="flex flex-col lg:flex-row gap-6 items-center py-4">
-                                        <div id="data-intro" className="scroll-mt-24 flex-1">
+                                        <FocusRegion
+                                            id="data__overview__text"
+                                            label="Daten Intro Text"
+                                            className="flex-1"
+                                        >
                                             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Die Zahlen: Eine gespaltene Gesellschaft</h2>
                                             <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
                                                 Die Daten aus 2024 und 2025 zeigen ein klares Bild: <strong>Wir driften beim Medienkonsum massiv auseinander.</strong>
                                             </p>
-                                        </div>
-                                        <div id="data-intro-image" className="w-full lg:w-2/5 group">
+                                        </FocusRegion>
+                                        <FocusRegion
+                                            id="data__overview__image"
+                                            label="Daten Intro Bild"
+                                            className="w-full lg:w-2/5 group"
+                                        >
                                             <div className="aspect-video bg-white rounded-3xl overflow-hidden shadow-xl border border-slate-200 transition-all duration-500 hover:shadow-purple-200/50">
                                                 <img
                                                     src="img/agora4.png"
@@ -388,7 +446,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
-                                        </div>
+                                        </FocusRegion>
                                     </div>
 
                                     {/* Combined Stats & Chart Grid */}
@@ -437,10 +495,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </FocusRegion>
 
                                 {/* 15-Second Video Problem Section */}
-                                <div id="tiktok-problem" className="scroll-mt-24 bg-purple-50/30 rounded-3xl p-4 md:p-8 border border-purple-100 my-4">
+                                <FocusRegion
+                                    id="data__tiktok"
+                                    label="Das 15-Sekunden-Problem"
+                                    className="scroll-mt-24 bg-purple-50/30 rounded-3xl p-4 md:p-8 border border-purple-100 my-4"
+                                >
                                     <h3 className="font-bold text-xl mb-6 text-center text-purple-900 tracking-tight">Das 15-Sekunden-Problem</h3>
                                     <div className="grid md:grid-cols-2 gap-6 items-center">
                                         <div className="space-y-4">
@@ -471,10 +533,14 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </FocusRegion>
 
                                 {/* Money Flow Section */}
-                                <div id="money-flow" className="scroll-mt-24 bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl p-4 md:p-8 border border-red-100 my-4">
+                                <FocusRegion
+                                    id="data__money"
+                                    label="Der Teufelskreis"
+                                    className="bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl p-4 md:p-8 border border-red-100 my-4"
+                                >
                                     <h3 className="font-bold text-xl mb-4 text-center text-red-900 tracking-tight">Der Teufelskreis</h3>
                                     <div className="flex flex-col md:flex-row gap-6 items-center">
                                         <div className="flex-1 space-y-4">
@@ -498,19 +564,23 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </FocusRegion>
                             </div>
                         )}
 
                         {/* TAB 3: FOLGEN */}
                         {activeTab === 'consequences' && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
-                                <div id="consequences-intro" className="scroll-mt-24 py-6">
+                                <FocusRegion
+                                    id="consequences__intro"
+                                    label="Was passiert mit der Demokratie?"
+                                    className="py-6"
+                                >
                                     <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Was passiert mit der Demokratie?</h2>
                                     <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
                                         In einer direkten Demokratie müssen wir <strong>informiert sein, um über komplexe Gesetze abstimmen zu können.</strong>
                                     </p>
-                                </div>
+                                </FocusRegion>
 
                                 <div className="grid md:grid-cols-3 gap-4 py-2">
                                     <div id="slacktivism-card" className="bg-white border-t-4 border-red-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
@@ -531,7 +601,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 </div>
 
                                 {/* Agenda Setting Section (Replaces Regulation) */}
-                                <div id="agenda-setting" className="scroll-mt-24 bg-amber-50/50 rounded-[2rem] p-6 md:p-8 my-4 border border-amber-100 relative overflow-hidden">
+                                <FocusRegion
+                                    id="consequences__agenda"
+                                    label="Agenda Setting"
+                                    className="bg-amber-50/50 rounded-[2rem] p-6 md:p-8 my-4 border border-amber-100 relative overflow-hidden"
+                                >
                                     <div className="relative z-10">
                                         <div className="flex items-center gap-3 mb-4">
                                             <div className="bg-amber-500 p-2 rounded-xl"><MessageCircle className="w-5 h-5 text-white" /></div>
@@ -565,11 +639,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full -mr-20 -mt-20 blur-3xl"></div>
-                                </div>
+                                </FocusRegion>
 
 
                                 {/* Final Responsibility Question Section */}
-                                <div id="final-question" className="scroll-mt-24 bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-6 md:p-10 my-6 border-2 border-slate-200 relative overflow-hidden">
+                                <FocusRegion
+                                    id="consequences__final"
+                                    label="Die entscheidende Frage"
+                                    className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-6 md:p-10 my-6 border-2 border-slate-200 relative overflow-hidden"
+                                >
                                     <div className="relative z-10">
                                         <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 text-center">Die entscheidende Frage</h3>
                                         <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -604,7 +682,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         </div>
                                     </div>
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-                                </div>
+                                </FocusRegion>
                             </div>
                         )}
                     </div>
@@ -640,16 +718,16 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         </div>
                     </div>
                 </main>
-            </div>
+            </div >
 
             {/* Audio Player Component */}
-            <AudioPlayer
+            < AudioPlayer
                 audioSrc={config.audioSrc || ''}
                 directorState={directorState}
             />
 
             {/* Onboarding Tour for first-time users */}
-            <OnboardingTour />
-        </div>
+            < OnboardingTour />
+        </div >
     );
 }

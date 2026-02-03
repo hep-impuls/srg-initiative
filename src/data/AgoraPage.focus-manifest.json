@@ -1,0 +1,108 @@
+{
+  "source": "AgoraPage.tsx",
+  "generated": "2026-02-03T06:15:29.365Z",
+  "totalRegions": 19,
+  "depthBreakdown": {
+    "depth0": 1,
+    "depth1": 12,
+    "depth2": 6,
+    "depth3": 0
+  },
+  "regions": [
+    {
+      "id": "beginning-highlight",
+      "label": "Einstieg & Überblick",
+      "depth": 0
+    },
+    {
+      "id": "consequences__agenda",
+      "label": "Agenda Setting",
+      "depth": 1
+    },
+    {
+      "id": "consequences__final",
+      "label": "Die entscheidende Frage",
+      "depth": 1
+    },
+    {
+      "id": "consequences__intro",
+      "label": "Was passiert mit der Demokratie?",
+      "depth": 1
+    },
+    {
+      "id": "data__money",
+      "label": "Der Teufelskreis",
+      "depth": 1
+    },
+    {
+      "id": "data__overview",
+      "label": "Die Zahlen: Eine gespaltene Gesellschaft",
+      "depth": 1
+    },
+    {
+      "id": "data__tiktok",
+      "label": "Das 15-Sekunden-Problem",
+      "depth": 1
+    },
+    {
+      "id": "theory__agora",
+      "label": "Was bedeutet Agora?",
+      "depth": 1
+    },
+    {
+      "id": "theory__algorithm",
+      "label": "Algorithmus als Hype-Man",
+      "depth": 1
+    },
+    {
+      "id": "theory__attention",
+      "label": "Aufmerksamkeits-Ökonomie",
+      "depth": 1
+    },
+    {
+      "id": "theory__comparison",
+      "label": "Der Wandel: Ein Vergleich",
+      "depth": 1
+    },
+    {
+      "id": "theory__gatekeeper",
+      "label": "Gatekeeper erklärt",
+      "depth": 1
+    },
+    {
+      "id": "theory__intro",
+      "label": "Einleitung: Wie wir miteinander reden",
+      "depth": 1
+    },
+    {
+      "id": "data__overview__image",
+      "label": "Daten Intro Bild",
+      "depth": 2
+    },
+    {
+      "id": "data__overview__text",
+      "label": "Daten Intro Text",
+      "depth": 2
+    },
+    {
+      "id": "theory__comparison__left",
+      "label": "Das Lagerfeuer (Früher)",
+      "depth": 2
+    },
+    {
+      "id": "theory__comparison__right",
+      "label": "Der eigene Tunnel (Heute)",
+      "depth": 2
+    },
+    {
+      "id": "theory__intro__image",
+      "label": "Intro Bild",
+      "depth": 2
+    },
+    {
+      "id": "theory__intro__text",
+      "label": "Intro Text",
+      "depth": 2
+    }
+  ]
+}

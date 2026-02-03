@@ -13,15 +13,15 @@
       "tab": "theory",
       "focusIds": [
         "main-tabs",
-        "theory-intro"
+        "theory__intro"
       ],
-      "focusId": "theory-intro",
+      "focusId": "theory__intro",
       "label": "Einleitung"
     },
     {
       "seconds": 16,
       "tab": "theory",
-      "focusId": "comparison-section",
+      "focusId": "theory__comparison",
       "label": "Lagerfeuer vs. Tunnel",
       "isChapter": true
     },
@@ -34,26 +34,42 @@
     {
       "seconds": 43,
       "tab": "theory",
-      "focusId": "agora-explanation",
+      "focusId": "theory__agora",
       "label": "Was bedeutet Agora?",
       "isChapter": true
     },
     {
       "seconds": 68,
       "tab": "theory",
-      "focusId": "gatekeeper-infobox",
+      "focusId": "theory__gatekeeper",
       "label": "Gatekeeper erklärt"
+    },
+    {
+      "seconds": 71,
+      "tab": "theory",
+      "focusId": "theory__gatekeeper__word__gatekeeper",
+      "label": "Begriff: Gatekeeper"
+    },
+    {
+      "seconds": 73,
+      "tab": "theory",
+      "focusId": "theory__gatekeeper__word__torwaechter",
+      "label": "Begriff: Torwächter"
     },
     {
       "seconds": 91,
       "tab": "theory",
-      "focusId": "algorithm-hypeman",
+      "focusId": "theory__algorithm",
       "label": "Algorithmus als Hype-Man"
     },
     {
-      "seconds": 120,
+      "seconds": 115,
       "tab": "theory",
-      "focusId": "attention-economy",
+      "focusIds": [
+        "theory__algorithm",
+        "theory__attention"
+      ],
+      "focusId": "theory__attention",
       "label": "Aufmerksamkeits-Ökonomie"
     },
     {
@@ -61,9 +77,9 @@
       "tab": "data",
       "focusIds": [
         "tab-btn-data",
-        "data-overview-container"
+        "data__overview"
       ],
-      "focusId": "data-overview-container",
+      "focusId": "data__overview",
       "label": "Die Datenlage",
       "isChapter": true
     },
@@ -94,13 +110,13 @@
     {
       "seconds": 194,
       "tab": "data",
-      "focusId": "tiktok-problem",
+      "focusId": "data__tiktok",
       "label": "15-Sekunden-Problem"
     },
     {
       "seconds": 207,
       "tab": "data",
-      "focusId": "money-flow",
+      "focusId": "data__money",
       "label": "Der Teufelskreis"
     },
     {
@@ -108,9 +124,9 @@
       "tab": "consequences",
       "focusIds": [
         "tab-btn-consequences",
-        "consequences-intro"
+        "consequences__intro"
       ],
-      "focusId": "consequences-intro",
+      "focusId": "consequences__intro",
       "label": "Folgen für Demokratie",
       "isChapter": true
     },
@@ -133,17 +149,17 @@
       "label": "Polarisierung"
     },
     {
-      "seconds": 322,
+      "seconds": 288,
       "tab": "consequences",
-      "focusId": "final-question",
-      "label": "Die entscheidende Frage",
-      "isChapter": true
+      "focusId": "consequences__agenda",
+      "label": "Agenda Setting"
     },
     {
-      "seconds": 338,
+      "seconds": 322,
       "tab": "consequences",
-      "focusId": "agenda-setting",
-      "label": "Agenda Setting"
+      "focusId": "consequences__final",
+      "label": "Die entscheidende Frage",
+      "isChapter": true
     },
     {
       "seconds": 349,

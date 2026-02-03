@@ -6,6 +6,8 @@ Ein interaktives Reportage-System, bei dem Audio-Narration automatisch durch den
 
 **Status:** ✅ Vollständig implementiert und funktionsfähig
 
+> **Neu (Februar 2026):** Das Projekt nutzt jetzt das **FocusRegion System** für strukturierte, selbstdokumentierende Fokus-Elemente. Siehe [focusregion-system.md](./focusregion-system.md) für Details.
+
 ---
 
 ## Architektur
