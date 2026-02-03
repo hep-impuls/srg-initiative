@@ -90,6 +90,35 @@ export function MyPage({ config }: MyPageProps) {
 }
 ```
 
+### Special Case: Embedding H5P/Lumi Content
+
+If your page requires an embedded H5P quiz or interactive element, follow these strict rules to ensure compatibility and state preservation.
+
+1.  **Iframe Configuration:**
+    *   Use `frameBorder="0"` (React casing).
+    *   Add `p-[2px]` class to the container to prevent clipping of rounded corners.
+    *   Ensure the source URL is **lowercase** (e.g., `https://app.lumi.education/...`).
+
+2.  **State Preservation:**
+    *   **DO NOT** use conditional rendering (e.g., `{activeTab === 'quiz' && ...}`) for the iframe container. Unmounting destroys the user's progress.
+    *   **MUST** use CSS toggling: `<div style={{ display: activeTab === 'quiz' ? 'block' : 'none' }}>`.
+
+3.  **Resizer Script:**
+    *   H5P requires `h5p-resizer.js` to adjust height automatically.
+    *   Import and use the `ScriptLoader` component inside the iframe container.
+
+    ```tsx
+    import { ScriptLoader } from '@/components/ScriptLoader';
+
+    // ... inside component
+    <div style={{ display: activeTab === 'quiz' ? 'block' : 'none' }}>
+        <div className="rounded-xl border p-[2px]"> {/* Container with padding */}
+            <iframe src="..." frameBorder="0" className="w-full h-full" ... />
+            <ScriptLoader />
+        </div>
+    </div>
+    ```
+
 ---
 
 ## Step 3: Registration (Router)

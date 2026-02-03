@@ -126,6 +126,13 @@
             "focusId": "quellen",
             "label": "Quellenverzeichnis",
             "isChapter": false
+        },
+        {
+            "seconds": 640,
+            "tab": "quiz",
+            "focusId": "public_media__quiz",
+            "label": "Abschluss: Quiz",
+            "isChapter": true
         }
     ]
 }

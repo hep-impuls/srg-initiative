@@ -11,13 +11,15 @@ import {
     Coins,
     ShieldCheck,
     ShieldAlert,
-    ExternalLink
+    ExternalLink,
+    HelpCircle
 } from 'lucide-react';
 
 import { FocusRegion } from '@/components/FocusRegion';
 import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { SourceBadge } from '@/components/SourceBadge';
+import { ScriptLoader } from '@/components/ScriptLoader';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 
@@ -508,7 +510,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
     const directorState = useAudioDirector(config.timeline);
 
     // Fallback to manual control if no audio or audio paused
-    const [manualTab, setManualTab] = useState<'intro' | 'map' | 'compare' | 'analysis'>('intro');
+    const [manualTab, setManualTab] = useState<'intro' | 'map' | 'compare' | 'analysis' | 'quiz'>('intro');
     const activeTab = directorState.audioState.isPlaying
         ? (directorState.currentTab || manualTab)
         : manualTab;
@@ -559,7 +561,8 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                             { id: 'intro', label: 'Einstieg', icon: Info },
                             { id: 'map', label: 'Länder-Übersicht', icon: Globe },
                             { id: 'compare', label: 'Vergleich', icon: TrendingUp },
-                            { id: 'analysis', label: 'Folgen & Analyse', icon: BookOpen }
+                            { id: 'analysis', label: 'Folgen & Analyse', icon: BookOpen },
+                            { id: 'quiz', label: 'Quiz', icon: HelpCircle }
                         ].map((tab) => (
                             <button
                                 key={tab.id}
@@ -962,6 +965,36 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                     </FocusRegion>
                 )}
 
+                {/* VIEW: QUIZ */}
+                {/* Always render iframe to preserve state, just hide it when not active */}
+                <div style={{ display: activeTab === 'quiz' ? 'block' : 'none' }}>
+                    <FocusRegion id="public_media__quiz" label="Quiz" className="animate-in fade-in duration-500">
+                        <div className="bg-white p-4 md:p-8 rounded-2xl shadow-lg border border-slate-200">
+                            <div className="max-w-4xl mx-auto text-center mb-8">
+                                <span className="inline-block p-3 bg-blue-100 text-blue-600 rounded-full mb-4">
+                                    <HelpCircle size={32} />
+                                </span>
+                                <h2 className="text-3xl font-bold text-slate-900 mb-2">Testen Sie Ihr Wissen</h2>
+                                <p className="text-slate-600 text-lg">
+                                    Haben Sie gut aufgepasst? Beantworten Sie die Fragen zum Thema Public Media.
+                                </p>
+                            </div>
+
+                            <div className="w-full aspect-[4/3] md:aspect-[16/9] bg-slate-50 rounded-xl overflow-hidden shadow-inner border border-slate-200 p-[2px]">
+                                <iframe
+                                    src="https://app.lumi.education/api/v1/run/Y-5ydU/embed"
+                                    className="w-full h-full"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                                    title="Public Media Quiz"
+                                ></iframe>
+                                <ScriptLoader />
+                            </div>
+                        </div>
+                    </FocusRegion>
+                </div>
+
                 {/* Footer with Sources List */}
                 <div id="quellen" className="mt-8 border-t border-slate-200 pt-6">
                     <h3 className="text-sm font-bold text-slate-600 mb-4 flex items-center">
@@ -991,6 +1024,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                         ))}
                     </div>
                 </div>
+
 
             </main>
 
