@@ -276,7 +276,7 @@ const sources: Source[] = swissifyData([
 ]);
 
 // Daten für Berufsschüler (B1 Niveau)
-const countryData = [
+const countryData = swissifyData([
     {
         id: 'deutschland',
         name: 'Deutschland',
@@ -483,7 +483,7 @@ const countryData = [
         status: 'gefaehrdet',
         refs: ["26", "27", "28", "29"]
     }
-];
+]);
 
 const StatusIndicator = ({ status }: { status: string }) => {
     const config: Record<string, { color: string; text: string; icon: any }> = {
@@ -858,7 +858,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     Die "Wissens-Lücke" (Knowledge Gap)
                                 </h3>
                                 <p className="text-slate-700 mb-4">
-                                    Wer weiß eigentlich, was in der Politik passiert?
+                                    Wer weiss eigentlich, was in der Politik passiert?
                                 </p>
                                 <div className="space-y-3">
                                     <div className="p-3 bg-slate-100 rounded text-slate-700">
