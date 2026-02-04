@@ -7,24 +7,41 @@ service cloud.firestore {
     match /interactions/{interactionId} {
       allow read: if true;
       
-      // Strict update: must be authenticated, and total_votes must increment by exactly 1
+      // Updates are only allowed if they follow the aggregated data model
+      // We rely on transactions for atomicity, but rules still provide a safety net
       allow update: if request.auth != null 
-                    && request.resource.data.total_votes == resource.data.total_votes + 1;
+                    && request.resource.data.total_votes >= resource.data.total_votes;
       
       // Allow initial creation (lazy initialization)
       allow create: if request.auth != null;
     }
 
-    // User Votes collection: prevents double voting
+    // User Votes collection: prevents double voting and manages drafts
     match /user_votes/{voteId} {
       // voteId is expected to be [userId]_[interactionId]
       
-      // Allow creation only if the user is authenticated and the ID matches their UID
+      // Create is allowed if:
+      // 1. User is authenticated
+      // 2. ID starts with their UID (regex check)
+      // 3. Document doesn't exist yet
       allow create: if request.auth != null 
-                    && voteId[0:request.auth.uid.size()] == request.auth.uid
+                    && voteId.matches('^' + request.auth.uid + '_.*')
                     && !exists(/databases/$(database)/documents/user_votes/$(voteId));
       
-      allow read, update, delete: if false;
+      // Update is ONLY allowed if:
+      // 1. It's a draft being updated to another draft or a final vote
+      // 2. The existing document WAS a draft (cannot overwrite final votes)
+      // 3. ID matches UID
+      allow update: if request.auth != null
+                    && voteId.matches('^' + request.auth.uid + '_.*')
+                    && resource.data.isDraft == true;
+      
+      // Read allowed for own votes
+      allow read: if request.auth != null 
+                  && voteId.matches('^' + request.auth.uid + '_.*');
+                  
+      // No deletes
+      allow delete: if false;
     }
   }
 }

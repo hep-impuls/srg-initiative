@@ -27,7 +27,7 @@ export function SourceBadge({ ids }: SourceBadgeProps) {
   };
 
   return (
-    <div className="flex flex-wrap gap-1 mt-1">
+    <span className="flex flex-wrap gap-1 mt-1">
       {ids.map(id => (
         <a
           key={id}
@@ -38,6 +38,6 @@ export function SourceBadge({ ids }: SourceBadgeProps) {
           [{id}]
         </a>
       ))}
-    </div>
+    </span>
   );
 }

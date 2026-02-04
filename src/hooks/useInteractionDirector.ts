@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { doc, onSnapshot, increment, setDoc, DocumentSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, DocumentSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { InteractionConfig, InteractionResults } from '../types/interaction';
 
 export type InteractionPhase = 'input' | 'locked' | 'reveal';
+export type VoteStatus = 'idle' | 'drafting' | 'finalizing' | 'finalized';
 
 interface UseInteractionDirectorProps {
     config: InteractionConfig;
@@ -24,8 +25,13 @@ export function useInteractionDirector({
     const [hasVoted, setHasVoted] = useState(false);
     const [userVote, setUserVote] = useState<string | number | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const finalizeRef = useRef(false);
+    const voteStatusRef = useRef<VoteStatus>('idle');
     const lastSuccessfulVoteRef = useRef<string | number | null>(null);
+
+    // Helper to update ref immediately
+    const updateVoteStatus = (status: VoteStatus) => {
+        voteStatusRef.current = status;
+    };
 
     // 1. Manage Phases based on Time
     useEffect(() => {
@@ -87,9 +93,12 @@ export function useInteractionDirector({
         }
     }, [config.id]);
 
-    // 4. Draft Saving (Silent background update)
     const saveDraft = async (optionId: string | number) => {
-        if (hasVoted || phase !== 'input' || finalizeRef.current) return;
+        // Only save drafts if we're idle or already drafting (not finalizing/finalized)
+        const currentStatus = voteStatusRef.current as VoteStatus;
+        if (hasVoted || phase !== 'input' || currentStatus === 'finalizing' || currentStatus === 'finalized') return;
+
+        updateVoteStatus('drafting');
 
         try {
             let currentUserId = userId;
@@ -103,8 +112,9 @@ export function useInteractionDirector({
             const voteId = `${currentUserId}_${config.id}`;
             const userVoteRef = doc(db, 'user_votes', voteId);
 
-            // Double check finalizeRef inside the async block
-            if (finalizeRef.current) return;
+            // Double check voteStatus inside the async block using ref to bypass closure narrowing
+            const statusAfterAwait = voteStatusRef.current as VoteStatus;
+            if (statusAfterAwait === 'finalizing' || statusAfterAwait === 'finalized') return;
 
             await setDoc(userVoteRef, {
                 timestamp: new Date().toISOString(),
@@ -115,11 +125,14 @@ export function useInteractionDirector({
 
             localStorage.setItem(`vote_draft_${config.id}`, String(optionId));
 
-            // Only update state if we haven't finalized or if this is actually newer than what we have
-            if (!finalizeRef.current) {
+            // Only update state if we haven't finalized
+            const finalStatusCheck = voteStatusRef.current as VoteStatus;
+            if (finalStatusCheck !== 'finalizing' && finalStatusCheck !== 'finalized') {
                 lastSuccessfulVoteRef.current = optionId;
                 setUserVote(optionId);
             }
+
+            updateVoteStatus('idle'); // Return to idle after draft save
         } catch (error) {
             console.error("Error saving draft:", error);
         }
@@ -127,9 +140,10 @@ export function useInteractionDirector({
 
     // 5. Final Vote Submission (Locks UI & Increments Community Count)
     const submitVote = async (optionId: string | number) => {
-        if (hasVoted || isSubmitting || phase !== 'input') return;
+        const currentStatus = voteStatusRef.current as VoteStatus;
+        if (hasVoted || isSubmitting || phase !== 'input' || currentStatus === 'finalizing' || currentStatus === 'finalized') return;
 
-        finalizeRef.current = true; // Block any further drafts immediately
+        updateVoteStatus('finalizing'); // Block any further drafts immediately
         setIsSubmitting(true);
 
         try {
@@ -145,32 +159,65 @@ export function useInteractionDirector({
             const userVoteRef = doc(db, 'user_votes', voteId);
             const interactionRef = doc(db, 'interactions', config.id);
 
-            // 1. Mark vote as non-draft in the unique user_vote record
-            await setDoc(userVoteRef, {
-                timestamp: new Date().toISOString(),
-                value: optionId,
-                interactionId: config.id,
-                isDraft: false
-            }, { merge: true });
+            // Use a transaction to atomically check and write both documents
+            const { runTransaction } = await import('firebase/firestore');
 
-            // 2. Increment the aggregated counters
-            await setDoc(interactionRef, {
-                total_votes: increment(1),
-                options: {
-                    [optionId]: increment(1)
+            await runTransaction(db, async (transaction) => {
+                const userVoteSnap = await transaction.get(userVoteRef);
+
+                // Server-side duplicate vote prevention
+                if (userVoteSnap.exists()) {
+                    const existingData = userVoteSnap.data();
+                    if (existingData && !existingData.isDraft) {
+                        throw new Error('ALREADY_VOTED');
+                    }
                 }
-            }, { merge: true });
+
+                const interactionSnap = await transaction.get(interactionRef);
+                const interactionData = interactionSnap.data();
+
+                // Atomically write both documents
+                transaction.set(userVoteRef, {
+                    timestamp: new Date().toISOString(),
+                    value: optionId,
+                    interactionId: config.id,
+                    isDraft: false
+                });
+
+                // Calculate new values
+                const currentTotalVotes = interactionData?.total_votes || 0;
+                const currentOptionCount = interactionData?.options?.[optionId] || 0;
+
+                transaction.set(interactionRef, {
+                    total_votes: currentTotalVotes + 1,
+                    options: {
+                        ...interactionData?.options,
+                        [optionId]: currentOptionCount + 1
+                    }
+                }, { merge: true });
+            });
 
             // Save to local storage for UI persistence
             localStorage.setItem(`vote_${config.id}`, String(optionId));
+            localStorage.removeItem(`vote_draft_${config.id}`); // Clear draft
             lastSuccessfulVoteRef.current = optionId;
             setUserVote(optionId);
             setHasVoted(true);
+            updateVoteStatus('finalized'); // Mark as finalized
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Error submitting vote:", error);
-            if ((error as any).code === 'permission-denied' || (error as any).message?.includes('already exists')) {
+
+            // Handle specific error cases
+            if (error.message === 'ALREADY_VOTED') {
+                // User already voted (possibly in another tab)
                 setHasVoted(true);
+                const stored = localStorage.getItem(`vote_${config.id}`);
+                if (stored) setUserVote(stored);
+            } else {
+                // Other errors - don't mark as voted, allow retry
+                updateVoteStatus('idle'); // Allow retry
+                alert('Fehler beim Speichern. Bitte versuchen Sie es erneut.');
             }
         } finally {
             setIsSubmitting(false);
@@ -182,7 +229,7 @@ export function useInteractionDirector({
     const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
 
     const handleInteraction = (value: string | number) => {
-        if (hasVoted || phase !== 'input' || finalizeRef.current) return;
+        if (hasVoted || phase !== 'input' || voteStatusRef.current === 'finalizing' || voteStatusRef.current === 'finalized') return;
         setDraftVote(value);
         setLastInteractionTime(Date.now());
 
