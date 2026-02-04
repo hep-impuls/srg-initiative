@@ -68,7 +68,7 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
     const quizTotal = answeredInteractions.filter(i => i.config.type === 'quiz').length;
     const quizCorrect = answeredInteractions.filter(i => {
         if (i.config.type !== 'quiz') return false;
-        const correctOption = i.config.options.find(o => o.isCorrect);
+        const correctOption = i.config.options?.find((o: any) => o.isCorrect);
         return correctOption?.id === i.vote;
     }).length;
 
@@ -95,9 +95,9 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
 
                 {answeredInteractions.map(({ config, vote }) => {
                     const isQuiz = config.type === 'quiz';
-                    const correctOption = config.options.find(o => o.isCorrect);
+                    const correctOption = config.options?.find((o: any) => o.isCorrect);
                     const isCorrect = isQuiz && correctOption?.id === vote;
-                    const userOptionLabel = config.options.find(o => o.id === vote)?.label || vote;
+                    const userOptionLabel = config.options?.find((o: any) => o.id === vote)?.label || vote;
 
                     return (
                         <div key={config.id} className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex items-start gap-4">
