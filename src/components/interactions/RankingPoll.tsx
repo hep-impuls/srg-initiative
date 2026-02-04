@@ -24,14 +24,38 @@ export const RankingPoll: React.FC<RankingPollProps> = ({
     userVote,
     showResults
 }) => {
-    const [items, setItems] = React.useState(initialOptions);
+    const [items, setItems] = React.useState(() => {
+        if (userVote) {
+            const order = (userVote as string).split(',');
+            // Map the initial options to the saved order
+            return [...initialOptions].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+        }
+        return initialOptions;
+    });
+
+    const touchedRef = React.useRef(false);
 
     // Sync items with initialOptions if they change (e.g. on new interaction load in sequence)
     React.useEffect(() => {
-        setItems(initialOptions);
-    }, [initialOptions]);
+        touchedRef.current = false;
+        if (userVote) {
+            const order = (userVote as string).split(',');
+            setItems([...initialOptions].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)));
+        } else {
+            setItems(initialOptions);
+        }
+    }, [initialOptions]); // Only on interaction change
+
+    // Sync from userVote only if not touched
+    React.useEffect(() => {
+        if (userVote && !touchedRef.current) {
+            const order = (userVote as string).split(',');
+            setItems([...initialOptions].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id)));
+        }
+    }, [userVote, initialOptions]); // Added initialOptions to dependency array for safety, though it's primarily for userVote changes
 
     const move = (index: number, direction: 'up' | 'down') => {
+        touchedRef.current = true;
         const newItems = [...items];
         const newIndex = direction === 'up' ? index - 1 : index + 1;
         if (newIndex < 0 || newIndex >= items.length) return;

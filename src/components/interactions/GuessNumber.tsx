@@ -22,7 +22,25 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
     userVote,
     showResults
 }) => {
-    const [localValue, setLocalValue] = useState<string>('');
+    const [localValue, setLocalValue] = useState<string>(userVote !== null ? String(userVote) : '');
+    const touchedRef = React.useRef(false);
+
+    // Reset on interaction change
+    React.useEffect(() => {
+        touchedRef.current = false;
+        if (userVote !== null) {
+            setLocalValue(String(userVote));
+        } else {
+            setLocalValue('');
+        }
+    }, [config.question]); // GuessNumber uses config.question as ID effectively
+
+    // Sync from userVote only if not touched
+    React.useEffect(() => {
+        if (userVote !== null && !touchedRef.current) {
+            setLocalValue(String(userVote));
+        }
+    }, [userVote]);
     const totalVotes = results?.totalVotes || 0;
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -54,6 +72,7 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
                             type="number"
                             value={localValue}
                             onChange={(e) => {
+                                touchedRef.current = true;
                                 setLocalValue(e.target.value);
                                 const val = parseFloat(e.target.value);
                                 if (!isNaN(val)) onInteract?.(val);

@@ -10,7 +10,7 @@ interface UserSummaryProps {
 }
 
 export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
-    const [answeredInteractions, setAnsweredInteractions] = useState<{ config: InteractionConfig, vote: string | number | null, stats: InteractionResults | null }[]>([]);
+    const [answeredInteractions, setAnsweredInteractions] = useState<{ config: InteractionConfig, vote: string | number | null, stats: InteractionResults | null, isDraft?: boolean }[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -22,7 +22,10 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
                 for (const path in modules) {
                     const mod: any = await modules[path]();
                     const config = mod.default || mod;
-                    const userVote = localStorage.getItem(`vote_${config.id}`);
+                    const finalizedVote = localStorage.getItem(`vote_${config.id}`);
+                    const draftVote = localStorage.getItem(`vote_draft_${config.id}`);
+                    const userVote = finalizedVote || draftVote;
+                    const isDraft = !finalizedVote && !!draftVote;
 
                     // Filter logic
                     let shouldInclude = true;
@@ -49,7 +52,7 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
                             console.warn("Failed to load stats for", config.id, e);
                         }
 
-                        results.push({ config, vote: userVote, stats });
+                        results.push({ config, vote: userVote, stats, isDraft } as any);
                     }
                 }
                 setAnsweredInteractions(results);
@@ -102,7 +105,7 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
                     Ihre individuellen Antworten
                 </h3>
 
-                {answeredInteractions.map(({ config, vote, stats }) => {
+                {answeredInteractions.map(({ config, vote, stats, isDraft }) => {
                     const isQuiz = config.type === 'quiz';
                     const correctOption = config.options?.find((o: any) => o.isCorrect);
                     const isCorrect = isQuiz && correctOption?.id === vote;
@@ -119,9 +122,12 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
                                 <div className="text-sm mb-3">
                                     <span className="text-slate-500">Ihre Antwort: </span>
                                     {vote ? (
-                                        <span className={`font-bold ${isQuiz ? (isCorrect ? 'text-green-600' : 'text-red-600') : 'text-blue-600'}`}>
-                                            {swissifyData(String(userOptionLabel))}
-                                        </span>
+                                        <>
+                                            <span className={`font-bold ${isQuiz ? (isCorrect ? 'text-green-600' : 'text-red-600') : 'text-blue-600'}`}>
+                                                {swissifyData(String(userOptionLabel))}
+                                            </span>
+                                            {isDraft && <span className="ml-2 text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-bold uppercase">Entwurf</span>}
+                                        </>
                                     ) : (
                                         <span className="font-bold text-slate-400 italic">keine antwort</span>
                                     )}

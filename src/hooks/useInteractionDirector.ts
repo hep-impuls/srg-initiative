@@ -72,32 +72,75 @@ export function useInteractionDirector({
         });
 
         const storageKey = `vote_${config.id}`;
+        const draftKey = `vote_draft_${config.id}`;
+
         const storedVote = localStorage.getItem(storageKey);
+        const draftVote = localStorage.getItem(draftKey);
+
         if (storedVote) {
             setHasVoted(true);
             setUserVote(storedVote);
+        } else if (draftVote) {
+            setUserVote(draftVote);
         }
     }, [config.id]);
 
-    // 4. Vote Action
+    // 4. Draft Saving (Silent background update)
+    const saveDraft = async (optionId: string | number) => {
+        if (hasVoted || phase !== 'input') return;
+
+        try {
+            let currentUserId = userId;
+            if (!currentUserId) {
+                const { ensureAuth } = await import('../lib/firebase');
+                const user = await ensureAuth();
+                currentUserId = user.uid;
+                setUserId(currentUserId);
+            }
+
+            const voteId = `${currentUserId}_${config.id}`;
+            const userVoteRef = doc(db, 'user_votes', voteId);
+
+            await setDoc(userVoteRef, {
+                timestamp: new Date().toISOString(),
+                value: optionId,
+                interactionId: config.id,
+                isDraft: true
+            }, { merge: true });
+
+            localStorage.setItem(`vote_draft_${config.id}`, String(optionId));
+            setUserVote(optionId);
+        } catch (error) {
+            console.error("Error saving draft:", error);
+        }
+    };
+
+    // 5. Final Vote Submission (Locks UI & Increments Community Count)
     const submitVote = async (optionId: string | number) => {
-        if (hasVoted || isSubmitting || phase !== 'input' || !userId) return;
+        if (hasVoted || isSubmitting || phase !== 'input') return;
 
         setIsSubmitting(true);
 
         try {
-            const voteId = `${userId}_${config.id}`;
+            let currentUserId = userId;
+            if (!currentUserId) {
+                const { ensureAuth } = await import('../lib/firebase');
+                const user = await ensureAuth();
+                currentUserId = user.uid;
+                setUserId(currentUserId);
+            }
+
+            const voteId = `${currentUserId}_${config.id}`;
             const userVoteRef = doc(db, 'user_votes', voteId);
             const interactionRef = doc(db, 'interactions', config.id);
 
-            // 1. Create the unique user_vote record first.
-            // If this fails (e.g. because it already exists), 
-            // the firestore rules will block it and we stop.
+            // 1. Mark vote as non-draft in the unique user_vote record
             await setDoc(userVoteRef, {
                 timestamp: new Date().toISOString(),
                 value: optionId,
-                interactionId: config.id
-            });
+                interactionId: config.id,
+                isDraft: false
+            }, { merge: true });
 
             // 2. Increment the aggregated counters
             await setDoc(interactionRef, {
@@ -114,7 +157,6 @@ export function useInteractionDirector({
 
         } catch (error) {
             console.error("Error submitting vote:", error);
-            // If it failed because of duplicate vote, still mark as voted locally
             if ((error as any).code === 'permission-denied' || (error as any).message?.includes('already exists')) {
                 setHasVoted(true);
             }
@@ -128,9 +170,12 @@ export function useInteractionDirector({
     const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
 
     const handleInteraction = (value: string | number) => {
-        if (hasVoted || isSubmitting || phase !== 'input') return;
+        if (hasVoted || phase !== 'input') return;
         setDraftVote(value);
         setLastInteractionTime(Date.now());
+
+        // Optimistic local update so it's not lost on refresh even before auto-save
+        localStorage.setItem(`vote_draft_${config.id}`, String(value));
     };
 
     useEffect(() => {
@@ -138,7 +183,7 @@ export function useInteractionDirector({
 
         const timer = setTimeout(() => {
             if (!hasVoted) {
-                submitVote(draftVote);
+                saveDraft(draftVote);
             }
         }, 1000);
 

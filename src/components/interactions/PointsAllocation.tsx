@@ -24,12 +24,21 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
     showResults
 }) => {
     const TOTAL_POINTS = 100;
-    const [allocation, setAllocation] = React.useState<Record<string, number>>(
-        Object.fromEntries(options.map(o => [o.id, 0]))
-    );
+    const [allocation, setAllocation] = React.useState<Record<string, number>>(() => {
+        if (userVote) {
+            return Object.fromEntries((userVote as string).split(',').map(s => {
+                const [id, val] = s.split(':');
+                return [id, parseInt(val)];
+            }));
+        }
+        return Object.fromEntries(options.map(o => [o.id, 0]));
+    });
+
+    const touchedRef = React.useRef(false);
 
     // Sync allocation keys with options if they change
     React.useEffect(() => {
+        touchedRef.current = false;
         setAllocation(prev => {
             const next = { ...prev };
             options.forEach(o => {
@@ -37,12 +46,23 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
             });
             return next;
         });
-    }, [options]);
+    }, [options]); // Only on interaction change
+
+    // Sync from userVote only if not touched
+    React.useEffect(() => {
+        if (userVote && !touchedRef.current) {
+            setAllocation(Object.fromEntries((userVote as string).split(',').map(s => {
+                const [id, val] = s.split(':');
+                return [id, parseInt(val)];
+            })));
+        }
+    }, [userVote]);
 
     const currentTotal = Object.values(allocation).reduce((a, b) => a + b, 0);
     const remaining = TOTAL_POINTS - currentTotal;
 
     const handleUpdate = (id: string, value: number) => {
+        touchedRef.current = true;
         const currentVal = allocation[id];
         const diff = value - currentVal;
 
