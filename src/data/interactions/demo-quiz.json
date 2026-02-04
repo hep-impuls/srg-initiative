@@ -1,0 +1,24 @@
+{
+    "id": "demo-quiz",
+    "type": "quiz",
+    "question": "Wie viele Kantone hat die Schweiz?",
+    "options": [
+        {
+            "id": "q1",
+            "label": "20"
+        },
+        {
+            "id": "q2",
+            "label": "23"
+        },
+        {
+            "id": "q3",
+            "label": "26",
+            "isCorrect": true
+        },
+        {
+            "id": "q4",
+            "label": "30"
+        }
+    ]
+}

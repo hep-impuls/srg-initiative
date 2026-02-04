@@ -8,6 +8,8 @@ Ein interaktives Reportage-System, bei dem Audio-Narration automatisch durch den
 
 > **Neu (Februar 2026):** Das Projekt nutzt jetzt das **FocusRegion System** für strukturierte, selbstdokumentierende Fokus-Elemente. Siehe [focusregion-system.md](./focusregion-system.md) für Details.
 
+> **Neu (Februar 2026):** Die **Interaction Engine** ermöglicht native Umfragen und Quizzes via Firebase. Siehe [guide-interactions.md](./guide-interactions.md).
+
 > **Wichtig:** Für das Hinzufügen neuer Seiten bitte unbedingt [guide-adding-new-pages.md](./guide-adding-new-pages.md) konsultieren, da sich die Routing-Architektur geändert hat.
 
 ---
@@ -31,6 +33,7 @@ Ein interaktives Reportage-System, bei dem Audio-Narration automatisch durch den
 - **React Router DOM v6** - Routing
 - **Tailwind CSS** - Styling
 - **Lucide React** - Icons
+- **Firebase (Firestore)** - Realtime Database for Interactions
 
 ### Kern-Komponenten
 

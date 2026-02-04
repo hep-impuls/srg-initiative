@@ -1,0 +1,23 @@
+{
+    "id": "agora-intro-money",
+    "type": "poll",
+    "question": "335 Franken Serafe-Gebühr pro Jahr für alle Haushalte. Deine Meinung?",
+    "options": [
+        {
+            "id": "imp",
+            "label": "Wichtig für die Demokratie – Solidarität!"
+        },
+        {
+            "id": "ok",
+            "label": "Okay, aber sollte günstiger sein."
+        },
+        {
+            "id": "no",
+            "label": "Abzocke – ich nutze das eh nicht, weg damit!"
+        },
+        {
+            "id": "dunno",
+            "label": "Ich weiss nicht genau, was die damit machen."
+        }
+    ]
+}

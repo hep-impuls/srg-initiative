@@ -1,0 +1,7 @@
+{
+    "id": "agora-outro-scale-2",
+    "type": "slider",
+    "question": "Wie siehst du das JETZT? Ich bin skeptischer gegenüber 15-Sekunden-Videos zu politischen Themen.",
+    "minLabel": "Nein, gar nicht",
+    "maxLabel": "Ja, absolut"
+}

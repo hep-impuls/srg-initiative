@@ -1,0 +1,8 @@
+{
+    "id": "demo-guess",
+    "type": "guess",
+    "question": "Wie hoch ist die tägliche Nutzungsdauer von SRG-Inhalten pro Person?",
+    "correctValue": 101,
+    "unit": "Minuten",
+    "options": []
+}

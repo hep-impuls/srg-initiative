@@ -1,0 +1,27 @@
+{
+    "id": "agora-intro-wordcloud-sub",
+    "type": "poll",
+    "question": "Wenn du das Wort 'Nachrichten' hörst – an welche App oder Plattform denkst du zuerst?",
+    "options": [
+        {
+            "id": "tiktok",
+            "label": "TikTok"
+        },
+        {
+            "id": "insta",
+            "label": "Instagram"
+        },
+        {
+            "id": "20min",
+            "label": "20min"
+        },
+        {
+            "id": "srf",
+            "label": "SRF"
+        },
+        {
+            "id": "snap",
+            "label": "Snapchat"
+        }
+    ]
+}

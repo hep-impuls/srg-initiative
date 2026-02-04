@@ -1,5 +1,8 @@
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ReportShell } from '@/components/ReportShell';
+import EmbedPage from '@/pages/EmbedPage';
+import { InteractionDemoPage } from '@/pages/InteractionDemoPage';
+import { ResultsPage } from '@/pages/ResultsPage';
 
 export default function App() {
   return (
@@ -9,7 +12,12 @@ export default function App() {
         <Route path="/" element={<Navigate to="/report/agora" replace />} />
 
         {/* Dynamic Report Routing */}
+        <Route path="/report/demo" element={<InteractionDemoPage />} />
+        <Route path="/report/results" element={<ResultsPage />} />
         <Route path="/report/:slug" element={<ReportShell />} />
+
+        {/* Embed Route for Interactions */}
+        <Route path="/embed/:interactionId" element={<EmbedPage />} />
 
         {/* 404 fallback */}
         <Route path="*" element={<Navigate to="/report/agora" replace />} />

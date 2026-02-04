@@ -1,0 +1,7 @@
+{
+    "id": "agora-intro-scale-2",
+    "type": "slider",
+    "question": "Mein 'For You'-Feed zeigt mir ein objektives Bild der Welt.",
+    "minLabel": "Stimme gar nicht zu",
+    "maxLabel": "Stimme voll zu"
+}

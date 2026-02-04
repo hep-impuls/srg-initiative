@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
     Smartphone,
     Users,
@@ -22,6 +22,8 @@ import { SourceBadge } from '@/components/SourceBadge';
 import { FocusRegion } from '@/components/FocusRegion';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
+import { InteractionSequence } from '@/components/interactions/InteractionSequence';
+import { InteractionModal } from '@/components/interactions/InteractionModal';
 
 interface AgoraPageProps {
     config: PageConfig;
@@ -103,13 +105,105 @@ const sources: Source[] = swissifyData([
     }
 ]);
 
+
+// Interaction Sequences
+const PRE_UNIT_IDS = [
+    'agora-intro-wordcloud-sub',
+    'agora-intro-ranking',
+    'agora-intro-scale-1',
+    'agora-intro-scale-2',
+    'agora-intro-scale-3',
+    'agora-intro-money'
+];
+
+const THEORY_DATA_IDS = [
+    'agora-quiz-gatekeeper',
+    'agora-points-hypeman',
+    'agora-slider-tunnel',
+    'agora-ranking-history',
+    'agora-guess-tv'
+];
+
+const DATA_CONSEQUENCES_IDS = [
+    'agora-guess-money',
+    'agora-quiz-tiktok',
+    'agora-ranking-spiral',
+    'agora-poll-slacktivism',
+    'agora-slider-fakenews'
+];
+
+const POST_UNIT_IDS = [
+    'agora-outro-scale-1',
+    'agora-outro-scale-2',
+    'agora-outro-scale-3',
+    'agora-outro-action',
+    'agora-outro-money-check',
+    'agora-outro-wordcloud-sub'
+];
+
 export function AgoraPage({ config }: AgoraPageProps) {
     const directorState = useAudioDirector(config.timeline);
-    const { currentTab, audioState } = directorState;
+    const { currentTab, audioState, audioRef } = directorState; // Destructure audioRef for control
     const [manualTab, setManualTab] = useState<'theory' | 'data' | 'consequences'>('theory');
+    const activeTab = audioState.isPlaying ? currentTab : manualTab;
+
+    // Modal State
+    const [activeModal, setActiveModal] = useState<string | null>(null);
+    const [completedModals, setCompletedModals] = useState<string[]>([]);
+    const hasStartedRef = useRef(false);
+
+    // --- Modal Trigger Logic ---
+
+    // 1. Pre-Unit (Start)
+    useEffect(() => {
+        if (audioState.isPlaying && !hasStartedRef.current && !completedModals.includes('pre')) {
+            // Audio started, pause immediately and show modal
+            audioRef.current?.pause();
+            setActiveModal('pre');
+            hasStartedRef.current = true;
+        }
+    }, [audioState.isPlaying, completedModals, audioRef]);
+
+    // 2. Tab Transitions
+    useEffect(() => {
+        const time = audioState.currentTime;
+
+        // Theory -> Data (~255s)
+        if (time > 255 && time < 260 && !completedModals.includes('theory-data') && activeModal !== 'theory-data') {
+            audioRef.current?.pause();
+            setActiveModal('theory-data');
+        }
+
+        // Data -> Consequences (~397s)
+        if (time > 397 && time < 402 && !completedModals.includes('data-consequences') && activeModal !== 'data-consequences') {
+            audioRef.current?.pause();
+            setActiveModal('data-consequences');
+        }
+
+    }, [audioState.currentTime, completedModals, activeModal, audioRef]);
+
+    // 3. Post-Unit (End)
+    useEffect(() => {
+        // Trigger slightly before end or check if ended
+        if (audioState.duration > 0 && audioState.currentTime >= audioState.duration - 0.5 && !completedModals.includes('post') && activeModal !== 'post') {
+            setActiveModal('post');
+            // Audio stops naturally or we ensure it's paused? It ends anyway.
+        }
+    }, [audioState.currentTime, audioState.duration, completedModals, activeModal]);
+
+
+    const handleModalComplete = (modalId: string) => {
+        setCompletedModals(prev => [...prev, modalId]);
+        setActiveModal(null);
+
+        // Resume playback if it's not the end
+        if (modalId !== 'post') {
+            audioRef.current?.play();
+        }
+    };
 
     // Use audio director's tab when playing, manual tab when paused
-    const activeTab = audioState.isPlaying ? currentTab : manualTab;
+    // const activeTab = audioState.isPlaying ? currentTab : manualTab; // This line was moved up
 
     // Sync manual tab with director when audio starts playing
     useEffect(() => {
@@ -125,6 +219,46 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
+            {/* --- Modals --- */}
+            <InteractionModal isOpen={activeModal === 'pre'}>
+                <InteractionSequence
+                    interactionIds={PRE_UNIT_IDS}
+                    mode="stepped"
+                    title="Teil 1: Deine Meinung vor dem Start"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('pre')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'theory-data'}>
+                <InteractionSequence
+                    interactionIds={THEORY_DATA_IDS}
+                    mode="stepped"
+                    title="Check: Theorie verstanden?"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('theory-data')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'data-consequences'}>
+                <InteractionSequence
+                    interactionIds={DATA_CONSEQUENCES_IDS}
+                    mode="stepped"
+                    title="Check: Daten eingeordnet?"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('data-consequences')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'post'}>
+                <InteractionSequence
+                    interactionIds={POST_UNIT_IDS}
+                    mode="stepped"
+                    title="Fazit: Deine Meinung nach der Einheit"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('post')}
+                />
+            </InteractionModal>
 
             {/* Unified Beginning Section (Header, Tabs, Intro) */}
             <div>
@@ -201,6 +335,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         {/* TAB 1: THEORIE */}
                         {activeTab === 'theory' && (
                             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-500">
+
+
 
                                 {/* Intro Text Section */}
                                 <FocusRegion
@@ -417,6 +553,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         {/* TAB 2: DATEN */}
                         {activeTab === 'data' && (
                             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
+
                                 <FocusRegion
                                     id="data__overview"
                                     label="Die Zahlen: Eine gespaltene Gesellschaft"
@@ -570,6 +707,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                         {/* TAB 3: FOLGEN */}
                         {activeTab === 'consequences' && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+
                                 <FocusRegion
                                     id="consequences__intro"
                                     label="Was passiert mit der Demokratie?"
@@ -682,6 +820,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                     </div>
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                                 </FocusRegion>
+
                             </div>
                         )}
                     </div>

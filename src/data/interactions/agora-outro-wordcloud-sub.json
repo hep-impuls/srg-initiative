@@ -1,0 +1,31 @@
+{
+    "id": "agora-outro-wordcloud-sub",
+    "type": "poll",
+    "question": "Mit welchem EINEN Wort würdest du die heutige digitale Medienwelt beschreiben?",
+    "options": [
+        {
+            "id": "complicated",
+            "label": "Kompliziert"
+        },
+        {
+            "id": "manipulative",
+            "label": "Manipulativ"
+        },
+        {
+            "id": "fast",
+            "label": "Schnell"
+        },
+        {
+            "id": "bubble",
+            "label": "Blase"
+        },
+        {
+            "id": "responsibility",
+            "label": "Verantwortung"
+        },
+        {
+            "id": "money",
+            "label": "Geldgesteuert"
+        }
+    ]
+}

@@ -3,7 +3,7 @@
 ## High-Level Pattern
 The application uses a **Director/Actor** pattern. 
 - **The Director:** `useAudioDirector` hook. It owns the time and the intent.
-- **The Actor:** The UI (Page Components). It reacts to the Director's state (scrolling, highlighting).
+- **The Actor:** The UI (Page Components) and **Interaction Engine** (Firebase-powered).
 - **The Script:** `*.json` configuration files in `src/data/`.
 
 ## Data Flow
@@ -51,7 +51,13 @@ interface FocusRegionProps {
 - `theory__intro__text` → depth 2 (element)
 - `theory__intro__text__highlight` → depth 3 (detail)
 
-### 4. Page Components (e.g., `AgoraPage.tsx`)
+### 4. Interaction Engine (`src/components/interactions/`)
+Ein hybrides System für Engagement.
+- **Static Config**: Fragen und Optionen in `src/data/interactions/*.json`.
+- **Dynamic State**: Echtzeit-Ergebnisse via Firebase Firestore.
+- **Sync**: Nutzt `useInteractionDirector` um Abstimmungs-Phasen mit der Audio-Zeit zu koppeln.
+
+### 5. Page Components (e.g., `AgoraPage.tsx`)
 These are purely presentational. They must:
 - Accept `PageConfig` props.
 - Wrap focusable content with **FocusRegion components** using hierarchical IDs.

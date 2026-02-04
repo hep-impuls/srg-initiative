@@ -1,0 +1,19 @@
+{
+    "id": "agora-outro-money-check",
+    "type": "poll",
+    "question": "Ändert der Abfluss von 2,1 Mrd. Werbegeldern deine Sicht auf die Medienfinanzierung (Serafe)?",
+    "options": [
+        {
+            "id": "no",
+            "label": "Nein, ich will trotzdem nicht zahlen."
+        },
+        {
+            "id": "mixed",
+            "label": "Jein, sehe das Problem, finde Gebühr aber zu hoch."
+        },
+        {
+            "id": "yes",
+            "label": "Ja, ich sehe jetzt eher ein, warum unabhängige Medien Geld brauchen."
+        }
+    ]
+}

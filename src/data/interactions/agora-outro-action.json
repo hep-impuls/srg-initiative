@@ -1,0 +1,23 @@
+{
+    "id": "agora-outro-action",
+    "type": "poll",
+    "question": "Was wirst du an deinem Medienkonsum ändern?",
+    "options": [
+        {
+            "id": "nothing",
+            "label": "Nichts, ich mache weiter wie bisher."
+        },
+        {
+            "id": "trick",
+            "label": "Ich werde versuchen, den Algorithmus \"auszutricksen\"."
+        },
+        {
+            "id": "classic",
+            "label": "Ich werde ab und zu eine \"klassische\" Nachrichtenquelle checken."
+        },
+        {
+            "id": "check",
+            "label": "Ich werde bei Abstimmungen genauer prüfen, wer der Absender ist."
+        }
+    ]
+}

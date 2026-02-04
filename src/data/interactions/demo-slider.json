@@ -1,0 +1,8 @@
+{
+    "id": "demo-slider",
+    "type": "slider",
+    "question": "Wie stark nutzen Sie KI im Alltag?",
+    "minLabel": "Gar nicht",
+    "maxLabel": "Täglich",
+    "options": []
+}

@@ -1,0 +1,19 @@
+{
+    "id": "agora-ranking-history",
+    "type": "ranking",
+    "question": "Bringe die Entwicklung der Medien in die richtige zeitliche Reihenfolge:",
+    "options": [
+        {
+            "id": "agora",
+            "label": "Agora (Marktplatz)"
+        },
+        {
+            "id": "mass",
+            "label": "Massenmedien (Lagerfeuer/TV)"
+        },
+        {
+            "id": "social",
+            "label": "Social Media (Personalisierter Feed)"
+        }
+    ]
+}

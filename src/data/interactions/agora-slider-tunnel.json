@@ -1,0 +1,7 @@
+{
+    "id": "agora-slider-tunnel",
+    "type": "slider",
+    "question": "Selbst-Check: Wie stark lebst du im \"Tunnel\"? Wie oft siehst du Nachrichten, die deiner Meinung komplett widersprechen?",
+    "minLabel": "Nie (Tunnelblick)",
+    "maxLabel": "Ständig (Weitblick)"
+}
