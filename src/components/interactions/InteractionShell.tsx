@@ -104,7 +104,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
             </div>
 
             <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
-                <span>ID: {config.id}</span>
+                <span></span>
                 <span>
                     {hasVoted ? 'Abgestimmt' : phase === 'locked' ? 'Geschlossen' : 'Offen'}
                 </span>
