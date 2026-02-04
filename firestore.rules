@@ -21,7 +21,7 @@ service cloud.firestore {
       
       // Allow creation only if the user is authenticated and the ID matches their UID
       allow create: if request.auth != null 
-                    && voteId.startsWith(request.auth.uid)
+                    && voteId[0:request.auth.uid.size()] == request.auth.uid
                     && !exists(/databases/$(database)/documents/user_votes/$(voteId));
       
       allow read, update, delete: if false;
