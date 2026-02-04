@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { doc, onSnapshot, increment, setDoc, DocumentSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { InteractionConfig, InteractionResults } from '../types/interaction';
@@ -24,6 +24,8 @@ export function useInteractionDirector({
     const [hasVoted, setHasVoted] = useState(false);
     const [userVote, setUserVote] = useState<string | number | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const finalizeRef = useRef(false);
+    const lastSuccessfulVoteRef = useRef<string | number | null>(null);
 
     // 1. Manage Phases based on Time
     useEffect(() => {
@@ -87,7 +89,7 @@ export function useInteractionDirector({
 
     // 4. Draft Saving (Silent background update)
     const saveDraft = async (optionId: string | number) => {
-        if (hasVoted || phase !== 'input') return;
+        if (hasVoted || phase !== 'input' || finalizeRef.current) return;
 
         try {
             let currentUserId = userId;
@@ -101,6 +103,9 @@ export function useInteractionDirector({
             const voteId = `${currentUserId}_${config.id}`;
             const userVoteRef = doc(db, 'user_votes', voteId);
 
+            // Double check finalizeRef inside the async block
+            if (finalizeRef.current) return;
+
             await setDoc(userVoteRef, {
                 timestamp: new Date().toISOString(),
                 value: optionId,
@@ -109,7 +114,12 @@ export function useInteractionDirector({
             }, { merge: true });
 
             localStorage.setItem(`vote_draft_${config.id}`, String(optionId));
-            setUserVote(optionId);
+
+            // Only update state if we haven't finalized or if this is actually newer than what we have
+            if (!finalizeRef.current) {
+                lastSuccessfulVoteRef.current = optionId;
+                setUserVote(optionId);
+            }
         } catch (error) {
             console.error("Error saving draft:", error);
         }
@@ -119,6 +129,7 @@ export function useInteractionDirector({
     const submitVote = async (optionId: string | number) => {
         if (hasVoted || isSubmitting || phase !== 'input') return;
 
+        finalizeRef.current = true; // Block any further drafts immediately
         setIsSubmitting(true);
 
         try {
@@ -152,6 +163,7 @@ export function useInteractionDirector({
 
             // Save to local storage for UI persistence
             localStorage.setItem(`vote_${config.id}`, String(optionId));
+            lastSuccessfulVoteRef.current = optionId;
             setUserVote(optionId);
             setHasVoted(true);
 
@@ -170,7 +182,7 @@ export function useInteractionDirector({
     const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
 
     const handleInteraction = (value: string | number) => {
-        if (hasVoted || phase !== 'input') return;
+        if (hasVoted || phase !== 'input' || finalizeRef.current) return;
         setDraftVote(value);
         setLastInteractionTime(Date.now());
 
@@ -197,6 +209,7 @@ export function useInteractionDirector({
         userVote,
         isSubmitting,
         submitVote,
+        saveDraft, // Expose for immediate triggers like onMouseUp
         handleInteraction // Expose this for continuous inputs
     };
 }

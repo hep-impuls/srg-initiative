@@ -8,6 +8,7 @@ interface PollSliderProps {
     results: InteractionResults | null;
     onVote: (value: number) => void;
     onInteract?: (value: number) => void;
+    onSaveDraft?: (value: number) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -19,6 +20,7 @@ export const PollSlider: React.FC<PollSliderProps> = ({
     results,
     onVote,
     onInteract,
+    onSaveDraft,
     hasVoted,
     isSubmitting,
     userVote,
@@ -74,7 +76,9 @@ export const PollSlider: React.FC<PollSliderProps> = ({
         onVote(localValue);
     };
 
-    const displayValue = hasVoted ? Number(userVote) : localValue;
+    // CRITICAL: After voting, we MUST use the value we just submitted (localValue) 
+    // until userVote definitely catches up.
+    const displayValue = hasVoted ? (userVote !== null ? Number(userVote) : localValue) : localValue;
 
     return (
         <div className="w-full max-w-xl mx-auto py-8 px-4">
@@ -102,6 +106,8 @@ export const PollSlider: React.FC<PollSliderProps> = ({
                     max="100"
                     value={displayValue}
                     onChange={handleSlide}
+                    onMouseUp={() => onSaveDraft?.(localValue)}
+                    onTouchEnd={() => onSaveDraft?.(localValue)}
                     disabled={hasVoted || isSubmitting}
                     className={`
             absolute w-full h-2 bg-transparent appearance-none cursor-pointer z-20 
@@ -114,7 +120,7 @@ export const PollSlider: React.FC<PollSliderProps> = ({
                 {showResults && hasVoted && (
                     <div
                         className="absolute top-1/2 -ml-3 mt-4 flex flex-col items-center z-10"
-                        style={{ left: `${userVote}%` }}
+                        style={{ left: `${displayValue}%` }}
                     >
                         <div className="w-1 h-4 bg-blue-600"></div>
                         <div className="bg-blue-600 text-white px-2 py-0.5 rounded text-[10px] font-bold mt-1">
@@ -151,7 +157,7 @@ export const PollSlider: React.FC<PollSliderProps> = ({
                     <div className="flex justify-center gap-8 items-center">
                         <div>
                             <div className="text-[10px] uppercase font-bold tracking-wider text-slate-400 mb-1">Deine Wahl</div>
-                            <div className="text-2xl font-black text-blue-600">{Math.round(Number(userVote))}</div>
+                            <div className="text-2xl font-black text-blue-600">{Math.round(displayValue)}</div>
                         </div>
                         <div className="w-px h-8 bg-slate-200"></div>
                         <div>

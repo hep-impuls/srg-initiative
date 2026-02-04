@@ -7,6 +7,7 @@ interface PointsAllocationProps {
     results: InteractionResults | null;
     onVote: (allocation: string) => void;
     onInteract?: (allocation: string) => void;
+    onSaveDraft?: (allocation: string) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -18,6 +19,7 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
     results,
     onVote,
     onInteract,
+    onSaveDraft,
     hasVoted,
     isSubmitting,
     userVote,
@@ -78,8 +80,9 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
 
         setAllocation(newAllocation);
 
-        const resultString = Object.entries(newAllocation).map(([key, val]) => `${key}:${val}`).join(',');
-        onInteract?.(resultString);
+        const encoded = Object.entries(newAllocation).map(([key, val]) => `${key}:${val}`).join(',');
+        onInteract?.(encoded);
+        onSaveDraft?.(encoded);
     };
 
     const handleSubmit = () => {

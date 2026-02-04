@@ -8,6 +8,7 @@ interface RankingPollProps {
     results: InteractionResults | null;
     onVote: (order: string) => void;
     onInteract?: (order: string) => void;
+    onSaveDraft?: (order: string) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -19,6 +20,7 @@ export const RankingPoll: React.FC<RankingPollProps> = ({
     results,
     onVote,
     onInteract,
+    onSaveDraft,
     hasVoted,
     isSubmitting,
     userVote,
@@ -60,12 +62,14 @@ export const RankingPoll: React.FC<RankingPollProps> = ({
         const newIndex = direction === 'up' ? index - 1 : index + 1;
         if (newIndex < 0 || newIndex >= items.length) return;
 
-        [newItems[index], newItems[newIndex]] = [newItems[newIndex], newItems[index]];
+        newItems.splice(index, 1);
+        newItems.splice(newIndex, 0, items[index]);
         setItems(newItems);
 
         // Auto-save logic
-        const resultString = newItems.map(i => i.id).join(',');
-        onInteract?.(resultString);
+        const order = newItems.map(i => i.id).join(',');
+        onInteract?.(order);
+        onSaveDraft?.(order);
     };
 
     const handleSubmit = () => {

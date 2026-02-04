@@ -28,6 +28,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
         userVote,
         isSubmitting,
         submitVote,
+        saveDraft,
         handleInteraction
     } = useInteractionDirector({ config, currentTime, startTime });
 
@@ -50,6 +51,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
             results,
             onVote: submitVote,
             onInteract: handleInteraction,
+            onSaveDraft: saveDraft,
             hasVoted,
             isSubmitting,
             userVote,
@@ -66,10 +68,11 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
             case 'slider':
                 return (
                     <PollSlider
-                        config={config}
+                        config={config as any}
                         results={results}
                         onVote={submitVote}
                         onInteract={handleInteraction}
+                        onSaveDraft={saveDraft}
                         hasVoted={hasVoted}
                         isSubmitting={isSubmitting}
                         userVote={userVote}
@@ -90,6 +93,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
                         results={results}
                         onVote={submitVote}
                         onInteract={handleInteraction}
+                        onSaveDraft={saveDraft}
                         hasVoted={hasVoted}
                         isSubmitting={isSubmitting}
                         userVote={userVote}

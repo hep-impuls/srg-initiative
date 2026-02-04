@@ -6,6 +6,7 @@ interface GuessNumberProps {
     results: InteractionResults | null;
     onVote: (value: number) => void;
     onInteract?: (value: number) => void;
+    onSaveDraft?: (value: number) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -17,6 +18,7 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
     results,
     onVote,
     onInteract,
+    onSaveDraft,
     hasVoted,
     isSubmitting,
     userVote,
@@ -78,7 +80,11 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
                                 if (!isNaN(val)) onInteract?.(val);
                             }}
                             placeholder="Ihre Schätzung..."
-                            className="w-full p-4 text-2xl font-bold text-center border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-0 outline-none transition-all"
+                            onBlur={() => {
+                                const val = parseFloat(localValue);
+                                if (!isNaN(val)) onSaveDraft?.(val);
+                            }}
+                            className="w-32 bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-2xl font-black text-slate-800 text-center focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all"
                             autoFocus
                         />
                         {config.unit && (
