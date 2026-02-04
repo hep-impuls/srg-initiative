@@ -1,6 +1,8 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { AgoraPage } from '@/pages/AgoraPage';
 import { PublicMediaPage } from '@/pages/PublicMediaPage';
+import { LumiTestPage } from '@/pages/LumiTestPage';
+import { MentiTestPage } from '@/pages/MentiTestPage';
 import { OnboardingTour } from '@/components/OnboardingTour';
 import { PageConfig } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
@@ -13,12 +15,16 @@ import PublicMediaConfig from '@/data/PublicMediaPage.json';
 const PAGE_REGISTRY: Record<string, React.ComponentType<{ config: PageConfig }>> = {
     'agora': AgoraPage,
     'publicMedia': PublicMediaPage,
+    'lumiTest': LumiTestPage,
+    'mentiTest': MentiTestPage,
 };
 
 // Registry of configurations
 const CONFIG_REGISTRY: Record<string, PageConfig> = {
     'agora': swissifyData(AgoraConfig as unknown as PageConfig),
     'publicMedia': swissifyData(PublicMediaConfig as unknown as PageConfig),
+    'lumiTest': { title: 'Lumi Test', audioSrc: 'audio/PublicMediaPage.mp3', timeline: [] },
+    'mentiTest': { title: 'Menti Test', audioSrc: 'audio/PublicMediaPage.mp3', timeline: [] },
 };
 
 export function ReportShell() {
