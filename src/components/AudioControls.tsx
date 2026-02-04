@@ -1,4 +1,4 @@
-import { Play, Pause, RotateCcw, List, HelpCircle } from 'lucide-react';
+import { Play, Pause, RotateCcw, List, HelpCircle, BrainCircuit, BarChart3 } from 'lucide-react';
 import { AudioPlayerState } from '@/types';
 
 interface AudioControlsProps {
@@ -10,6 +10,8 @@ interface AudioControlsProps {
   showChapters?: boolean;
   onToggleChapters?: () => void;
   onHelp?: () => void;
+  onStartQuiz?: () => void;
+  onShowResults?: () => void;
 }
 
 export function AudioControls({
@@ -20,7 +22,9 @@ export function AudioControls({
   onRateChange,
   showChapters,
   onToggleChapters,
-  onHelp
+  onHelp,
+  onStartQuiz,
+  onShowResults
 }: AudioControlsProps) {
   const { isPlaying, currentTime, duration, isLoading, playbackRate } = audioState;
 
@@ -87,6 +91,26 @@ export function AudioControls({
 
         {/* Navigation Actions */}
         <div className="flex items-center gap-0.5">
+          {onStartQuiz && (
+            <button
+              onClick={onStartQuiz}
+              className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+              title="Quiz starten"
+            >
+              <BrainCircuit size={14} />
+            </button>
+          )}
+
+          {onShowResults && (
+            <button
+              onClick={onShowResults}
+              className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-all"
+              title="Ergebnisse ansehen"
+            >
+              <BarChart3 size={14} />
+            </button>
+          )}
+
           {onToggleChapters && (
             <button
               onClick={onToggleChapters}

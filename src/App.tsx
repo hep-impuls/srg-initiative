@@ -13,7 +13,8 @@ export default function App() {
 
         {/* Dynamic Report Routing */}
         <Route path="/report/demo" element={<InteractionDemoPage />} />
-        <Route path="/report/results" element={<ResultsPage />} />
+        <Route path="/report/results/:sourceId" element={<ResultsPage />} />
+        <Route path="/report/results" element={<Navigate to="/report/results/demo" replace />} />
         <Route path="/report/:slug" element={<ReportShell />} />
 
         {/* Embed Route for Interactions */}

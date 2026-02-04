@@ -141,6 +141,13 @@ const POST_UNIT_IDS = [
     'agora-outro-wordcloud-sub'
 ];
 
+const MASTER_QUIZ_IDS = [
+    ...PRE_UNIT_IDS,
+    ...THEORY_DATA_IDS,
+    ...DATA_CONSEQUENCES_IDS,
+    ...POST_UNIT_IDS
+];
+
 export function AgoraPage({ config }: AgoraPageProps) {
     const directorState = useAudioDirector(config.timeline);
     const { currentTab, audioState, audioRef } = directorState; // Destructure audioRef for control
@@ -219,8 +226,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pb-24">
-            {/* --- Modals --- */}
-            <InteractionModal isOpen={activeModal === 'pre'}>
+            <InteractionModal isOpen={activeModal === 'pre'} onClose={() => setActiveModal(null)}>
                 <InteractionSequence
                     interactionIds={PRE_UNIT_IDS}
                     mode="stepped"
@@ -230,7 +236,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 />
             </InteractionModal>
 
-            <InteractionModal isOpen={activeModal === 'theory-data'}>
+            <InteractionModal isOpen={activeModal === 'theory-data'} onClose={() => setActiveModal(null)}>
                 <InteractionSequence
                     interactionIds={THEORY_DATA_IDS}
                     mode="stepped"
@@ -240,7 +246,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 />
             </InteractionModal>
 
-            <InteractionModal isOpen={activeModal === 'data-consequences'}>
+            <InteractionModal isOpen={activeModal === 'data-consequences'} onClose={() => setActiveModal(null)}>
                 <InteractionSequence
                     interactionIds={DATA_CONSEQUENCES_IDS}
                     mode="stepped"
@@ -250,13 +256,23 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 />
             </InteractionModal>
 
-            <InteractionModal isOpen={activeModal === 'post'}>
+            <InteractionModal isOpen={activeModal === 'post'} onClose={() => setActiveModal(null)}>
                 <InteractionSequence
                     interactionIds={POST_UNIT_IDS}
                     mode="stepped"
                     title="Fazit: Deine Meinung nach der Einheit"
-                    showResultsButton={false}
+                    showResultsButton={true}
                     onComplete={() => handleModalComplete('post')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'master'} onClose={() => setActiveModal(null)}>
+                <InteractionSequence
+                    interactionIds={MASTER_QUIZ_IDS}
+                    mode="stepped"
+                    title="Vollständiges Quiz"
+                    showResultsButton={true}
+                    onComplete={() => handleModalComplete('master')}
                 />
             </InteractionModal>
 
@@ -862,6 +878,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
             < AudioPlayer
                 audioSrc={config.audioSrc || ''}
                 directorState={directorState}
+                onStartQuiz={() => {
+                    audioRef.current?.pause();
+                    setActiveModal('master');
+                }}
+                onShowResults={() => window.location.hash = '#/report/results/agora'}
             />
         </div >
     );

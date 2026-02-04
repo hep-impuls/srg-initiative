@@ -3,7 +3,11 @@ import { InteractionConfig } from '../../types/interaction';
 import { swissifyData } from '../../utils/textUtils';
 import { CheckCircle, Info, Award } from 'lucide-react';
 
-export const UserSummary: React.FC = () => {
+interface UserSummaryProps {
+    sourceId?: string;
+}
+
+export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
     const [answeredInteractions, setAnsweredInteractions] = useState<{ config: InteractionConfig, vote: string | number }[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -19,7 +23,24 @@ export const UserSummary: React.FC = () => {
                     const userVote = localStorage.getItem(`vote_${config.id}`);
 
                     if (userVote) {
-                        results.push({ config, vote: userVote });
+                        // Filter based on sourceId if provided
+                        // 'agora' -> 'agora-'
+                        // 'demo' -> 'poll-' or generic or everything else? 
+                        // For now: if sourceId is 'agora', show 'agora-'.
+                        // If 'demo', show others? Or just filter by prefix if it matches.
+
+                        let shouldInclude = true;
+                        if (sourceId) {
+                            if (sourceId === 'agora' && !config.id.startsWith('agora-')) {
+                                shouldInclude = false;
+                            }
+                            // Add more specific rules here if needed. 
+                            // For public-media, maybe we'll use 'pm-' prefix later.
+                        }
+
+                        if (shouldInclude) {
+                            results.push({ config, vote: userVote });
+                        }
                     }
                 }
                 setAnsweredInteractions(results);
@@ -30,7 +51,7 @@ export const UserSummary: React.FC = () => {
             }
         }
         discoverAnswers();
-    }, []);
+    }, [sourceId]);
 
     if (loading) return <div className="p-12 text-center">Analysiere Ihre Antworten...</div>;
 

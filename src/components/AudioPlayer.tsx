@@ -6,9 +6,11 @@ import { AudioDirectorState } from '@/types';
 interface AudioPlayerProps {
   audioSrc: string;
   directorState: AudioDirectorState;
+  onStartQuiz?: () => void;
+  onShowResults?: () => void;
 }
 
-export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
+export function AudioPlayer({ audioSrc, directorState, onStartQuiz, onShowResults }: AudioPlayerProps) {
   const [showChapters, setShowChapters] = useState(false);
 
   const {
@@ -62,6 +64,8 @@ export function AudioPlayer({ audioSrc, directorState }: AudioPlayerProps) {
               showChapters={showChapters}
               onToggleChapters={() => setShowChapters(!showChapters)}
               onHelp={handleHelp}
+              onStartQuiz={onStartQuiz}
+              onShowResults={onShowResults}
             />
           </div>
         </div>
