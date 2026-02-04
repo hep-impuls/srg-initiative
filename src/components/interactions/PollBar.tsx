@@ -78,7 +78,7 @@ export const PollBar: React.FC<PollBarProps> = ({
 
             {showResults && (
                 <div className="text-center text-sm text-slate-500 mt-2">
-                    {totalVotes} Abstimmungen
+                    {totalVotes} Teilnehmer
                 </div>
             )}
         </div>

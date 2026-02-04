@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InteractionOption, InteractionResults } from '../../types/interaction';
 import { swissifyData } from '../../utils/textUtils';
 
@@ -6,6 +6,7 @@ interface PointsAllocationProps {
     options: InteractionOption[];
     results: InteractionResults | null;
     onVote: (allocation: string) => void;
+    onInteract?: (allocation: string) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -14,16 +15,29 @@ interface PointsAllocationProps {
 
 export const PointsAllocation: React.FC<PointsAllocationProps> = ({
     options,
+    results,
     onVote,
+    onInteract,
     hasVoted,
     isSubmitting,
     userVote,
     showResults
 }) => {
     const TOTAL_POINTS = 100;
-    const [allocation, setAllocation] = useState<Record<string, number>>(
+    const [allocation, setAllocation] = React.useState<Record<string, number>>(
         Object.fromEntries(options.map(o => [o.id, 0]))
     );
+
+    // Sync allocation keys with options if they change
+    React.useEffect(() => {
+        setAllocation(prev => {
+            const next = { ...prev };
+            options.forEach(o => {
+                if (!(o.id in next)) next[o.id] = 0;
+            });
+            return next;
+        });
+    }, [options]);
 
     const currentTotal = Object.values(allocation).reduce((a, b) => a + b, 0);
     const remaining = TOTAL_POINTS - currentTotal;
@@ -32,13 +46,20 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
         const currentVal = allocation[id];
         const diff = value - currentVal;
 
+        let newAllocation = { ...allocation };
+
         // Prevent exceeding total
         if (currentTotal + diff > TOTAL_POINTS) {
             const allowed = TOTAL_POINTS - (currentTotal - currentVal);
-            setAllocation(prev => ({ ...prev, [id]: allowed }));
+            newAllocation[id] = allowed;
         } else {
-            setAllocation(prev => ({ ...prev, [id]: Math.max(0, value) }));
+            newAllocation[id] = Math.max(0, value);
         }
+
+        setAllocation(newAllocation);
+
+        const resultString = Object.entries(newAllocation).map(([key, val]) => `${key}:${val}`).join(',');
+        onInteract?.(resultString);
     };
 
     const handleSubmit = () => {
@@ -111,8 +132,46 @@ export const PointsAllocation: React.FC<PointsAllocationProps> = ({
             )}
 
             {showResults && (
-                <div className="text-center text-sm text-slate-400 mt-4 italic">
-                    Durchschnittliche Punkteverteilung der Community.
+                <div className="mt-8 pt-6 border-t border-slate-100 animate-in fade-in duration-700">
+                    <h4 className="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
+                        Teilnehmer-Durchschnitt
+                    </h4>
+                    <div className="space-y-4">
+                        {options.map(option => {
+                            // Calculate average for this option
+                            let totalPoints = 0;
+                            const totalVotes = results?.totalVotes || 0;
+
+                            if (totalVotes > 0 && results?.optionCounts) {
+                                Object.entries(results.optionCounts).forEach(([allocStr, count]) => {
+                                    const parts = allocStr.split(',');
+                                    parts.forEach(p => {
+                                        const [id, val] = p.split(':');
+                                        if (id === option.id) {
+                                            totalPoints += Number(val) * count;
+                                        }
+                                    });
+                                });
+                            }
+
+                            const avg = totalVotes > 0 ? totalPoints / totalVotes : 0;
+
+                            return (
+                                <div key={option.id} className="text-sm">
+                                    <div className="flex justify-between mb-1 text-slate-500">
+                                        <span>{swissifyData(option.label)}</span>
+                                        <span className="font-mono">{Math.round(avg)} Pkt</span>
+                                    </div>
+                                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                        <div
+                                            className="h-full bg-slate-400 opacity-50"
+                                            style={{ width: `${avg}%` }}
+                                        />
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             )}
         </div>

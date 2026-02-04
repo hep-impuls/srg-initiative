@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InteractionOption, InteractionResults } from '../../types/interaction';
 import { swissifyData } from '../../utils/textUtils';
 import { MoveUp, MoveDown, GripVertical } from 'lucide-react';
@@ -7,6 +7,7 @@ interface RankingPollProps {
     options: InteractionOption[];
     results: InteractionResults | null;
     onVote: (order: string) => void;
+    onInteract?: (order: string) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -15,13 +16,20 @@ interface RankingPollProps {
 
 export const RankingPoll: React.FC<RankingPollProps> = ({
     options: initialOptions,
+    results,
     onVote,
+    onInteract,
     hasVoted,
     isSubmitting,
     userVote,
     showResults
 }) => {
-    const [items, setItems] = useState(initialOptions);
+    const [items, setItems] = React.useState(initialOptions);
+
+    // Sync items with initialOptions if they change (e.g. on new interaction load in sequence)
+    React.useEffect(() => {
+        setItems(initialOptions);
+    }, [initialOptions]);
 
     const move = (index: number, direction: 'up' | 'down') => {
         const newItems = [...items];
@@ -30,6 +38,10 @@ export const RankingPoll: React.FC<RankingPollProps> = ({
 
         [newItems[index], newItems[newIndex]] = [newItems[newIndex], newItems[index]];
         setItems(newItems);
+
+        // Auto-save logic
+        const resultString = newItems.map(i => i.id).join(',');
+        onInteract?.(resultString);
     };
 
     const handleSubmit = () => {
@@ -103,8 +115,45 @@ export const RankingPoll: React.FC<RankingPollProps> = ({
             )}
 
             {showResults && (
-                <div className="text-center text-sm text-slate-400 mt-4 italic">
-                    Ranglisten-Ergebnisse werden aggregiert angezeigt.
+                <div className="mt-8 pt-6 border-t border-slate-100 animate-in fade-in duration-700">
+                    <h4 className="text-center text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
+                        Teilnehmer-Ranking
+                    </h4>
+                    {(() => {
+                        // Calculate scores: Rank 1 = N points, Rank N = 1 point
+                        const optionScores: Record<string, number> = {};
+                        items.forEach(o => optionScores[o.id] = 0);
+
+                        const totalVotes = results?.totalVotes || 0;
+                        if (totalVotes > 0 && results?.optionCounts) {
+                            Object.entries(results.optionCounts).forEach(([orderStr, count]) => {
+                                const order = orderStr.split(',');
+                                order.forEach((id, idx) => {
+                                    const score = items.length - idx;
+                                    optionScores[id] = (optionScores[id] || 0) + (score * count);
+                                });
+                            });
+                        }
+
+                        // Sort by score
+                        const communityOrder = [...items].sort((a, b) => optionScores[b.id] - optionScores[a.id]);
+
+                        return (
+                            <div className="space-y-2">
+                                {communityOrder.map((item, index) => (
+                                    <div key={item.id} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                                        <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-500 font-bold text-xs flex items-center justify-center">
+                                            {index + 1}
+                                        </div>
+                                        <div className="flex-grow text-sm font-medium text-slate-700">
+                                            {swissifyData(item.label)}
+                                        </div>
+                                        {/* Optional: Show score or %? For now just order is enough */}
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })()}
                 </div>
             )}
         </div>

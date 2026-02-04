@@ -7,6 +7,7 @@ interface PollSliderProps {
     // If we map options as discrete steps on a slider:
     results: InteractionResults | null;
     onVote: (value: number) => void;
+    onInteract?: (value: number) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -17,6 +18,7 @@ export const PollSlider: React.FC<PollSliderProps> = ({
     config,
     results,
     onVote,
+    onInteract,
     hasVoted,
     isSubmitting,
     userVote,
@@ -43,7 +45,9 @@ export const PollSlider: React.FC<PollSliderProps> = ({
     const average = calculateAverage();
 
     const handleSlide = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLocalValue(Number(e.target.value));
+        const val = Number(e.target.value);
+        setLocalValue(val);
+        onInteract?.(val);
     };
 
     const handleSubmit = () => {
@@ -110,7 +114,7 @@ export const PollSlider: React.FC<PollSliderProps> = ({
 
             {showResults && (
                 <div className="text-center mt-4 text-slate-500">
-                    Durchschnitt: <span className="font-bold text-slate-800">{Math.round(average)}</span> ({totalVotes} Stimmen)
+                    Durchschnitt: <span className="font-bold text-slate-800">{Math.round(average)}</span> ({totalVotes} Teilnehmer)
                 </div>
             )}
         </div>

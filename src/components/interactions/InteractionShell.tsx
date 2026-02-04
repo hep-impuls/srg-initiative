@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { InteractionConfig } from '../../types/interaction';
 import { useInteractionDirector } from '../../hooks/useInteractionDirector';
 import { PollBar } from './PollBar';
@@ -8,6 +8,7 @@ import { RankingPoll } from './RankingPoll';
 import { PointsAllocation } from './PointsAllocation';
 import { GuessNumber } from './GuessNumber';
 import { swissifyData } from '../../utils/textUtils';
+import { shuffleArray } from '../../utils/arrayUtils';
 
 interface InteractionShellProps {
     config: InteractionConfig;
@@ -26,14 +27,29 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
         hasVoted,
         userVote,
         isSubmitting,
-        submitVote
+        submitVote,
+        handleInteraction
     } = useInteractionDirector({ config, currentTime, startTime });
+
+    // Memoize shuffled options based on the config ID to ensure they don't reshuffle on every render
+    const shuffledOptions = useMemo(() => {
+        if (!config.options) return [];
+
+        // We randomize for these specific types as requested
+        const typesToRandomize = ['quiz', 'ranking', 'points', 'poll'];
+        if (typesToRandomize.includes(config.type)) {
+            return shuffleArray(config.options);
+        }
+
+        return config.options;
+    }, [config.id, config.options, config.type]);
 
     const renderInteraction = () => {
         const commonProps = {
-            options: config.options,
+            options: shuffledOptions,
             results,
             onVote: submitVote,
+            onInteract: handleInteraction,
             hasVoted,
             isSubmitting,
             userVote,
@@ -53,6 +69,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
                         config={config}
                         results={results}
                         onVote={submitVote}
+                        onInteract={handleInteraction}
                         hasVoted={hasVoted}
                         isSubmitting={isSubmitting}
                         userVote={userVote}
@@ -72,6 +89,7 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
                         config={config as any}
                         results={results}
                         onVote={submitVote}
+                        onInteract={handleInteraction}
                         hasVoted={hasVoted}
                         isSubmitting={isSubmitting}
                         userVote={userVote}

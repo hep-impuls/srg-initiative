@@ -5,6 +5,7 @@ interface GuessNumberProps {
     config: { question: string; correctValue?: number; unit?: string };
     results: InteractionResults | null;
     onVote: (value: number) => void;
+    onInteract?: (value: number) => void;
     hasVoted: boolean;
     isSubmitting: boolean;
     userVote: string | number | null;
@@ -15,6 +16,7 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
     config,
     results,
     onVote,
+    onInteract,
     hasVoted,
     isSubmitting,
     userVote,
@@ -51,7 +53,11 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
                         <input
                             type="number"
                             value={localValue}
-                            onChange={(e) => setLocalValue(e.target.value)}
+                            onChange={(e) => {
+                                setLocalValue(e.target.value);
+                                const val = parseFloat(e.target.value);
+                                if (!isNaN(val)) onInteract?.(val);
+                            }}
                             placeholder="Ihre Schätzung..."
                             className="w-full p-4 text-2xl font-bold text-center border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-0 outline-none transition-all"
                             autoFocus
@@ -93,7 +99,7 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
                             </div>
 
                             <div className="flex justify-between items-center px-4 py-3 bg-white border border-slate-100 rounded-xl text-sm">
-                                <span className="text-slate-500">Durchschnitt aller Schätzungen:</span>
+                                <span className="text-slate-500">Durchschnitt ({totalVotes} Teilnehmer):</span>
                                 <span className="font-bold text-slate-800">{average.toFixed(1)} {config.unit}</span>
                             </div>
                         </div>

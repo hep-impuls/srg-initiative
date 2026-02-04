@@ -99,12 +99,35 @@ export function useInteractionDirector({
         }
     };
 
+    // 5. Auto-Save Logic (Debounce)
+    const [draftVote, setDraftVote] = useState<string | number | null>(null);
+    const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
+
+    const handleInteraction = (value: string | number) => {
+        if (hasVoted || isSubmitting || phase !== 'input') return;
+        setDraftVote(value);
+        setLastInteractionTime(Date.now());
+    };
+
+    useEffect(() => {
+        if (draftVote === null || hasVoted) return;
+
+        const timer = setTimeout(() => {
+            if (!hasVoted) {
+                submitVote(draftVote);
+            }
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [draftVote, lastInteractionTime, hasVoted]);
+
     return {
         phase,
         results,
         hasVoted,
         userVote,
         isSubmitting,
-        submitVote
+        submitVote,
+        handleInteraction // Expose this for continuous inputs
     };
 }
