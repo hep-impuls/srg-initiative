@@ -262,6 +262,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                     mode="stepped"
                     title="Fazit: Deine Meinung nach der Einheit"
                     showResultsButton={true}
+                    resultsSourceId="agora"
                     onComplete={() => handleModalComplete('post')}
                 />
             </InteractionModal>
@@ -272,6 +273,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                     mode="stepped"
                     title="Vollständiges Quiz"
                     showResultsButton={true}
+                    resultsSourceId="agora"
                     onComplete={() => handleModalComplete('master')}
                 />
             </InteractionModal>

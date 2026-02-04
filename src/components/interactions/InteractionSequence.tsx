@@ -12,6 +12,7 @@ interface InteractionSequenceProps {
     mode?: 'list' | 'stepped';
     onComplete?: () => void;
     showResultsButton?: boolean;
+    resultsSourceId?: string;
 }
 
 export const InteractionSequence: React.FC<InteractionSequenceProps> = ({
@@ -23,7 +24,8 @@ export const InteractionSequence: React.FC<InteractionSequenceProps> = ({
     title,
     mode = 'list',
     onComplete,
-    showResultsButton = true
+    showResultsButton = true,
+    resultsSourceId = 'demo'
 }) => {
     const [configs, setConfigs] = useState<Record<string, InteractionConfig>>({});
     const [loading, setLoading] = useState(true);
@@ -124,7 +126,7 @@ export const InteractionSequence: React.FC<InteractionSequenceProps> = ({
                     ) : (
                         showResultsButton ? (
                             <button
-                                onClick={() => window.location.hash = '#/report/results'}
+                                onClick={() => window.location.hash = `#/report/results/${resultsSourceId}`}
                                 className="bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition-all"
                             >
                                 Zusammenfassung ansehen
