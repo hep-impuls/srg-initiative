@@ -10,7 +10,7 @@ service cloud.firestore {
       // Updates are only allowed if they follow the aggregated data model
       // We rely on transactions for atomicity, but rules still provide a safety net
       allow update: if request.auth != null 
-                    && request.resource.data.total_votes >= resource.data.total_votes;
+                    && request.resource.data.total_votes == resource.data.total_votes + 1;
       
       // Allow initial creation (lazy initialization)
       allow create: if request.auth != null;
