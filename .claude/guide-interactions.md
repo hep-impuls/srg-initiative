@@ -56,14 +56,14 @@ const questions = ['q1', 'q2', 'q3'];
 
 ## 🛠️ Unterstützte Interaktions-Typen
 
-| Typ | Beschreibung | Besondere Felder |
-|-----|--------------|-----------------|
-| `poll` | Klassische Umfrage mit Balken. | `options` |
-| `quiz` | Wissenstest mit Richtig/Falsch Feedback. | `options` mit `isCorrect: true` |
-| `slider` | Skala von 0 bis 100 mit Durchschnittsanzeige. | `minLabel`, `maxLabel` |
-| `ranking` | Items in eine Reihenfolge bringen. | `options` |
-| `points` | 100 Punkte auf verschiedene Items verteilen. | `options` |
-| `guess` | Eine Zahl schätzen mit Auflösung. | `correctValue`, `unit` |
+| Typ | Beschreibung | Besondere Felder | Visualisierung (Teilnehmer) |
+|-----|--------------|-----------------|---------------------------|
+| `poll` | Klassische Umfrage mit Balken. | `options` | Prozentuale Balken |
+| `quiz` | Wissenstest mit Richtig/Falsch Feedback. | `options` mit `isCorrect: true` | Prozentualer Erfolg |
+| `slider` | Skala von 0 bis 100. | `minLabel`, `maxLabel` | Durchschnitts-Marker (Ø) auf dem Track |
+| `ranking` | Items in eine Reihenfolge bringen. | `options` | "Top 3" Liste basierend auf gewichteten Scores |
+| `points` | 100 Punkte verteilen. | `options` | Balkendiagramm: Eigenes vs. Durchschnitt |
+| `guess` | Eine Zahl schätzen. | `correctValue`, `unit` | Durchschnitt aller Schätzungen |
 
 ---
 
@@ -74,6 +74,9 @@ Die `InteractionShell` synchronisiert sich automatisch mit der Audio-Wiedergabe:
 1.  **Input Phase (0s - 30s nach Start):** Nutzer kann abstimmen.
 2.  **Locked Phase (30s - 35s):** Eingabe gesperrt, "Warten auf Ergebnisse" Anzeige.
 3.  **Reveal Phase (> 35s):** Ergebnisse/Auflösung werden animiert eingeblendet.
+
+#### ⚡ Auto-Save (Neu)
+Interaktionen speichern Eingaben automatisch nach **1 Sekunde Inaktivität** in die Datenbank. Ein Klick auf "Bestätigen" ist für die Speicherung nicht mehr zwingend erforderlich, dient aber dazu, die Teilnehmer-Ergebnisse sofort aufzudecken.
 
 > [!TIP]
 > Die Phasen können über die Props der `InteractionShell` gesteuert werden, falls keine Audio-Anbindung gewünscht ist (z.B. Standalone).
@@ -92,7 +95,7 @@ Jede Interaktion ist automatisch als Standalone-Widget unter folgendem Pfad verf
 ## 🔒 Architektur & Datenschutz
 
 - **Firebase Firestore**: Speichert aggregierte Ergebnisse (atomare Inkremente).
-- **Anonymität**: Keine Speicherung von PII (Personally Identifiable Information). IP-Limitierung erfolgt via Firestore Rules (geplant) oder einfaches LocalStorage-Fingerprinting (aktiv).
+- **Anonymität**: Keine Speicherung von PII (Personally Identifiable Information). IP-Limitierung und Manipulationsschutz erfolgen via **Firebase Anonymous Auth** in Kombination mit Firestore Security Rules (Ein Vote pro UID).
 - **Swiss Orthography**: Alle Texte werden automatisch durch `swissifyData` verarbeitet (`ß` -> `ss`).
 
 ---
@@ -122,12 +125,14 @@ Um die Privatsphäre zu wahren und gleichzeitig ein Lernerlebnis zu bieten, nutz
 2.  **Persönliche Daten (LocalStorage)**: Die individuellen Antworten des Schülers werden ausschließlich in seinem Browser gespeichert (`localStorage.getItem('vote_[id]')`).
 
 ### Einen "Ergebnis-Report" erstellen
-Sie können eine Zusammenfassung aller Antworten anzeigen, indem Sie über alle Interaktions-IDs iterieren und den LocalStorage abfragen. Dies ermöglicht:
-- Eine "Meine Antworten" Seite.
-- Einen Vergleich zwischen eigener Schätzung und dem Community-Durchschnitt am Ende einer Lektion.
+Sie können eine Zusammenfassung aller Antworten anzeigen (`#/report/results/[slug]`).
+- **Vollständigkeit**: Die Seite zeigt **alle** konfigurierten Fragen einer Lektion an.
+- **Status**: Unbeantwortete Fragen werden als **"keine antwort"** markiert.
+- **Score**: Der Quiz-Score berechnet sich aus allen existierenden Quiz-Fragen der Lektion (z.B. `1 / 5` Punkte).
+- **Vergleich**: Visualisiert individuelle Antworten direkt neben dem **Teilnehmer-Durchschnitt** (Average) oder **Teilnehmer-Ranking**.
 
 ### Persistenz
-Da `localStorage` verwendet wird, bleiben Antworten erhalten, solange der Browser-Cache nicht gelöscht wird. Ein Wechsel des Endgeräts (z.B. Handy zu IPad) synchronisiert die Daten aktuell nicht (da kein Login-System existiert).
+Da `localStorage` verwendet wird, bleiben Antworten erhalten, solange der Browser-Cache nicht gelöscht wird. Ein Wechsel des Endgeräts (z.B. Handy zu IPad) synchronisiert die Daten aktuell nicht.
 
 ---
 

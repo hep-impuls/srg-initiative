@@ -58,8 +58,19 @@ export function useInteractionDirector({
         return () => unsubscribe();
     }, [config.id]);
 
-    // 3. User Vote Handling (Fingerprinting/LocalStorage)
+    // 3. User Identification & Local Storage
+    const [userId, setUserId] = useState<string | null>(null);
+
     useEffect(() => {
+        // Use Firebase Anonymous Auth for a secure, persistent UID
+        import('../lib/firebase').then(({ ensureAuth }) => {
+            ensureAuth().then(user => {
+                setUserId(user.uid);
+            }).catch(err => {
+                console.error("Auth failed:", err);
+            });
+        });
+
         const storageKey = `vote_${config.id}`;
         const storedVote = localStorage.getItem(storageKey);
         if (storedVote) {
@@ -70,16 +81,25 @@ export function useInteractionDirector({
 
     // 4. Vote Action
     const submitVote = async (optionId: string | number) => {
-        if (hasVoted || isSubmitting || phase !== 'input') return;
+        if (hasVoted || isSubmitting || phase !== 'input' || !userId) return;
 
         setIsSubmitting(true);
 
         try {
+            const voteId = `${userId}_${config.id}`;
+            const userVoteRef = doc(db, 'user_votes', voteId);
             const interactionRef = doc(db, 'interactions', config.id);
 
-            // Use nested object for setDoc with merge instead of dot notation
-            // Dot notation in keys is ONLY for updateDoc. 
-            // setDoc interprets dot-keys literally as field names.
+            // 1. Create the unique user_vote record first.
+            // If this fails (e.g. because it already exists), 
+            // the firestore rules will block it and we stop.
+            await setDoc(userVoteRef, {
+                timestamp: new Date().toISOString(),
+                value: optionId,
+                interactionId: config.id
+            });
+
+            // 2. Increment the aggregated counters
             await setDoc(interactionRef, {
                 total_votes: increment(1),
                 options: {
@@ -87,13 +107,17 @@ export function useInteractionDirector({
                 }
             }, { merge: true });
 
-            // Save to local storage
+            // Save to local storage for UI persistence
             localStorage.setItem(`vote_${config.id}`, String(optionId));
             setUserVote(optionId);
             setHasVoted(true);
 
         } catch (error) {
             console.error("Error submitting vote:", error);
+            // If it failed because of duplicate vote, still mark as voted locally
+            if ((error as any).code === 'permission-denied' || (error as any).message?.includes('already exists')) {
+                setHasVoted(true);
+            }
         } finally {
             setIsSubmitting(false);
         }

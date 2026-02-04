@@ -547,3 +547,11 @@ Das Projekt wurde für das Hosting auf GitHub Pages konfiguriert.
 - **Automatische Integration:** Die `OnboardingTour` wurde in die `ReportShell` verschoben.
 - **Vorteil:** Neue Seiten erhalten die Tour automatisch, ohne manuellen Code.
 - **Status:** Aktiviert für alle Reports.
+### Changelog v1.2.0 (Februar 2026)
+
+#### ⚡ Interaction Engine Refinement
+- **Auto-Save**: Automatische Speicherung von Nutzer-Eingaben nach 1s (Debounced).
+- **Umfassende Ergebnisse**: Die Results-Page zeigt nun alle Fragen einer Unit an; unbeantwortete werden als "keine antwort" markiert.
+- **Terminologie-Update**: "Community" wurde durch **"Teilnehmer"** ersetzt; "Teilnahmen" heißt nun **"Antworten"**.
+- **Erweiterte Visualisierung**: Teilnehmer-Durchschnitte für Slider, Punkte-Verteilungen und gewichtete Rankings für Ranking-Interaktionen implementiert.
+- **Fehlerbehandlung**: Robustere Verarbeitung von Null-Werten bei unvollständigen Fragebögen.
