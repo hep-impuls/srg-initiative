@@ -54,19 +54,19 @@ export const PollBar: React.FC<PollBarProps> = ({
                             )}
 
                             {/* Content */}
-                            <div className="relative z-10 flex justify-between items-center">
-                                <span className={`font-medium text-lg ${isSelected ? 'text-blue-700' : 'text-slate-700'}`}>
+                            <div className="relative z-10 flex justify-between items-start gap-3">
+                                <span className={`font-medium text-lg whitespace-normal break-words leading-snug min-w-0 ${isSelected ? 'text-blue-700' : 'text-slate-700'}`}>
                                     {swissifyData(option.label)}
                                 </span>
 
                                 {showResults && (
-                                    <span className="font-bold text-blue-600 animate-in fade-in">
+                                    <span className="font-bold text-blue-600 animate-in fade-in shrink-0">
                                         {percentage}%
                                     </span>
                                 )}
 
                                 {!showResults && isSelected && (
-                                    <span className="text-blue-500">
+                                    <span className="text-blue-500 shrink-0">
                                         ✓
                                     </span>
                                 )}

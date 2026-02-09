@@ -54,6 +54,24 @@ const questions = ['q1', 'q2', 'q3'];
 
 ---
 
+## 🔌 Integrations-Architektur (Modal vs. Iframe)
+
+Das System unterstützt zwei Betriebsmodi. Es ist wichtig, den Unterschied zu verstehen:
+
+### 1. Native Integration (In-App)
+In den Audio-Reports (z.B. `AgoraPage`) werden Interaktionen als **native React Components** gerendert.
+- **Container:** `InteractionModal.tsx`
+- **Technik:** Kein Iframe! Die Komponenten (`PollBar`, `RankingPoll` etc.) leben im selben React-Tree wie die Seite.
+- **Vorteil:** Bessere Performance, Shared State, keine Cross-Origin Probleme.
+
+### 2. Embed Integration (External)
+Für die Nutzung in *anderen* Webseiten (z.B. CMS, Lernplattformen) gibt es den Standalone-Modus.
+- **Route:** `/#/embed/[id]`
+- **Technik:** Hier fungiert die App als Iframe-Inhalt.
+- **Verwendung:** `EmbedPage.tsx` rendert nur die Interaktion ohne Header/Footer.
+
+---
+
 ## 🛠️ Unterstützte Interaktions-Typen
 
 | Typ | Beschreibung | Besondere Felder | Visualisierung (Teilnehmer) |

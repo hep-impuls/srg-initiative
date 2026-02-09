@@ -1,0 +1,23 @@
+{
+    "id": "publicMedia-intro-priority-ranking",
+    "type": "ranking",
+    "question": "Was ist dir bei Nachrichten am wichtigsten?",
+    "options": [
+        {
+            "id": "unabhaengigkeit",
+            "label": "Unabhaengigkeit"
+        },
+        {
+            "id": "erklaerung",
+            "label": "Erklaerung"
+        },
+        {
+            "id": "regionale_abdeckung",
+            "label": "Regionale Abdeckung"
+        },
+        {
+            "id": "geringe_kosten",
+            "label": "Geringe Kosten"
+        }
+    ]
+}

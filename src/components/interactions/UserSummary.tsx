@@ -33,6 +33,9 @@ export const UserSummary: React.FC<UserSummaryProps> = ({ sourceId }) => {
                         if (sourceId === 'agora' && !config.id.startsWith('agora-')) {
                             shouldInclude = false;
                         }
+                        if (sourceId === 'publicMedia' && !config.id.startsWith('publicMedia-')) {
+                            shouldInclude = false;
+                        }
                     }
 
                     if (shouldInclude) {

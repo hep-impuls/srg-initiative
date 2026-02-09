@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
     Globe,
     TrendingUp,
@@ -19,7 +19,8 @@ import { FocusRegion } from '@/components/FocusRegion';
 import { useAudioDirector } from '@/hooks/useAudioDirector';
 import { AudioPlayer } from '@/components/AudioPlayer';
 import { SourceBadge } from '@/components/SourceBadge';
-import { ScriptLoader } from '@/components/ScriptLoader';
+import { InteractionModal } from '@/components/interactions/InteractionModal';
+import { InteractionSequence } from '@/components/interactions/InteractionSequence';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 
@@ -287,16 +288,19 @@ const countryData = swissifyData([
         stability: 'Hoch',
         independence: 'Hoch',
         trustScore: 64,
-        fundingDetail: 'Pauschale pro Wohnung (egal wie viele Geräte).',
+        fundingDetail: 'Pauschale pro Wohnung (egal wie viele Geraete).',
         description: (
-            <>
-                In Deutschland zahlt jeder Haushalt den gleichen Betrag, egal ob man einen Fernseher hat oder nicht. Das sichert den Sendern feste Einnahmen. Wichtig: Nicht die Politiker bestimmen die Höhe des Beitrags, sondern eine unabhängige Gruppe von Experten (die <strong>KEF</strong>). Das schützt den Sender vor politischem Druck.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Jeder Haushalt zahlt den gleichen Betrag, auch ohne Fernseher.</li>
+                <li>Das sichert feste Einnahmen.</li>
+                <li>Die Hoehe bestimmt nicht die Politik, sondern die unabhaengige <strong>KEF</strong>.</li>
+                <li>Vorteil: Schutz vor politischem Druck.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Manchmal versuchen Politiker in den Bundesländern, eine Erhöhung zu blockieren, um bei Wählern gut dazustehen (<strong>Populismus</strong>).
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Bundeslaender blockieren Erhoehungen teils aus <strong>Populismus</strong>.</li>
+            </ul>
         ),
         status: 'sicher',
         refs: ["6", "11", "12"],
@@ -310,14 +314,22 @@ const countryData = swissifyData([
         model: 'Yle-Steuer',
         stability: 'Sehr Hoch',
         independence: 'Hoch',
-        trustScore: 69,
-        fundingDetail: 'Abhängig vom Einkommen (wer mehr verdient, zahlt mehr).',
+        trustScore: 79,
+        fundingDetail: 'Abhaengig vom Einkommen (wer mehr verdient, zahlt mehr).',
         description: (
-            <>
-                Finnland nutzt eine spezielle Steuer. Das ist <strong>sozial gerecht</strong>: Wer wenig verdient, zahlt nichts. Wer viel verdient, zahlt mehr. Der Clou: Das Geld kommt in einen <strong>extra Topf</strong> (Fonds). Die Politiker können dieses Geld nicht für andere Dinge (wie Strassenbau) wegnehmen.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Finland nutzt eine spezielle Steuer.</li>
+                <li><strong>Sozial gerecht</strong>: wenig Einkommen zahlt nichts, mehr Einkommen zahlt mehr.</li>
+                <li>Das Geld liegt in einem separaten <strong>Fonds</strong>.</li>
+                <li>Die Politik kann den Topf kaum fuer andere Projekte umleiten.</li>
+            </ul>
         ),
-        risks: 'Das System ist sehr sicher. Es gibt kaum Risiken, weil alle Parteien zustimmen.',
+        risks: (
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Breiter Parteikonsens stabilisiert das System.</li>
+                <li>Deshalb nur geringe politische Risiken.</li>
+            </ul>
+        ),
         status: 'sicher',
         refs: ["11", "16", "39"],
         image: 'img/public_media/2.png',
@@ -327,20 +339,24 @@ const countryData = swissifyData([
         id: 'uk',
         name: 'Grossbritannien',
         region: 'Europa',
-        model: 'Lizenzgebühr',
+        model: 'Lizenzgebuehr',
         stability: 'Sinkend',
         independence: 'Mittel',
         trustScore: 62,
-        fundingDetail: 'Gebühr für Live-TV Nutzung.',
+        fundingDetail: 'Gebuehr fuer Live-TV Nutzung.',
         description: (
-            <>
-                Die BBC ist berühmt, hat aber Probleme. Die Regierung hat den Preis für die Lizenz lange Zeit eingefroren. Das ist real eine <strong>Budget-Kürzung</strong> von 30%. Ausserdem muss die BBC alle paar Jahre neu mit der Regierung verhandeln (die "Royal Charter"). Das nutzen Politiker oft als <strong>Druckmittel</strong>.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>BBC ist stark, steht aber unter politischem Druck.</li>
+                <li>Die Lizenzgebuehr war lange eingefroren.</li>
+                <li>Real entspricht das rund <strong>30% Budget-Kuerzung</strong>.</li>
+                <li>Regelmaessige Charter-Verhandlungen schaffen zusaetzlichen Druck.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Viele junge Leute zahlen nicht mehr (<strong>Evasion</strong>). Die Regierung droht, die Gebühr 2027 ganz abzuschaffen.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Mehr junge Nutzer zahlen nicht mehr (<strong>Evasion</strong>).</li>
+                <li>Die Gebuehr koennte ab 2027 abgeschafft werden.</li>
+            </ul>
         ),
         status: 'risiko',
         refs: ["7", "8", "9", "10"],
@@ -351,42 +367,50 @@ const countryData = swissifyData([
         id: 'japan',
         name: 'Japan',
         region: 'Asien',
-        model: 'Empfangsgebühr',
+        model: 'Empfangsgebuehr',
         stability: 'Hoch',
         independence: 'Mittel',
         trustScore: 61,
-        fundingDetail: 'Pflicht-Vertrag bei Gerätebesitz.',
+        fundingDetail: 'Pflicht-Vertrag bei Geraetebesitz.',
         description: (
-            <>
-                Wer in Japan einen Fernseher hat, muss zahlen. Das Geld wird oft direkt an der Haustür von Kontrolleuren ("der NHK-Mann") eingesammelt. Das bringt viel Geld (96% der Einnahmen), aber viele Bürger/innen finden diesen <strong>Zwang</strong> nervig. Es gibt oft Streit darüber.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Mit TV-Besitz besteht Zahlpflicht.</li>
+                <li>Teils wird direkt an der Haustuer eingezogen.</li>
+                <li>Das Modell bringt hohe Einnahmen (ca. 96%).</li>
+                <li>Viele empfinden den <strong>Zwang</strong> als Belastung.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Immer mehr Menschen haben gar keinen Fernseher mehr, sondern streamen nur. Das System ist <strong>veraltet</strong>.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Immer mehr Haushalte streamen nur noch.</li>
+                <li>Dadurch wirkt das Modell zunehmend <strong>veraltet</strong>.</li>
+            </ul>
         ),
         status: 'stabil',
         refs: ["13", "14", "15"]
     },
     {
         id: 'daenemark',
-        name: 'Dänemark',
+        name: 'Daenemark',
         region: 'Nordic',
         model: 'Steuer (Staatsbudget)',
         stability: 'Mittel',
-        independence: 'Gefährdet',
+        independence: 'Gefaehrdet',
         trustScore: 57,
         fundingDetail: 'Geld direkt vom Staat.',
         description: (
-            <>
-                Dänemark hat die Gebühr abgeschafft und zahlt den Sender nun direkt aus Steuern. Das Problem: Die Politiker haben sofort das Budget um 20% gekürzt. Sie haben das Geld als <strong>Strafe</strong> benutzt, weil ihnen die Berichte nicht gefielen. Das zeigt: Steuer-Finanzierung macht <strong>abhängig</strong>.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Daenemark wechselte von Gebuehr zu direkter Steuerfinanzierung.</li>
+                <li>Direkt danach wurde das Budget um 20% gekuerzt.</li>
+                <li>Die Kuerzung wirkte wie politische <strong>Strafe</strong>.</li>
+                <li>Direkte Staatsfinanzierung macht abhaengiger.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Jede neue Regierung kann das Budget einfach ändern. Der Sender ist ein Spielball der Politik.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Jede Regierung kann das Budget schnell aendern.</li>
+                <li>Der Sender wird zum politischen Spielball.</li>
+            </ul>
         ),
         status: 'risiko',
         refs: ["1", "3", "17", "18"],
@@ -401,16 +425,20 @@ const countryData = swissifyData([
         stability: 'Mittel',
         independence: 'Mittel',
         trustScore: 50,
-        fundingDetail: 'Teil der Umsatzsteuer (temporär).',
+        fundingDetail: 'Teil der Umsatzsteuer (temporaer).',
         description: (
-            <>
-                Frankreich hat die Gebühr 2022 abgeschafft. Jetzt bekommen die Sender einen Teil der Mehrwertsteuer. Das ist aber nur eine <strong>Übergangslösung</strong>. Kritiker warnen: Wenn das Geld bald direkt aus dem normalen Staatshaushalt kommt, hat der Präsident zu viel <strong>Macht</strong> über die Medien.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Frankreich schaffte die Gebuehr 2022 ab.</li>
+                <li>Aktuell kommt Geld ueber einen MwSt-Anteil.</li>
+                <li>Das gilt als <strong>Uebergangsloesung</strong>.</li>
+                <li>Langfristig droht mehr politische Macht ueber das Budget.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Ohne festes Gesetz kann die Regierung den Geldhahn zudrehen, wenn die Sender zu kritisch berichten.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Ohne stabiles Gesetz kann die Regierung den Geldhahn zudrehen.</li>
+                <li>Besonders kritisch bei unbequemer Berichterstattung.</li>
+            </ul>
         ),
         status: 'risiko',
         refs: ["19", "20", "23", "24"]
@@ -423,21 +451,25 @@ const countryData = swissifyData([
         stability: 'Niedrig',
         independence: 'Mittel',
         trustScore: 40,
-        fundingDetail: 'Freiwillige Spenden von Bürgern/Firmen.',
+        fundingDetail: 'Freiwillige Spenden von Buergern/Firmen.',
         description: (
-            <>
-                In den USA zahlt der Staat fast nichts. Sender wie PBS müssen um <strong>Spenden</strong> betteln. Das Problem: Sie machen Programm für reiche Leute, damit diese spenden. Ärmere Regionen haben oft gar keine lokalen Nachrichten mehr (<strong>Nachrichten-Wüsten</strong>).
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Der Staat finanziert nur einen kleinen Teil.</li>
+                <li>Sender sind stark von <strong>Spenden</strong> abhaengig.</li>
+                <li>Programme richten sich oft an zahlungskraeftige Zielgruppen.</li>
+                <li>In armen Regionen entstehen News-Wuesten.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Wenn Spenden ausbleiben (z.B. in einer Wirtschaftskrise), gehen die Sender pleite. Es gibt keine Sicherheit.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Bei Wirtschaftskrisen brechen Spenden schnell ein.</li>
+                <li>Es fehlt eine stabile Grundsicherung.</li>
+            </ul>
         ),
         status: 'gefaehrdet',
         refs: ["2", "21", "22", "40"],
         image: 'img/public_media/5.png',
-        imageAlt: 'Nachrichten-Wüste'
+        imageAlt: 'Nachrichten-Wueste'
     },
     {
         id: 'griechenland',
@@ -449,14 +481,18 @@ const countryData = swissifyData([
         trustScore: 30,
         fundingDetail: 'Direkte Kontrolle durch Regierung.',
         description: (
-            <>
-                Ein Schock-Beispiel: 2013 hat die Regierung den Sender ERT einfach <strong>über Nacht geschlossen</strong>, um Geld zu sparen. Die Bildschirme waren schwarz. Das zeigt extrem deutlich: Wenn es keine Gesetze zum Schutz gibt, kann der Staat die Medien einfach abschalten ("Shutdown").
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>2013 wurde ERT <strong>ueber Nacht geschlossen</strong>.</li>
+                <li>Bildschirme blieben schwarz, der Betrieb stoppte sofort.</li>
+                <li>Das zeigt fehlende rechtliche Schutzmechanismen.</li>
+                <li>Der Staat kann das System abrupt abschalten.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Die Menschen vertrauen dem Sender kaum noch, weil jeder weiss: Die Regierung ist der Boss.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Das Vertrauen in den Sender ist sehr niedrig.</li>
+                <li>Viele sehen die Regierung als direkten Boss der Medien.</li>
+            </ul>
         ),
         status: 'kritisch',
         refs: ["30", "31", "32", "41"],
@@ -473,19 +509,44 @@ const countryData = swissifyData([
         trustScore: 45,
         fundingDetail: 'Muss Gewinn machen (Werbung).',
         description: (
-            <>
-                Der Staat besitzt den Sender TVNZ zwar, aber er verlangt, dass der Sender <strong>Gewinn</strong> macht (wie eine private Firma). Deshalb läuft dort viel billiges <strong>Reality-TV</strong> und Werbung statt Bildung. Guter Journalismus kostet Geld und bringt wenig Gewinn, also wird er gestrichen.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>TVNZ ist staatlich, muss aber <strong>Gewinn</strong> erzielen.</li>
+                <li>Darum dominieren Werbung und guenstiges Reality-TV.</li>
+                <li>Teurer Qualitaetsjournalismus wird schneller gekuerzt.</li>
+                <li>Der oeffentliche Auftrag rueckt in den Hintergrund.</li>
+            </ul>
         ),
         risks: (
-            <>
-                Der öffentliche Auftrag (Bildung, Info) wird vergessen, weil es nur ums Geldverdienen geht.
-            </>
+            <ul className="list-disc pl-5 space-y-1">
+                <li>Bildung und Information verlieren gegen Renditeziel.</li>
+                <li>Langfristig sinkt die inhaltliche Vielfalt.</li>
+            </ul>
         ),
         status: 'gefaehrdet',
         refs: ["26", "27", "28", "29"]
     }
 ]);
+const PRE_UNIT_IDS = [
+    'publicMedia-intro-funding-pre',
+    'publicMedia-intro-priority-ranking',
+    'publicMedia-intro-independence-slider'
+];
+
+const MAP_COMPARE_IDS = [
+    'publicMedia-map-quiz-protection',
+    'publicMedia-map-points-safeguards'
+];
+
+const POST_UNIT_IDS = [
+    'publicMedia-outro-funding-post',
+    'publicMedia-outro-action-ranking'
+];
+
+const MASTER_QUIZ_IDS = [
+    ...PRE_UNIT_IDS,
+    ...MAP_COMPARE_IDS,
+    ...POST_UNIT_IDS
+];
 
 const StatusIndicator = ({ status }: { status: string }) => {
     const config: Record<string, { color: string; text: string; icon: any }> = {
@@ -508,32 +569,71 @@ const StatusIndicator = ({ status }: { status: string }) => {
 
 export function PublicMediaPage({ config }: PublicMediaPageProps) {
     const directorState = useAudioDirector(config.timeline);
+    const { currentTab, audioState, audioRef, activeElementId } = directorState;
 
     // Fallback to manual control if no audio or audio paused
     const [manualTab, setManualTab] = useState<'intro' | 'map' | 'compare' | 'analysis' | 'quiz'>('intro');
-    const activeTab = directorState.audioState.isPlaying
-        ? (directorState.currentTab || manualTab)
+    const activeTab = audioState.isPlaying
+        ? (currentTab || manualTab)
         : manualTab;
 
     const [selectedCountry, setSelectedCountry] = useState(countryData[0]);
+    const [activeModal, setActiveModal] = useState<string | null>(null);
+    const [completedModals, setCompletedModals] = useState<string[]>([]);
+    const hasStartedRef = useRef(false);
 
     // Sync manual tab when director changes tab
     useEffect(() => {
-        if (directorState.currentTab && directorState.audioState.isPlaying) {
-            setManualTab(directorState.currentTab as any);
+        if (currentTab && audioState.isPlaying) {
+            setManualTab(currentTab as any);
         }
-    }, [directorState.currentTab, directorState.audioState.isPlaying]);
+    }, [currentTab, audioState.isPlaying]);
 
     // Sync selected country with audio director
     useEffect(() => {
-        if (directorState.activeElementId?.startsWith('country_')) {
-            const countryId = directorState.activeElementId.replace('country_', '');
+        if (activeElementId?.startsWith('country_')) {
+            const countryId = activeElementId.replace('country_', '');
             const country = countryData.find(c => c.id === countryId);
             if (country) {
                 setSelectedCountry(country);
             }
         }
-    }, [directorState.activeElementId]);
+    }, [activeElementId]);
+
+    // Pre-unit trigger when audio starts for the first time
+    useEffect(() => {
+        if (audioState.isPlaying && !hasStartedRef.current && !completedModals.includes('pre')) {
+            audioRef.current?.pause();
+            setActiveModal('pre');
+            hasStartedRef.current = true;
+        }
+    }, [audioState.isPlaying, completedModals, audioRef]);
+
+    // Mid-unit transition triggers
+    useEffect(() => {
+        const time = audioState.currentTime;
+
+        if (time > 371 && time < 374 && !completedModals.includes('map-compare') && activeModal !== 'map-compare') {
+            audioRef.current?.pause();
+            setActiveModal('map-compare');
+        }
+    }, [audioState.currentTime, completedModals, activeModal, audioRef]);
+
+    // Post-unit trigger near the end of the audio
+    useEffect(() => {
+        if (audioState.duration > 0 && audioState.currentTime >= audioState.duration - 0.5 && !completedModals.includes('post') && activeModal !== 'post') {
+            setActiveModal('post');
+        }
+    }, [audioState.currentTime, audioState.duration, completedModals, activeModal]);
+
+    const handleModalComplete = (modalId: string) => {
+        setCompletedModals(prev => (prev.includes(modalId) ? prev : [...prev, modalId]));
+        setActiveModal(null);
+
+        if (modalId !== 'post') {
+            audioRef.current?.play();
+        }
+    };
 
     // Ensure smooth scrolling
     useEffect(() => {
@@ -542,6 +642,47 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
 
     return (
         <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-24">
+            <InteractionModal isOpen={activeModal === 'pre'} onClose={() => setActiveModal(null)}>
+                <InteractionSequence
+                    interactionIds={PRE_UNIT_IDS}
+                    mode="stepped"
+                    title="Teil 1: Deine Meinung vor dem Start"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('pre')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'map-compare'} onClose={() => setActiveModal(null)}>
+                <InteractionSequence
+                    interactionIds={MAP_COMPARE_IDS}
+                    mode="stepped"
+                    title="Zwischen-Check: Laendervergleich"
+                    showResultsButton={false}
+                    onComplete={() => handleModalComplete('map-compare')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'post'} onClose={() => setActiveModal(null)}>
+                <InteractionSequence
+                    interactionIds={POST_UNIT_IDS}
+                    mode="stepped"
+                    title="Fazit: Deine Meinung nach der Einheit"
+                    showResultsButton={true}
+                    resultsSourceId="publicMedia"
+                    onComplete={() => handleModalComplete('post')}
+                />
+            </InteractionModal>
+
+            <InteractionModal isOpen={activeModal === 'master'} onClose={() => setActiveModal(null)}>
+                <InteractionSequence
+                    interactionIds={MASTER_QUIZ_IDS}
+                    mode="stepped"
+                    title="Abschluss-Check"
+                    showResultsButton={true}
+                    resultsSourceId="publicMedia"
+                    onComplete={() => handleModalComplete('master')}
+                />
+            </InteractionModal>
 
             {/* Header */}
             <header className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 shadow-xl sticky top-0 z-30">
@@ -751,9 +892,9 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                         </h3>
                                         <div className="flex flex-col md:flex-row gap-6 items-start">
                                             <div className="flex-1">
-                                                <p className="text-slate-700 leading-relaxed text-lg mb-3">
+                                                <div className="text-slate-700 leading-relaxed text-base mb-3">
                                                     {selectedCountry.description}
-                                                </p>
+                                                </div>
                                                 <SourceBadge ids={selectedCountry.refs} />
                                             </div>
                                             {/* @ts-ignore - image property is added dynamically */}
@@ -778,9 +919,9 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                         <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider mb-2 text-slate-900">
                                             {selectedCountry.status === 'sicher' ? 'Warum es gut funktioniert:' : 'Das grösste Problem:'}
                                         </h3>
-                                        <p className={`text-sm ${selectedCountry.status === 'sicher' ? 'text-emerald-800' : 'text-red-800'}`}>
+                                        <div className={`text-sm ${selectedCountry.status === 'sicher' ? 'text-emerald-800' : 'text-red-800'}`}>
                                             {selectedCountry.risks}
-                                        </p>
+                                        </div>
                                     </FocusRegion>
                                 </div>
                             </div>
@@ -837,7 +978,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                 </h3>
                                 <p className="text-slate-700 mb-4">
                                     Viele glauben: Wenn es ARD/ZDF gibt, haben private Firmen (wie Netflix oder RTL) keine Chance.
-                                    <strong>Das stimmt nicht.</strong> Studien zeigen:
+                                    <strong> Studien zeigen:</strong>
                                 </p>
                                 <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100 text-sm">
                                     <div className="flex justify-between items-center mb-2 font-bold text-emerald-900">
@@ -858,7 +999,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                             <FocusRegion id="public_media__compare__gap" label="Wissens-Lücke" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                                     <BookOpen className="text-blue-500" />
-                                    Die "Wissens-Lücke" (Knowledge Gap)
+                                    Die "Wissens-Lücke"
                                 </h3>
                                 <p className="text-slate-700 mb-4">
                                     Wer weiss eigentlich, was in der Politik passiert?
@@ -870,7 +1011,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     </div>
                                     <div className="p-3 bg-blue-50 rounded text-blue-900 border border-blue-100">
                                         <span className="block font-bold text-xs uppercase mb-1 text-blue-400">In Europa (Öffentliches System)</span>
-                                        <span className="text-sm">Fast <strong>alle</strong> sind gut informiert, egal wie viel Geld sie haben. Öffentliche Medien machen schlau.</span>
+                                        <span className="text-sm">Die <strong>Leuten</strong> sind gut informiert, egal wie viel Geld sie haben. Öffentliche Medien informierend alle Bevölkerungsschichten.</span>
                                     </div>
                                     <SourceBadge ids={["5", "36", "37"]} />
                                 </div>
@@ -966,34 +1107,39 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                 )}
 
                 {/* VIEW: QUIZ */}
-                {/* Always render iframe to preserve state, just hide it when not active */}
-                <div style={{ display: activeTab === 'quiz' ? 'block' : 'none' }}>
-                    <FocusRegion id="public_media__quiz" label="Quiz" className="animate-in fade-in duration-500">
-                        <div className="bg-white p-4 md:p-8 rounded-2xl shadow-lg border border-slate-200">
-                            <div className="max-w-4xl mx-auto text-center mb-8">
+                {activeTab === 'quiz' && (
+                    <FocusRegion id="public_media__quiz" label="Abschluss-Check" className="animate-in fade-in duration-500">
+                        <div className="bg-white p-6 md:p-10 rounded-2xl shadow-lg border border-slate-200">
+                            <div className="max-w-4xl mx-auto text-center">
                                 <span className="inline-block p-3 bg-blue-100 text-blue-600 rounded-full mb-4">
                                     <HelpCircle size={32} />
                                 </span>
-                                <h2 className="text-3xl font-bold text-slate-900 mb-2">Testen Sie Ihr Wissen</h2>
-                                <p className="text-slate-600 text-lg">
-                                    Haben Sie gut aufgepasst? Beantworten Sie die Fragen zum Thema Public Media.
+                                <h2 className="text-3xl font-bold text-slate-900 mb-2">Abschluss-Check</h2>
+                                <p className="text-slate-600 text-lg mb-8">
+                                    Starte den nativen Abschluss-Check oder oeffne direkt deine Auswertung.
                                 </p>
-                            </div>
 
-                            <div className="w-full aspect-[4/3] md:aspect-[16/9] bg-slate-50 rounded-xl overflow-hidden shadow-inner border border-slate-200 p-[2px]">
-                                <iframe
-                                    src="https://app.lumi.education/api/v1/run/Y-5ydU/embed"
-                                    className="w-full h-full"
-                                    frameBorder="0"
-                                    allowFullScreen
-                                    allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
-                                    title="Public Media Quiz"
-                                ></iframe>
-                                <ScriptLoader />
+                                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                                    <button
+                                        onClick={() => {
+                                            audioRef.current?.pause();
+                                            setActiveModal('master');
+                                        }}
+                                        className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+                                    >
+                                        Abschluss-Check starten
+                                    </button>
+                                    <button
+                                        onClick={() => window.location.hash = '#/report/results/publicMedia'}
+                                        className="px-6 py-3 rounded-xl bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200"
+                                    >
+                                        Auswertung ansehen
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </FocusRegion>
-                </div>
+                )}
 
                 {/* Footer with Sources List */}
                 <div id="quellen" className="mt-8 border-t border-slate-200 pt-6">
@@ -1032,7 +1178,13 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
             <AudioPlayer
                 audioSrc={config.audioSrc || ''}
                 directorState={directorState}
+                onStartQuiz={() => {
+                    audioRef.current?.pause();
+                    setActiveModal('master');
+                }}
+                onShowResults={() => window.location.hash = '#/report/results/publicMedia'}
             />
         </div>
     );
 };
+

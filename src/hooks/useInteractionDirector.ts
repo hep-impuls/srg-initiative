@@ -28,6 +28,17 @@ export function useInteractionDirector({
     const voteStatusRef = useRef<VoteStatus>('idle');
     const lastSuccessfulVoteRef = useRef<string | number | null>(null);
 
+    const normalizeVoteValue = (value: string | number): string | number => {
+        if (config.type === 'guess') {
+            const numeric = typeof value === 'number' ? value : Number.parseInt(String(value), 10);
+            if (Number.isNaN(numeric)) return 0;
+            return Math.max(0, Math.round(numeric));
+        }
+        return value;
+    };
+
+    const toOptionKey = (value: string | number) => String(value);
+
     // Helper to update ref immediately
     const updateVoteStatus = (status: VoteStatus) => {
         voteStatusRef.current = status;
@@ -94,6 +105,8 @@ export function useInteractionDirector({
     }, [config.id]);
 
     const saveDraft = async (optionId: string | number) => {
+        const normalizedOptionId = normalizeVoteValue(optionId);
+
         // Only save drafts if we're idle or already drafting (not finalizing/finalized)
         const currentStatus = voteStatusRef.current as VoteStatus;
         if (hasVoted || phase !== 'input' || currentStatus === 'finalizing' || currentStatus === 'finalized') return;
@@ -118,18 +131,18 @@ export function useInteractionDirector({
 
             await setDoc(userVoteRef, {
                 timestamp: new Date().toISOString(),
-                value: optionId,
+                value: normalizedOptionId,
                 interactionId: config.id,
                 isDraft: true
             }, { merge: true });
 
-            localStorage.setItem(`vote_draft_${config.id}`, String(optionId));
+            localStorage.setItem(`vote_draft_${config.id}`, String(normalizedOptionId));
 
             // Only update state if we haven't finalized
             const finalStatusCheck = voteStatusRef.current as VoteStatus;
             if (finalStatusCheck !== 'finalizing' && finalStatusCheck !== 'finalized') {
-                lastSuccessfulVoteRef.current = optionId;
-                setUserVote(optionId);
+                lastSuccessfulVoteRef.current = normalizedOptionId;
+                setUserVote(normalizedOptionId);
             }
 
             updateVoteStatus('idle'); // Return to idle after draft save
@@ -140,6 +153,9 @@ export function useInteractionDirector({
 
     // 5. Final Vote Submission (Locks UI & Increments Community Count)
     const submitVote = async (optionId: string | number) => {
+        const normalizedOptionId = normalizeVoteValue(optionId);
+        const optionKey = toOptionKey(normalizedOptionId);
+
         const currentStatus = voteStatusRef.current as VoteStatus;
         if (hasVoted || isSubmitting || phase !== 'input' || currentStatus === 'finalizing' || currentStatus === 'finalized') return;
 
@@ -179,29 +195,29 @@ export function useInteractionDirector({
                 // Atomically write both documents
                 transaction.set(userVoteRef, {
                     timestamp: new Date().toISOString(),
-                    value: optionId,
+                    value: normalizedOptionId,
                     interactionId: config.id,
                     isDraft: false
                 });
 
                 // Calculate new values
                 const currentTotalVotes = interactionData?.total_votes || 0;
-                const currentOptionCount = interactionData?.options?.[optionId] || 0;
+                const currentOptionCount = interactionData?.options?.[optionKey] || 0;
 
                 transaction.set(interactionRef, {
                     total_votes: currentTotalVotes + 1,
                     options: {
                         ...interactionData?.options,
-                        [optionId]: currentOptionCount + 1
+                        [optionKey]: currentOptionCount + 1
                     }
                 }, { merge: true });
             });
 
             // Save to local storage for UI persistence
-            localStorage.setItem(`vote_${config.id}`, String(optionId));
+            localStorage.setItem(`vote_${config.id}`, String(normalizedOptionId));
             localStorage.removeItem(`vote_draft_${config.id}`); // Clear draft
-            lastSuccessfulVoteRef.current = optionId;
-            setUserVote(optionId);
+            lastSuccessfulVoteRef.current = normalizedOptionId;
+            setUserVote(normalizedOptionId);
             setHasVoted(true);
             updateVoteStatus('finalized'); // Mark as finalized
 
@@ -229,12 +245,13 @@ export function useInteractionDirector({
     const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
 
     const handleInteraction = (value: string | number) => {
+        const normalizedValue = normalizeVoteValue(value);
         if (hasVoted || phase !== 'input' || voteStatusRef.current === 'finalizing' || voteStatusRef.current === 'finalized') return;
-        setDraftVote(value);
+        setDraftVote(normalizedValue);
         setLastInteractionTime(Date.now());
 
         // Optimistic local update so it's not lost on refresh even before auto-save
-        localStorage.setItem(`vote_draft_${config.id}`, String(value));
+        localStorage.setItem(`vote_draft_${config.id}`, String(normalizedValue));
     };
 
     useEffect(() => {

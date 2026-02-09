@@ -10,6 +10,8 @@ export const ResultsPage: React.FC = () => {
     const handleBack = () => {
         if (sourceId === 'agora') {
             navigate('/report/agora');
+        } else if (sourceId === 'publicMedia') {
+            navigate('/report/publicMedia');
         } else {
             navigate('/report/demo');
         }
