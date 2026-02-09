@@ -53,6 +53,7 @@ interface FocusRegionProps {
 
 ### 4. Interaction Engine (`src/components/interactions/`)
 Ein hybrides System für Engagement.
+- **Native React Modals**: `InteractionModal.tsx` rendert die Interaktionen direkt im DOM (kein `iframe` im Haupt-App-Flow!).
 - **Static Config**: Fragen und Optionen in `src/data/interactions/*.json`.
 - **Dynamic State**: Echtzeit-Ergebnisse via Firebase Firestore.
 - **Sync**: Nutzt `useInteractionDirector` um Abstimmungs-Phasen mit der Audio-Zeit zu koppeln.
@@ -70,6 +71,17 @@ These are purely presentational. They must:
   <p>Früher bestimmten Zeitungsredaktionen...</p>
 </FocusRegion>
 ```
+
+### 6. Interaction Orchestration (The Pop-ups)
+Page Components like `AgoraPage.tsx` orchestrate when interactions appear using a `useEffect` hook monitoring `audioState.currentTime`.
+
+**Pattern:**
+1. **Trigger**: Code checks if `currentTime > TARGET_TIME` and `!completedModals.includes(ID)`.
+2. **Action**: Audio is paused (`audioRef.current.pause()`).
+3. **Display**: `activeModal` state is set to the ID, rendering `<InteractionModal>`.
+4. **Resume**: On completion, the modal closes and audio resumes.
+
+This is a **controlled, code-driven flow**, distinct from the passive timeline/focus system.
 
 ## Focus Manifest System
 

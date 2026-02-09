@@ -26,6 +26,11 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
 }) => {
     const [localValue, setLocalValue] = useState<string>(userVote !== null ? String(userVote) : '');
     const touchedRef = React.useRef(false);
+    const parseGuessValue = (raw: string) => {
+        const parsed = Number.parseInt(raw, 10);
+        if (Number.isNaN(parsed)) return null;
+        return Math.max(0, parsed);
+    };
 
     // Reset on interaction change
     React.useEffect(() => {
@@ -47,8 +52,8 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const val = parseFloat(localValue);
-        if (!isNaN(val)) {
+        const val = parseGuessValue(localValue);
+        if (val !== null) {
             onVote(val);
         }
     };
@@ -72,17 +77,19 @@ export const GuessNumber: React.FC<GuessNumberProps> = ({
                     <div className="relative">
                         <input
                             type="number"
+                            step="1"
+                            min="0"
                             value={localValue}
                             onChange={(e) => {
                                 touchedRef.current = true;
                                 setLocalValue(e.target.value);
-                                const val = parseFloat(e.target.value);
-                                if (!isNaN(val)) onInteract?.(val);
+                                const val = parseGuessValue(e.target.value);
+                                if (val !== null) onInteract?.(val);
                             }}
                             placeholder="Ihre Schätzung..."
                             onBlur={() => {
-                                const val = parseFloat(localValue);
-                                if (!isNaN(val)) onSaveDraft?.(val);
+                                const val = parseGuessValue(localValue);
+                                if (val !== null) onSaveDraft?.(val);
                             }}
                             className="w-32 bg-slate-50 border-2 border-slate-200 rounded-xl px-4 py-3 text-2xl font-black text-slate-800 text-center focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition-all"
                             autoFocus

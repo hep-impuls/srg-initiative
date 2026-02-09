@@ -1,11 +1,11 @@
 {
   "source": "PublicMediaPage.tsx",
-  "generated": "2026-02-03T08:46:39.226Z",
-  "totalRegions": 19,
+  "generated": "2026-02-08T10:05:22.178Z",
+  "totalRegions": 24,
   "depthBreakdown": {
     "depth0": 0,
-    "depth1": 5,
-    "depth2": 9,
+    "depth1": 7,
+    "depth2": 12,
     "depth3": 5
   },
   "regions": [
@@ -25,6 +25,11 @@
       "depth": 1
     },
     {
+      "id": "public_media__hero",
+      "label": "Intro-Bereich",
+      "depth": 1
+    },
+    {
       "id": "public_media__map",
       "label": "Länder-Übersicht",
       "depth": 1
@@ -32,6 +37,11 @@
     {
       "id": "public_media__nav",
       "label": "Hauptnavigation",
+      "depth": 1
+    },
+    {
+      "id": "public_media__quiz",
+      "label": "Abschluss-Check",
       "depth": 1
     },
     {
@@ -65,13 +75,28 @@
       "depth": 2
     },
     {
+      "id": "public_media__compare__main_visual",
+      "label": "Vergleich: Visualisierung",
+      "depth": 2
+    },
+    {
       "id": "public_media__compare__myth",
       "label": "Mythos-Check",
       "depth": 2
     },
     {
-      "id": "public_media__map__detail",
-      "label": "Detail-Ansicht",
+      "id": "public_media__hero__card_analysis",
+      "label": "Folgen-Karte",
+      "depth": 2
+    },
+    {
+      "id": "public_media__hero__card_compare",
+      "label": "Muster-Karte",
+      "depth": 2
+    },
+    {
+      "id": "public_media__hero__card_map",
+      "label": "Karte-Karte",
       "depth": 2
     },
     {

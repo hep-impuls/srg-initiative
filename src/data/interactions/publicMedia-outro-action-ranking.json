@@ -1,0 +1,23 @@
+{
+    "id": "publicMedia-outro-action-ranking",
+    "type": "ranking",
+    "question": "Was sollte politisch zuerst priorisiert werden?",
+    "options": [
+        {
+            "id": "budgetschutz",
+            "label": "Schutz vor Budgetzugriff"
+        },
+        {
+            "id": "medienkompetenz",
+            "label": "Medienkompetenz"
+        },
+        {
+            "id": "transparenzpflichten",
+            "label": "Transparenzpflichten"
+        },
+        {
+            "id": "plattformregeln",
+            "label": "Plattformregeln"
+        }
+    ]
+}

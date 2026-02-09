@@ -1,0 +1,23 @@
+{
+    "id": "publicMedia-intro-funding-pre",
+    "type": "poll",
+    "question": "Soll die Finanzierung oeffentlicher Medien verpflichtend sein?",
+    "options": [
+        {
+            "id": "ja_klar",
+            "label": "Ja, klar verpflichtend"
+        },
+        {
+            "id": "ja_aber_guenstiger",
+            "label": "Ja, aber guenstiger als heute"
+        },
+        {
+            "id": "nein_freiwillig",
+            "label": "Nein, lieber freiwillig finanzieren"
+        },
+        {
+            "id": "unsicher",
+            "label": "Unsicher"
+        }
+    ]
+}

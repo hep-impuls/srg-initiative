@@ -1,0 +1,24 @@
+{
+    "id": "publicMedia-map-quiz-protection",
+    "type": "quiz",
+    "question": "Was schuetzt oeffentliche Medien am besten vor politischem Druck?",
+    "options": [
+        {
+            "id": "direktbudget",
+            "label": "Direkte Budgetkontrolle durch die Regierung"
+        },
+        {
+            "id": "fondslogik",
+            "label": "Unabhaengige Beitrags- oder Fondslogik statt direkter Budgetkontrolle",
+            "isCorrect": true
+        },
+        {
+            "id": "werbeabhaengigkeit",
+            "label": "Moeglichst hohe Abhaengigkeit von Werbeeinnahmen"
+        },
+        {
+            "id": "sponsoring",
+            "label": "Einzelne Grosssponsoren finanzieren den News-Bereich"
+        }
+    ]
+}

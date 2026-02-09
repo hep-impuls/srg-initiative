@@ -25,7 +25,7 @@ export const QuizOption: React.FC<QuizOptionProps> = ({
     const totalVotes = results?.totalVotes || 0;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <div className="flex flex-col gap-3 w-full max-w-2xl mx-auto">
             {options.map((option) => {
                 const count = results?.optionCounts[option.id] || 0;
                 const percentage = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
@@ -63,21 +63,21 @@ export const QuizOption: React.FC<QuizOptionProps> = ({
                         onClick={() => onVote(option.id)}
                         disabled={hasVoted || isSubmitting}
                         className={`
-              relative p-6 rounded-xl text-left border-2 transition-all duration-300
-              flex flex-col justify-between h-32
+              relative w-full p-4 rounded-xl text-left border-2 transition-all duration-300
+              flex flex-col gap-3
               ${borderColor} ${bgColor}
               ${!hasVoted && !showResults ? 'hover:border-blue-300 hover:shadow-md' : 'cursor-default'}
             `}
                     >
-                        <div className="flex justify-between items-start w-full">
-                            <span className="font-semibold text-lg text-slate-800 line-clamp-2">
+                        <div className="flex justify-between items-start gap-3 w-full">
+                            <span className="font-semibold text-lg text-slate-800 whitespace-normal break-words leading-snug">
                                 {swissifyData(option.label)}
                             </span>
-                            {icon}
+                            {icon && <span className="shrink-0">{icon}</span>}
                         </div>
 
                         {showResults && (
-                            <div className="w-full mt-2">
+                            <div className="w-full">
                                 <div className="flex justify-between text-xs text-slate-500 mb-1">
                                     <span>{percentage}% gewählt</span>
                                 </div>
