@@ -1,0 +1,203 @@
+{
+    "sources": [
+        {
+            "id": "1",
+            "text": "Reuters Institute Digital News Report 2025 (Deutschland)",
+            "details": "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen.",
+            "url": "https://leibniz-hbi.de/en/hbi-news/pressinfo/german-findings-of-the-reuters-institute-digital-news-report-2025/"
+        },
+        {
+            "id": "2",
+            "text": "Reuters Institute Digital News Report 2025 (Schweiz)",
+            "details": "Verschiebung von Print/TV zu Video-Plattformen.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025"
+        },
+        {
+            "id": "3",
+            "text": "Reuters Institute Digital News Report 2025 (Plattformen)",
+            "details": "Wachstum von TikTok (+7%) als Nachrichtenquelle.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/switzerland"
+        },
+        {
+            "id": "4",
+            "text": "Marktanalyse Online-Werbung Schweiz 2024",
+            "details": "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen.",
+            "url": "https://www.foeg.uzh.ch/dam/jcr:adbffe22-c427-4c9a-8e3f-390ef071eb9a/JB_2025_I_Main_Findings_20251030_final%20korr.pdf"
+        },
+        {
+            "id": "5",
+            "text": "fög Jahrbuch Qualität der Medien 2024/2025",
+            "details": "News-Deprivation auf Rekordhoch von 46%.",
+            "url": "https://www.foeg.uzh.ch/dam/jcr:eaddc4bc-a0fd-4323-8c4a-2376ceeac959/Pr%C3%A4sentation_2024_final_DE.pdf"
+        },
+        {
+            "id": "6",
+            "text": "fög Studie zu Bildungskluft",
+            "details": "Zusammenhang zwischen formaler Bildung und News-Deprivation.",
+            "url": "https://www.news.uzh.ch/en/articles/media/2025/yearbook-quality-of-the-media-foeg.html"
+        },
+        {
+            "id": "7",
+            "text": "Analyse 'Crowding Out' Effekt",
+            "details": "Widerlegung der These, dass SRG private Medien verdrängt.",
+            "url": "https://www.foeg.uzh.ch/dam/jcr:85ef7b15-95f8-4815-bde8-179b0d0e1089/JB_2024_Study_I_private_Media_EN.pdf"
+        },
+        {
+            "id": "8",
+            "text": "Forschung zu politischer Partizipation",
+            "details": "'Slacktivism' und das Paradox der Social-Media-Teilnahme.",
+            "url": "https://www.mdpi.com/2673-5172/6/3/155"
+        },
+        {
+            "id": "9",
+            "text": "Studie zu COVID-19 Referenden",
+            "details": "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'.",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8242806/"
+        },
+        {
+            "id": "10",
+            "text": "Polarisierungs-Forschung 2025",
+            "details": "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau.",
+            "url": "https://www.news.uzh.ch/en/articles/news/2024/political-polarization.html"
+        },
+        {
+            "id": "11",
+            "text": "OECD Studie zu Desinformation",
+            "details": "Niedrige Erkennungsrate von Fake News in der Schweiz (55%).",
+            "url": "https://www.swissinfo.ch/eng/information-wars/swiss-found-to-be-gullible-regarding-fake-news/87475624"
+        },
+        {
+            "id": "12",
+            "text": "BAKOM Bericht zum KomPG",
+            "details": "Unterschiede zwischen Schweizer Regulierung und EU-DSA.",
+            "url": "https://www.bakom.admin.ch/dam/de/sd-web/-XQxe6i9YyQN/Erl%C3%A4uternder%20Bericht%20(VE-KomPG).pdf"
+        }
+    ],
+    "modalTitles": {
+        "pre": "Teil 1: Deine Meinung vor dem Start",
+        "theoryData": "Check: Theorie verstanden?",
+        "dataConsequences": "Check: Daten eingeordnet?",
+        "post": "Fazit: Deine Meinung nach der Einheit",
+        "master": "Vollständiges Quiz"
+    },
+    "header": {
+        "title": "Vom Dorfplatz zum Digitalen Feed",
+        "subtitle": "Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen."
+    },
+    "tabs": {
+        "theory": {
+            "label": "1. Theorie",
+            "sublabel": "Verstehen"
+        },
+        "data": {
+            "label": "2. Datenlage",
+            "sublabel": "Erkennen"
+        },
+        "consequences": {
+            "label": "3. Folgen",
+            "sublabel": "Handeln"
+        }
+    },
+    "sections": {
+        "theoryIntro": {
+            "heading": "Wie wir miteinander reden",
+            "text": "Früher bestimmten Zeitungsredaktionen, was wichtig war. Heute entscheidet oft ein Algorithmus auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert."
+        },
+        "comparison": {
+            "heading": "Der Wandel: Ein Vergleich",
+            "campfire": {
+                "title": "Das \"Lagerfeuer\"",
+                "subtitle": "Massenmedien",
+                "points": [
+                    "Alle sehen das Gleiche (z.B. Tagesschau um 20:00 Uhr).",
+                    "Journalisten filtern Fakten und sortieren Gerüchte aus."
+                ]
+            },
+            "tunnel": {
+                "title": "Der \"Eigene Tunnel\"",
+                "subtitle": "Plattformen",
+                "points": [
+                    "Jeder sieht etwas anderes. Es fehlt die gemeinsame Basis.",
+                    "Algorithmen entscheiden, was dich am Bildschirm hält."
+                ]
+            }
+        },
+        "agora": {
+            "heading": "Was bedeutet \"Agora\"?",
+            "text1": "Das Wort kommt aus dem alten Griechenland. Die Agora war der zentrale Marktplatz einer Stadt.",
+            "text2": "Es war der Ort, an dem sich die \"Öffentlichkeit\" bildete – wo Bürger/innen diskutierten und Politik machten.",
+            "comparisonBefore": "Früher: Wie eine grosse Schulversammlung. Alle hören dasselbe.",
+            "comparisonToday": "Heute: Tausende kleine WhatsApp-Gruppenchats gleichzeitig. Jeder sieht nur seinen Teil."
+        },
+        "gatekeeper": {
+            "heading": "Was bedeutet 'Gatekeeper'?",
+            "text": "Gatekeeper heisst \"Torwächter\". Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – jeder kann alles posten, wahr oder falsch."
+        },
+        "algorithm": {
+            "heading": "Der Ja-Sager",
+            "text": "Der Algorithmus will dich nicht informieren, sondern bestätigen. Wut und Freude binden dich stärker als neutrale Fakten."
+        },
+        "attention": {
+            "heading": "Die Währung",
+            "text": "Das Ziel ist deine Aufmerksamkeit (Verweildauer). Je länger du bleibst, desto mehr Werbung kannst du sehen."
+        },
+        "dataOverview": {
+            "heading": "Die Zahlen: Eine gespaltene Gesellschaft",
+            "text": "Die Daten aus 2024 und 2025 zeigen ein klares Bild: Wir driften beim Medienkonsum massiv auseinander."
+        },
+        "dataStats": {
+            "chartHeading": "Wer schaut noch Nachrichten?",
+            "tiktokHeading": "Die \"TikTokisierung\"",
+            "tiktokText": "Komplexe Politik wird oft auf 15 Sekunden Spass reduziert. Hintergründe fehlen meist.",
+            "bildungskluftHeading": "Bildungskluft",
+            "bildungskluftText": "Menschen mit niedriger formaler Bildung gehören öfter zu den News-Deprivierten."
+        },
+        "tiktokProblem": {
+            "heading": "Das 15-Sekunden-Problem",
+            "text1": "Kannst du eine Rentenreform wirklich in einem 15-Sekunden-Video verstehen?",
+            "text2": "Du kriegst die Emotion, den schnellen Slogan, aber die Details, die du für die Stimmabgabe brauchst, fallen weg.",
+            "callout": "Komplexe Politik wird auf Unterhaltung reduziert. Hintergründe fehlen meist."
+        },
+        "moneyFlow": {
+            "heading": "Der Teufelskreis",
+            "text1": "Jedes Jahr fliessen 2,1 Milliarden Franken an Werbegeldern an globale Plattformen.",
+            "text2": "Geld, das den Schweizer Medienhäusern fehlt, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.",
+            "callout": "Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen"
+        },
+        "consequencesIntro": {
+            "heading": "Was passiert mit der Demokratie?",
+            "text": "In einer direkten Demokratie müssen wir informiert sein, um über komplexe Gesetze abstimmen zu können."
+        },
+        "consequenceCards": {
+            "slacktivism": {
+                "heading": "Slacktivism",
+                "text": "Liken statt wählen: Politische Posts fühlen sich wie Aktivität an, führen aber selten zur Urne."
+            },
+            "fakeNews": {
+                "heading": "Anfällig für Fakes",
+                "text": "Nur 55% der Schweizer erkennen Fakes zuverlässig. Bei Abstimmungen ist das ein hohes Risiko."
+            },
+            "polarization": {
+                "heading": "Affektive Polarisierung",
+                "text": "Wut klickt besser. Der politische Gegner wird oft nicht mehr als falsch, sondern als böse gesehen."
+            }
+        },
+        "agenda": {
+            "heading": "Die Macht der Agenda",
+            "text": "Beispiel Covid-Abstimmungen: Früher setzten Journalisten die Themen. Heute wachsen Themen oft in privaten Chats (Telegram) heran, bis die Politik reagieren muss.",
+            "quote": "\"Die Politik diskutiert nicht mehr das, was wichtig ist, sondern das, was viral geht.\""
+        },
+        "finalQuestion": {
+            "heading": "Die entscheidende Frage",
+            "text": "Wenn der Algorithmus dich nicht informieren will, wer ist dann dafür verantwortlich, dass du informiert bist?",
+            "options": [
+                "Die Tech-Giganten?",
+                "Der Staat?",
+                "Oder bist du es selbst?"
+            ]
+        }
+    },
+    "footer": {
+        "sourcesHeading": "Wissenschaftliche Quellen"
+    }
+}

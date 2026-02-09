@@ -3,6 +3,7 @@ import { ReportShell } from '@/components/ReportShell';
 import EmbedPage from '@/pages/EmbedPage';
 import { InteractionDemoPage } from '@/pages/InteractionDemoPage';
 import { ResultsPage } from '@/pages/ResultsPage';
+import { AdminEditor } from '@/pages/AdminEditor';
 
 export default function App() {
   return (
@@ -16,6 +17,9 @@ export default function App() {
         <Route path="/report/results/:sourceId" element={<ResultsPage />} />
         <Route path="/report/results" element={<Navigate to="/report/results/demo" replace />} />
         <Route path="/report/:slug" element={<ReportShell />} />
+
+        {/* Admin Editor */}
+        <Route path="/admin" element={<AdminEditor />} />
 
         {/* Embed Route for Interactions */}
         <Route path="/embed/:interactionId" element={<EmbedPage />} />

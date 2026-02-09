@@ -24,86 +24,14 @@ import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 import { InteractionSequence } from '@/components/interactions/InteractionSequence';
 import { InteractionModal } from '@/components/interactions/InteractionModal';
+import agoraContent from '@/data/content/agora-text.json';
 
 interface AgoraPageProps {
     config: PageConfig;
 }
 
-// Sources data
-const sources: Source[] = swissifyData([
-    {
-        id: "1",
-        text: "Reuters Institute Digital News Report 2025 (Deutschland)",
-        details: "Analyse der Nachrichtennutzung und Abhängigkeit von Social Media bei 18-24 Jährigen.",
-        url: "https://leibniz-hbi.de/en/hbi-news/pressinfo/german-findings-of-the-reuters-institute-digital-news-report-2025/"
-    },
-    {
-        id: "2",
-        text: "Reuters Institute Digital News Report 2025 (Schweiz)",
-        details: "Verschiebung von Print/TV zu Video-Plattformen.",
-        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025"
-    },
-    {
-        id: "3",
-        text: "Reuters Institute Digital News Report 2025 (Plattformen)",
-        details: "Wachstum von TikTok (+7%) als Nachrichtenquelle.",
-        url: "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/switzerland"
-    },
-    {
-        id: "4",
-        text: "Marktanalyse Online-Werbung Schweiz 2024",
-        details: "Abfluss von 2.1 Mrd. CHF Werbegeldern zu globalen Tech-Plattformen.",
-        url: "https://www.foeg.uzh.ch/dam/jcr:adbffe22-c427-4c9a-8e3f-390ef071eb9a/JB_2025_I_Main_Findings_20251030_final%20korr.pdf"
-    },
-    {
-        id: "5",
-        text: "fög Jahrbuch Qualität der Medien 2024/2025",
-        details: "News-Deprivation auf Rekordhoch von 46%.",
-        url: "https://www.foeg.uzh.ch/dam/jcr:eaddc4bc-a0fd-4323-8c4a-2376ceeac959/Pr%C3%A4sentation_2024_final_DE.pdf"
-    },
-    {
-        id: "6",
-        text: "fög Studie zu Bildungskluft",
-        details: "Zusammenhang zwischen formaler Bildung und News-Deprivation.",
-        url: "https://www.news.uzh.ch/en/articles/media/2025/yearbook-quality-of-the-media-foeg.html"
-    },
-    {
-        id: "7",
-        text: "Analyse 'Crowding Out' Effekt",
-        details: "Widerlegung der These, dass SRG private Medien verdrängt.",
-        url: "https://www.foeg.uzh.ch/dam/jcr:85ef7b15-95f8-4815-bde8-179b0d0e1089/JB_2024_Study_I_private_Media_EN.pdf"
-    },
-    {
-        id: "8",
-        text: "Forschung zu politischer Partizipation",
-        details: "'Slacktivism' und das Paradox der Social-Media-Teilnahme.",
-        url: "https://www.mdpi.com/2673-5172/6/3/155"
-    },
-    {
-        id: "9",
-        text: "Studie zu COVID-19 Referenden",
-        details: "Agenda-Setting-Machtverschiebung von Redaktionen zu 'Attentive Public'.",
-        url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8242806/"
-    },
-    {
-        id: "10",
-        text: "Polarisierungs-Forschung 2025",
-        details: "Anstieg der 'affektiven Polarisierung' in der Schweiz auf US-Niveau.",
-        url: "https://www.news.uzh.ch/en/articles/news/2024/political-polarization.html"
-    },
-    {
-        id: "11",
-        text: "OECD Studie zu Desinformation",
-        details: "Niedrige Erkennungsrate von Fake News in der Schweiz (55%).",
-        url: "https://www.swissinfo.ch/eng/information-wars/swiss-found-to-be-gullible-regarding-fake-news/87475624"
-    },
-    {
-        id: "12",
-        text: "BAKOM Bericht zum KomPG",
-        details: "Unterschiede zwischen Schweizer Regulierung und EU-DSA.",
-        url: "https://www.bakom.admin.ch/dam/de/sd-web/-XQxe6i9YyQN/Erl%C3%A4uternder%20Bericht%20(VE-KomPG).pdf"
-    }
-]);
+// Sources data - loaded from JSON
+const sources: Source[] = swissifyData(agoraContent.sources);
 
 
 // Interaction Sequences
@@ -230,7 +158,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 <InteractionSequence
                     interactionIds={PRE_UNIT_IDS}
                     mode="stepped"
-                    title="Teil 1: Deine Meinung vor dem Start"
+                    title={agoraContent.modalTitles.pre}
                     showResultsButton={false}
                     onComplete={() => handleModalComplete('pre')}
                 />
@@ -240,7 +168,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 <InteractionSequence
                     interactionIds={THEORY_DATA_IDS}
                     mode="stepped"
-                    title="Check: Theorie verstanden?"
+                    title={agoraContent.modalTitles.theoryData}
                     showResultsButton={false}
                     onComplete={() => handleModalComplete('theory-data')}
                 />
@@ -250,7 +178,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 <InteractionSequence
                     interactionIds={DATA_CONSEQUENCES_IDS}
                     mode="stepped"
-                    title="Check: Daten eingeordnet?"
+                    title={agoraContent.modalTitles.dataConsequences}
                     showResultsButton={false}
                     onComplete={() => handleModalComplete('data-consequences')}
                 />
@@ -260,7 +188,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 <InteractionSequence
                     interactionIds={POST_UNIT_IDS}
                     mode="stepped"
-                    title="Fazit: Deine Meinung nach der Einheit"
+                    title={agoraContent.modalTitles.post}
                     showResultsButton={true}
                     resultsSourceId="agora"
                     onComplete={() => handleModalComplete('post')}
@@ -271,7 +199,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                 <InteractionSequence
                     interactionIds={MASTER_QUIZ_IDS}
                     mode="stepped"
-                    title="Vollständiges Quiz"
+                    title={agoraContent.modalTitles.master}
                     showResultsButton={true}
                     resultsSourceId="agora"
                     onComplete={() => handleModalComplete('master')}
@@ -290,11 +218,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
                     <div className="max-w-5xl mx-auto relative z-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                         <div className="max-w-3xl">
                             <h1 className="text-3xl md:text-4xl font-extrabold leading-tight text-slate-900 mb-2">
-                                Vom Dorfplatz zum <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">Digitalen Feed</span>
+                                {agoraContent.header.title.split(' ').slice(0, 3).join(' ')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-600">{agoraContent.header.title.split(' ').slice(3).join(' ')}</span>
                             </h1>
                         </div>
                         <p className="text-sm text-slate-500 max-w-sm leading-relaxed md:text-right">
-                            Wie sich unsere Demokratie verändert, wenn wir nicht mehr dieselben Nachrichten sehen.
+                            {agoraContent.header.subtitle}
                         </p>
                     </div>
                 </FocusRegion>

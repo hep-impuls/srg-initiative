@@ -1,0 +1,554 @@
+{
+    "sources": [
+        {
+            "id": "1",
+            "text": "Cuts to funding: Denmark",
+            "details": "Studie zu Finanzierungskürzungen in Dänemark.",
+            "url": "https://www.mappingmediafreedom.org/2018/07/27/cuts-to-funding-threaten-the-future-of-denmarks-public-service-journalism/"
+        },
+        {
+            "id": "2",
+            "text": "Funding for NPR and PBS",
+            "details": "Beitrag zur US-Finanzierung von Public Media.",
+            "url": "https://cei.org/blog/lets-cut-the-cord-on-federal-funding-for-npr-and-pbs/"
+        },
+        {
+            "id": "3",
+            "text": "DR budget slashed",
+            "details": "Bericht über massive Budgetkürzungen beim dänischen Rundfunk.",
+            "url": "https://nordiskfilmogtvfond.com/news/stories/dr-budget-to-be-slashed-by-20"
+        },
+        {
+            "id": "4",
+            "text": "Media's coverage & Polarization",
+            "details": "Forschung zu Medienberichterstattung und politischer Polarisierung.",
+            "url": "https://journalistsresource.org/politics-and-government/medias-coverage-political-polarization-affects-voter-attitudes/"
+        },
+        {
+            "id": "5",
+            "text": "Media System & Democracy",
+            "details": "Vergleichende Studie zu Mediensystemen und öffentlichem Wissen.",
+            "url": "https://www.researchgate.net/publication/237431069_Media_System_Public_Knowledge_and_DemocracyA_Comparative_Study"
+        },
+        {
+            "id": "6",
+            "text": "Public financing of news media (EU)",
+            "details": "Bericht zur öffentlichen Finanzierung von Nachrichtenmedien in der EU.",
+            "url": "https://www.europarl.europa.eu/meetdocs/2014_2019/plmrep/COMMITTEES/CULT/DV/2024/04-09/PublicfinancingofnewsmediaintheEU_EN.pdf"
+        },
+        {
+            "id": "7",
+            "text": "BBC Licence Fee Model",
+            "details": "Artikel zur Zukunft des BBC-Finanzierungsmodells.",
+            "url": "https://www.theguardian.com/media/2026/jan/26/bbc-tim-davie-licence-fee-funding-model"
+        },
+        {
+            "id": "8",
+            "text": "BBC Licence Fee Increase",
+            "details": "Hintergrund zur Erhöhung der BBC-Gebühren.",
+            "url": "https://www.publicmediaalliance.org/licence-fee-increase-for-the-bbc/"
+        },
+        {
+            "id": "9",
+            "text": "BBC Royal Charter Review",
+            "details": "Regierungsdokument zur Überprüfung der BBC-Charta.",
+            "url": "https://www.gov.uk/government/consultations/britains-story-the-next-chapter-the-bbc-royal-charter-review-green-paper-and-public-consultation/britains-story-the-next-chapter-bbc-royal-charter-review-green-paper-and-public-consultation"
+        },
+        {
+            "id": "10",
+            "text": "UK Parliament: Future of BBC",
+            "details": "Parlamentarischer Bericht zur Zukunft der BBC.",
+            "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10050/"
+        },
+        {
+            "id": "11",
+            "text": "EBU: Public Funding",
+            "details": "EBU-Analyse zur öffentlichen Finanzierung von Medien.",
+            "url": "https://www.ebu.ch/files/live/sites/ebu/files/Publications/EBU-Legal-Focus-Pub-Fund_EN.pdf"
+        },
+        {
+            "id": "12",
+            "text": "Reuters Report 2024 (Germany)",
+            "details": "Analyse der Nachrichtennutzung in Deutschland.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2024/germany"
+        },
+        {
+            "id": "13",
+            "text": "NHK Receiving Fee (Japan)",
+            "details": "Informationen zum japanischen Gebührensystem.",
+            "url": "https://www.nhk-cs.jp/jushinryo/multilingual/english/"
+        },
+        {
+            "id": "14",
+            "text": "Japan: NHK Fees Critique",
+            "details": "Kritische Meinung zu den NHK-Gebühren in Japan.",
+            "url": "https://japantoday.com/category/features/opinions/japan-nhk-fees-in-2025-harassment-disguised-as-public-service"
+        },
+        {
+            "id": "15",
+            "text": "NHK Fees Explained",
+            "details": "Erklärung des japanischen Mediensystems.",
+            "url": "https://blog.gaijinpot.com/nhk-fees-in-japan-explained/"
+        },
+        {
+            "id": "16",
+            "text": "Public Service Media Policy",
+            "details": "Policy Briefs der British Academy zu Public Service Media.",
+            "url": "https://www.thebritishacademy.ac.uk/documents/6012/Public_Service_Media_Policy_Briefs.pdf"
+        },
+        {
+            "id": "17",
+            "text": "Change for Danish Broadcaster",
+            "details": "Hintergrund zum Wandel des dänischen Rundfunks.",
+            "url": "https://www.publicmediaalliance.org/drastic-change-ahead-for-danish-public-broadcaster/"
+        },
+        {
+            "id": "18",
+            "text": "Denmark: Journalisten threatened",
+            "details": "Bericht über die Auswirkungen von Kürzungen in Dänemark.",
+            "url": "https://www.indexoncensorship.org/2018/07/denmark-cuts-to-funding-threaten-the-future-of-public-service-journalism/"
+        },
+        {
+            "id": "19",
+            "text": "Reform: French Public Media",
+            "details": "Informationen zur Reform der Medienfinanzierung in Frankreich.",
+            "url": "https://entreprendre.service-public.gouv.fr/actualites/A18046?lang=en"
+        },
+        {
+            "id": "20",
+            "text": "Audiovisual Reform France",
+            "details": "Details zur französischen Rundfunkreform.",
+            "url": "https://www.culture.gouv.fr/Media/Thematiques/Audiovisuel/Reform-of-the-funding-of-public-broadcasting2"
+        },
+        {
+            "id": "21",
+            "text": "History of US Public Media",
+            "details": "Rückblick auf die Geschichte von PBS and NPR.",
+            "url": "https://www.pbs.org/newshour/show/a-look-at-the-history-of-public-media-in-the-u-s-as-republicans-target-federal-funding"
+        },
+        {
+            "id": "22",
+            "text": "CPB Funding Cuts Impact",
+            "details": "Analyse der Auswirkungen von Budgetkürzungen bei der CPB.",
+            "url": "https://current.org/2025/02/why-the-impact-of-cpb-funding-cuts-may-not-be-equal/"
+        },
+        {
+            "id": "23",
+            "text": "French Private Television",
+            "details": "Wissenschaftliche Arbeit zur Etablierung des Privatfernsehens in Frankreich.",
+            "url": "https://business.columbia.edu/sites/default/files-efs/imce-uploads/CITI/Working%20Papers/Working%20Papers%20T/The%20Establishment%20of%20French%20Private%20Television.pdf"
+        },
+        {
+            "id": "24",
+            "text": "TF1 (France)",
+            "details": "Informationen zum ehemals öffentlichen Sender TF1.",
+            "url": "https://en.wikipedia.org/wiki/TF1"
+        },
+        {
+            "id": "25",
+            "text": "Place for Public Service TV?",
+            "details": "Bericht des Reuters Institute zur Relevanz von Public Service TV.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/sites/default/files/2017-11/Is%20There%20Still%20a%20Place%20for%20Public%20Service%20Television.pdf"
+        },
+        {
+            "id": "26",
+            "text": "NZ Public Service TV",
+            "details": "Ressourcen zum öffentlich-rechtlichen Fernsehen in Neuseeland.",
+            "url": "https://www.betterpublicmedia.org.nz/resources/public-service-tv-channel"
+        },
+        {
+            "id": "27",
+            "text": "Media Environment NZ",
+            "details": "Studie zum neuseeländischen Medienmarkt.",
+            "url": "https://www.researchbank.ac.nz/server/api/core/bitstreams/85db6735-c7f1-41a8-b74c-5bcfd96be2f4/content"
+        },
+        {
+            "id": "28",
+            "text": "TV in a Small Country (NZ)",
+            "details": "Analyse des neuseeländischen Medienexperiments.",
+            "url": "https://www.flowjournal.org/2009/05/public-television-in-a-small-country-the-new-zealand-%E2%80%98experiment%E2%80%99-20-years-on%C2%A0%C2%A0trisha-dunleavy%C2%A0%C2%A0victoria-university-of-wellington%C2%A0%C2%A0/"
+        },
+        {
+            "id": "29",
+            "text": "RNZ-TVNZ Merger Issue",
+            "details": "Artikel zur gescheiterten Fusion von RNZ und TVNZ.",
+            "url": "https://www.1news.co.nz/2023/01/31/media-marriage-on-the-rocks-public-weigh-in-on-rnz-tvnz-merger/"
+        },
+        {
+            "id": "30",
+            "text": "Independent Journalism: Greece",
+            "details": "Bericht zur Unabhängigkeit des Journalismus in Griechenland.",
+            "url": "https://www.opensocietyfoundations.org/uploads/7aa33e1e-6d0a-4739-94da-42eef04c316f/media-policy-independent-journalism-greece-20150511.pdf"
+        },
+        {
+            "id": "31",
+            "text": "Amnesty: Greece Broadcaster",
+            "details": "Stellungnahme von Amnesty International zur Schliessung des griechischen Staatsfunks.",
+            "url": "https://www.amnesty.org/fr/wp-content/uploads/2021/06/eur250092013en.pdf"
+        },
+        {
+            "id": "32",
+            "text": "Media Freedom in Greece",
+            "details": "Human Rights Watch Bericht zur Pressefreiheit in Griechenland.",
+            "url": "https://www.hrw.org/report/2025/05/08/bad-worse/deterioration-media-freedom-greece"
+        },
+        {
+            "id": "33",
+            "text": "Crowding Out Myth (EBU)",
+            "details": "Beitrag zur Debatte über die Verdrängung privater Medien durch die EBU.",
+            "url": "https://www.ebu.ch/news/2025/06/public-service-media-online-news-and-the-crowding-out-myth"
+        },
+        {
+            "id": "34",
+            "text": "Debunking Crowding Out",
+            "details": "Ausführliche EBU-Studie zur Marktbeeinflussung durch öffentliche Medien.",
+            "url": "https://www.ebu.ch/Publications/Reports/open/EBU_Study-debunking-crowding-out-Full-report.pdf"
+        },
+        {
+            "id": "35",
+            "text": "PSM and Market Performance",
+            "details": "Wissenschaftliche Studie zur Marktperformance von Public Service Media.",
+            "url": "https://www.tandfonline.com/doi/full/10.1080/14241277.2026.2617532"
+        },
+        {
+            "id": "36",
+            "text": "Cross-National Study (Stanford)",
+            "details": "Studie der Stanford University zum internationalen Medienvergleich.",
+            "url": "https://pcl.sites.stanford.edu/sites/g/files/sbiybj22066/files/media/file/iyengar-cross-national_0.pdf"
+        },
+        {
+            "id": "37",
+            "text": "EJC Media Systems",
+            "details": "Vergleich europäischer Nachrichtensysteme durch das EJC.",
+            "url": "https://www.hssaatio.fi/images/stories/tiedostot/EJC_2009.pdf"
+        },
+        {
+            "id": "38",
+            "text": "PSM and Social Cohesion",
+            "details": "Forschungsbericht zum Beitrag öffentlicher Medien zum sozialen Zusammenhalt.",
+            "url": "https://www.tandfonline.com/doi/full/10.1080/10584609.2024.2423093"
+        },
+        {
+            "id": "39",
+            "text": "Bang for our buck (Canada)",
+            "details": "Studie zum wirtschaftlichen und gesellschaftlichen Wert von Public Media.",
+            "url": "https://www.policyalternatives.ca/wp-content/uploads/2025/02/bang-for-our-buck.pdf"
+        },
+        {
+            "id": "40",
+            "text": "Reuters Report 2024 (USA)",
+            "details": "Nachrichtennutzung und Vertrauen in den USA.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2024/united-states"
+        },
+        {
+            "id": "41",
+            "text": "Digital News Report 2024",
+            "details": "Zentrale Ergebnisse des Reuters Digital News Report 2024.",
+            "url": "https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2024"
+        }
+    ],
+    "modalTitles": {
+        "pre": "Teil 1: Deine Meinung vor dem Start",
+        "mapCompare": "Zwischen-Check: Ländervergleich",
+        "post": "Fazit: Deine Meinung nach der Einheit",
+        "master": "Abschluss-Check"
+    },
+    "header": {
+        "title": "Medien-Check Global",
+        "subtitle": "Wie unabhängig sind Nachrichten weltweit?"
+    },
+    "tabs": {
+        "intro": {
+            "label": "Einstieg",
+            "icon": "Info"
+        },
+        "map": {
+            "label": "Länder-Übersicht",
+            "icon": "Globe"
+        },
+        "compare": {
+            "label": "Vergleich",
+            "icon": "TrendingUp"
+        },
+        "analysis": {
+            "label": "Folgen & Analyse",
+            "icon": "BookOpen"
+        },
+        "quiz": {
+            "label": "Quiz",
+            "icon": "HelpCircle"
+        }
+    },
+    "hero": {
+        "badge": "Ein Globaler Vergleich",
+        "heading": "Wer finanziert die öffentlichen Medien?",
+        "text": "Eine Reise durch die Mediensysteme der Welt. Von unabhängigen Stiftungen bis zum Staatsfunk – und was das für unser Vertrauen bedeutet."
+    },
+    "heroCards": {
+        "map": {
+            "heading": "Reise um die Welt",
+            "text": "Wie funktionieren Mediensysteme in Finnland, den USA oder Griechenland? Ein direkter Vergleich der Modelle."
+        },
+        "compare": {
+            "heading": "Muster erkennen",
+            "text": "Gibt es einen Zusammenhang zwischen Finanzierung und Vertrauen? Die Daten zeigen ein klares Bild."
+        },
+        "analysis": {
+            "heading": "Konsequenzen",
+            "text": "Was passiert, wenn Systeme kippen? Fallstudien zu Privatisierung und staatlicher Einflussnahme."
+        }
+    },
+    "countryData": [
+        {
+            "id": "deutschland",
+            "name": "Deutschland",
+            "region": "Europa",
+            "model": "Haushaltsbeitrag",
+            "stability": "Hoch",
+            "independence": "Hoch",
+            "trustScore": 64,
+            "fundingDetail": "Pauschale pro Wohnung (egal wie viele Geräte).",
+            "description": [
+                "Jeder Haushalt zahlt den gleichen Betrag, auch ohne Fernseher.",
+                "Das sichert feste Einnahmen.",
+                "Die Höhe bestimmt nicht die Politik, sondern die unabhängige KEF.",
+                "Vorteil: Schutz vor politischem Druck."
+            ],
+            "risks": [
+                "Bundesländer blockieren Erhöhungen teils aus Populismus."
+            ],
+            "status": "sicher",
+            "refs": [
+                "6",
+                "11",
+                "12"
+            ],
+            "image": "img/public_media/1.png",
+            "imageAlt": "Mauer zwischen Politik und Geld"
+        },
+        {
+            "id": "finnland",
+            "name": "Finnland",
+            "region": "Nordic",
+            "model": "Yle-Steuer",
+            "stability": "Sehr Hoch",
+            "independence": "Hoch",
+            "trustScore": 79,
+            "fundingDetail": "Abhängig vom Einkommen (wer mehr verdient, zahlt mehr).",
+            "description": [
+                "Finland nutzt eine spezielle Steuer.",
+                "Sozial gerecht: wenig Einkommen zahlt nichts, mehr Einkommen zahlt mehr.",
+                "Das Geld liegt in einem separaten Fonds.",
+                "Die Politik kann den Topf kaum für andere Projekte umleiten."
+            ],
+            "risks": [
+                "Breiter Parteikonsens stabilisiert das System.",
+                "Deshalb nur geringe politische Risiken."
+            ],
+            "status": "sicher",
+            "refs": [
+                "11",
+                "16",
+                "39"
+            ],
+            "image": "img/public_media/2.png",
+            "imageAlt": "Der gesicherte Geld-Topf"
+        },
+        {
+            "id": "uk",
+            "name": "Grossbritannien",
+            "region": "Europa",
+            "model": "Lizenzgebühr",
+            "stability": "Sinkend",
+            "independence": "Mittel",
+            "trustScore": 62,
+            "fundingDetail": "Gebühr für Live-TV Nutzung.",
+            "description": [
+                "BBC ist stark, steht aber unter politischem Druck.",
+                "Die Lizenzgebühr war lange eingefroren.",
+                "Real entspricht das rund 30% Budget-Kürzung.",
+                "Regelmässige Charter-Verhandlungen schaffen zusätzlichen Druck."
+            ],
+            "risks": [
+                "Mehr junge Nutzer zahlen nicht mehr (Evasion).",
+                "Die Gebühr könnte ab 2027 abgeschafft werden."
+            ],
+            "status": "risiko",
+            "refs": [
+                "7",
+                "8",
+                "9",
+                "10"
+            ],
+            "image": "img/public_media/3.png",
+            "imageAlt": "Das schmelzende Budget"
+        },
+        {
+            "id": "japan",
+            "name": "Japan",
+            "region": "Asien",
+            "model": "Empfangsgebühr",
+            "stability": "Hoch",
+            "independence": "Mittel",
+            "trustScore": 61,
+            "fundingDetail": "Pflicht-Vertrag bei Gerätebesitz.",
+            "description": [
+                "Mit TV-Besitz besteht Zahlpflicht.",
+                "Teils wird direkt an der Haustür eingezogen.",
+                "Das Modell bringt hohe Einnahmen (ca. 96%).",
+                "Viele empfinden den Zwang als Belastung."
+            ],
+            "risks": [
+                "Immer mehr Haushalte streamen nur noch.",
+                "Dadurch wirkt das Modell zunehmend veraltet."
+            ],
+            "status": "stabil",
+            "refs": [
+                "13",
+                "14",
+                "15"
+            ]
+        },
+        {
+            "id": "daenemark",
+            "name": "Dänemark",
+            "region": "Nordic",
+            "model": "Steuer (Staatsbudget)",
+            "stability": "Mittel",
+            "independence": "Gefährdet",
+            "trustScore": 57,
+            "fundingDetail": "Geld direkt vom Staat.",
+            "description": [
+                "Dänemark wechselte von Gebühr zu direkter Steuerfinanzierung.",
+                "Direkt danach wurde das Budget um 20% gekürzt.",
+                "Die Kürzung wirkte wie politische Strafe.",
+                "Direkte Staatsfinanzierung macht abhängiger."
+            ],
+            "risks": [
+                "Jede Regierung kann das Budget schnell ändern.",
+                "Der Sender wird zum politischen Spielball."
+            ],
+            "status": "risiko",
+            "refs": [
+                "1",
+                "3",
+                "17",
+                "18"
+            ],
+            "image": "img/public_media/4.png",
+            "imageAlt": "Das Budget als Waffe"
+        },
+        {
+            "id": "frankreich",
+            "name": "Frankreich",
+            "region": "Europa",
+            "model": "Mehrwertsteuer (MwSt)",
+            "stability": "Mittel",
+            "independence": "Mittel",
+            "trustScore": 50,
+            "fundingDetail": "Teil der Umsatzsteuer (temporär).",
+            "description": [
+                "Frankreich schaffte die Gebühr 2022 ab.",
+                "Aktuell kommt Geld über einen MwSt-Anteil.",
+                "Das gilt als Übergangslösung.",
+                "Langfristig droht mehr politische Macht über das Budget."
+            ],
+            "risks": [
+                "Ohne stabiles Gesetz kann die Regierung den Geldhahn zudrehen.",
+                "Besonders kritisch bei unbequemer Berichterstattung."
+            ],
+            "status": "risiko",
+            "refs": [
+                "19",
+                "20",
+                "23",
+                "24"
+            ]
+        },
+        {
+            "id": "usa",
+            "name": "USA",
+            "region": "Nordamerika",
+            "model": "Spenden & Stiftungen",
+            "stability": "Niedrig",
+            "independence": "Mittel",
+            "trustScore": 40,
+            "fundingDetail": "Freiwillige Spenden von Bürgern/Firmen.",
+            "description": [
+                "Der Staat finanziert nur einen kleinen Teil.",
+                "Sender sind stark von Spenden abhängig.",
+                "Programme richten sich oft an zahlungskräftige Zielgruppen.",
+                "In armen Regionen entstehen News-Wüsten."
+            ],
+            "risks": [
+                "Bei Wirtschaftskrisen brechen Spenden schnell ein.",
+                "Es fehlt eine stabile Grundsicherung."
+            ],
+            "status": "gefaehrdet",
+            "refs": [
+                "2",
+                "21",
+                "22",
+                "40"
+            ],
+            "image": "img/public_media/5.png",
+            "imageAlt": "Nachrichten-Wueste"
+        },
+        {
+            "id": "griechenland",
+            "name": "Griechenland",
+            "region": "Europa",
+            "model": "Staatsbudget (Instabil)",
+            "stability": "Kritisch",
+            "independence": "Niedrig",
+            "trustScore": 30,
+            "fundingDetail": "Direkte Kontrolle durch Regierung.",
+            "description": [
+                "2013 wurde ERT über Nacht geschlossen.",
+                "Bildschirme blieben schwarz, der Betrieb stoppte sofort.",
+                "Das zeigt fehlende rechtliche Schutzmechanismen.",
+                "Der Staat kann das System abrupt abschalten."
+            ],
+            "risks": [
+                "Das Vertrauen in den Sender ist sehr niedrig.",
+                "Viele sehen die Regierung als direkten Boss der Medien."
+            ],
+            "status": "kritisch",
+            "refs": [
+                "30",
+                "31",
+                "32",
+                "41"
+            ],
+            "image": "img/public_media/6.png",
+            "imageAlt": "Schwarzer Bildschirm"
+        },
+        {
+            "id": "neuseeland",
+            "name": "Neuseeland",
+            "region": "Ozeanien",
+            "model": "Kommerzieller Staatsbetrieb",
+            "stability": "Niedrig",
+            "independence": "Niedrig",
+            "trustScore": 45,
+            "fundingDetail": "Muss Gewinn machen (Werbung).",
+            "description": [
+                "TVNZ ist staatlich, muss aber Gewinn erzielen.",
+                "Darum dominieren Werbung und günstiges Reality-TV.",
+                "Teurer Qualitätsjournalismus wird schneller gekürzt.",
+                "Der öffentliche Auftrag rückt in den Hintergrund."
+            ],
+            "risks": [
+                "Bildung und Information verlieren gegen Renditeziel.",
+                "Langfristig sinkt die inhaltliche Vielfalt."
+            ],
+            "status": "gefaehrdet",
+            "refs": [
+                "26",
+                "27",
+                "28",
+                "29"
+            ]
+        }
+    ]
+}
