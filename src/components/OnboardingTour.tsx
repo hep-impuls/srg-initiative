@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
-import { X, Headphones, Info } from 'lucide-react';
+import { X, Headphones, Info, BrainCircuit, BarChart3 } from 'lucide-react';
 
-export function OnboardingTour() {
+interface OnboardingTourProps {
+    slug?: string;
+}
+
+export function OnboardingTour({ slug = 'default' }: OnboardingTourProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
         const handleOpenTour = () => setIsVisible(true);
         window.addEventListener('open-audio-onboarding', handleOpenTour);
 
-        const hasSeenTour = localStorage.getItem('hasSeenAudioTour');
+        const storageKey = `hasSeenAudioTour_${slug}`;
+        const hasSeenTour = localStorage.getItem(storageKey);
+
         if (!hasSeenTour) {
             // Delay slightly to ensure layout is ready and for better UX
             const timer = setTimeout(() => {
@@ -21,11 +27,12 @@ export function OnboardingTour() {
         }
 
         return () => window.removeEventListener('open-audio-onboarding', handleOpenTour);
-    }, []);
+    }, [slug]);
 
     const dismissTour = () => {
         setIsVisible(false);
-        localStorage.setItem('hasSeenAudioTour', 'true');
+        const storageKey = `hasSeenAudioTour_${slug}`;
+        localStorage.setItem(storageKey, 'true');
     };
 
     if (!isVisible) return null;
@@ -61,12 +68,20 @@ export function OnboardingTour() {
                             Diese Lerneinheit verfügt über einen <strong>Audio-Guide</strong>, der dich Schritt für Schritt durch die Inhalte führt.
                         </p>
 
+                        <p className="text-[12px] text-slate-600 leading-relaxed">
+                            <strong>Interaktive Fragen</strong> und <strong>Umfragen</strong> werden während des Guides automatisch eingeblendet. Du kannst sie aber auch jederzeit direkt über diesen Button <span className="inline-flex items-center align-middle bg-blue-50 p-1 rounded text-blue-600"><BrainCircuit size={14} /></span> unten rechts aufrufen.
+                        </p>
+
+                        <p className="text-[12px] text-slate-600 leading-relaxed">
+                            Deine <strong>Ergebnisse</strong> kannst du am Ende des Guides oder jederzeit mit diesem Button <span className="inline-flex items-center align-middle bg-emerald-50 p-1 rounded text-emerald-600"><BarChart3 size={14} /></span> als <strong>PDF exportieren</strong>.
+                        </p>
+
                         <div className="bg-slate-50 border border-slate-100 p-3 rounded-xl flex items-start gap-2">
                             <div className="text-blue-400 mt-0.5">
                                 <Info size={16} />
                             </div>
                             <p className="text-[11px] text-slate-500 italic leading-snug">
-                                Du kannst den Inhalten auch ohne Audio folgen, indem du einfach nach unten scrollst.
+                                Du kannst den Inhalten auch <strong>ohne Audio</strong> folgen, indem du einfach nach unten scrollst.
                             </p>
                         </div>
                     </div>
@@ -93,6 +108,16 @@ export function OnboardingTour() {
           0% { transform: scale(0.98); opacity: 0.6; }
           50% { transform: scale(1.02); opacity: 0.4; }
           100% { transform: scale(0.98); opacity: 0.6; }
+        }
+        @keyframes play-button-focus {
+          0% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.7); }
+          50% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+          100% { box-shadow: 0 0 0 0px rgba(59, 130, 246, 0); }
+        }
+        .play-button-focus {
+          animation: play-button-focus 2s infinite ease-out;
+          position: relative;
+          z-index: 60;
         }
         .audio-player-spotlight {
           position: fixed;

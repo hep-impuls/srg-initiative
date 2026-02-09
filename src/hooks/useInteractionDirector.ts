@@ -19,6 +19,20 @@ export function useInteractionDirector({
     startTime = 0,
     duration = 30
 }: UseInteractionDirectorProps) {
+    // Info type is always revealed and "voted"
+    if (config.type === 'info') {
+        return {
+            phase: 'reveal' as InteractionPhase,
+            results: null,
+            hasVoted: true,
+            userVote: null,
+            isSubmitting: false,
+            submitVote: async () => { },
+            saveDraft: async () => { },
+            handleInteraction: () => { }
+        };
+    }
+
 
     const [phase, setPhase] = useState<InteractionPhase>('input');
     const [results, setResults] = useState<InteractionResults | null>(null);

@@ -55,7 +55,7 @@ export function ReportShell() {
     return (
         <>
             <PageComponent config={resolvedConfig} />
-            <OnboardingTour />
+            <OnboardingTour slug={registryKey} />
         </>
     );
 }

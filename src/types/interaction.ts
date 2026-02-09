@@ -1,4 +1,5 @@
-export type InteractionType = 'poll' | 'slider' | 'quiz' | 'ranking' | 'points' | 'guess';
+export type InteractionType = 'poll' | 'slider' | 'quiz' | 'ranking' | 'points' | 'guess' | 'info';
+
 
 export interface InteractionOption {
     id: string;

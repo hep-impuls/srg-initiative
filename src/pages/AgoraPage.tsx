@@ -37,6 +37,7 @@ const sources: Source[] = swissifyData(agoraContent.sources);
 
 // Interaction Sequences
 const PRE_UNIT_IDS = [
+    'intro-warmup',
     'agora-intro-wordcloud-sub',
     'agora-intro-ranking',
     'agora-intro-scale-1',
@@ -44,6 +45,7 @@ const PRE_UNIT_IDS = [
     'agora-intro-scale-3',
     'agora-intro-money'
 ];
+
 
 const THEORY_DATA_IDS = [
     'agora-quiz-gatekeeper',

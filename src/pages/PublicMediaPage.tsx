@@ -39,6 +39,7 @@ const sources: Source[] = swissifyData(publicMediaContent.sources);
 const countryData = swissifyData(publicMediaContent.countryData);
 
 const PRE_UNIT_IDS = [
+    'intro-warmup',
     'publicMedia-intro-funding-pre',
     'publicMedia-intro-priority-ranking',
     'publicMedia-intro-independence-slider'

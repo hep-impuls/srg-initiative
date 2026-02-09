@@ -101,7 +101,19 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
                     />
                 );
 
+            case 'info':
+                return (
+                    <div className="flex flex-col items-center gap-4 text-center py-4">
+                        <div className="bg-blue-50 p-4 rounded-2xl border border-blue-100 text-blue-800">
+                            <p className="text-sm font-medium leading-relaxed">
+                                {swissifyData(config.question)}
+                            </p>
+                        </div>
+                    </div>
+                );
+
             default:
+
                 return <div className="text-red-500">Unbekannter Interaktions-Typ: {config.type}</div>;
         }
     };
@@ -110,8 +122,9 @@ export const InteractionShell: React.FC<InteractionShellProps> = ({
         <div className="w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
             <div className="bg-slate-50 p-6 border-b border-slate-100">
                 <h3 className="text-xl md:text-2xl font-bold text-slate-900 text-center leading-snug">
-                    {swissifyData(config.question)}
+                    {config.type === 'info' ? 'Kurzer Hinweis' : swissifyData(config.question)}
                 </h3>
+
 
                 {/* Phase Indicator (Optional Debug or UX) */}
                 {phase === 'locked' && !hasVoted && (

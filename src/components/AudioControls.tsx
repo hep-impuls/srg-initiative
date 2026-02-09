@@ -28,6 +28,10 @@ export function AudioControls({
 }: AudioControlsProps) {
   const { isPlaying, currentTime, duration, isLoading, playbackRate } = audioState;
 
+  // Pulse effect logic for play button
+  const hasSeenTour = localStorage.getItem('hasSeenAudioTour_agora') || localStorage.getItem('hasSeenAudioTour_publicMedia');
+  const showPulse = !isPlaying && currentTime === 0 && !isLoading && hasSeenTour;
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -57,7 +61,7 @@ export function AudioControls({
         <button
           onClick={isPlaying ? onPause : onPlay}
           disabled={isLoading}
-          className="w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-400 disabled:bg-slate-700 text-white rounded-full transition-all shrink-0 shadow-lg shadow-blue-500/10 active:scale-90"
+          className={`w-8 h-8 flex items-center justify-center bg-blue-500 hover:bg-blue-400 disabled:bg-slate-700 text-white rounded-full transition-all shrink-0 shadow-lg shadow-blue-500/10 active:scale-90 ${showPulse ? 'play-button-focus' : ''}`}
         >
           {isPlaying ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" className="ml-0.5" />}
         </button>
