@@ -12,7 +12,9 @@ import {
     ShieldCheck,
     ShieldAlert,
     ExternalLink,
-    HelpCircle
+    HelpCircle,
+    Scale,
+    Zap
 } from 'lucide-react';
 
 import { FocusRegion } from '@/components/FocusRegion';
@@ -23,6 +25,7 @@ import { InteractionModal } from '@/components/interactions/InteractionModal';
 import { InteractionSequence } from '@/components/interactions/InteractionSequence';
 import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
+import { SafeHTML } from '@/components/SafeHTML';
 import publicMediaContent from '@/data/content/publicmedia-text.json';
 
 interface PublicMediaPageProps {
@@ -32,255 +35,9 @@ interface PublicMediaPageProps {
 // Source data mapping - loaded from JSON
 const sources: Source[] = swissifyData(publicMediaContent.sources);
 
+// Daten für Berufsschüler (B1 Niveau) - loaded from JSON
+const countryData = swissifyData(publicMediaContent.countryData);
 
-// Daten für Berufsschüler (B1 Niveau)
-const countryData = swissifyData([
-    {
-        id: 'deutschland',
-        name: 'Deutschland',
-        region: 'Europa',
-        model: 'Haushaltsbeitrag',
-        stability: 'Hoch',
-        independence: 'Hoch',
-        trustScore: 64,
-        fundingDetail: 'Pauschale pro Wohnung (egal wie viele Geräte).',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Jeder Haushalt zahlt den gleichen Betrag, auch ohne Fernseher.</li>
-                <li>Das sichert feste Einnahmen.</li>
-                <li>Die Höhe bestimmt nicht die Politik, sondern die unabhängige <strong>KEF</strong>.</li>
-                <li>Vorteil: Schutz vor politischem Druck.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Bundesländer blockieren Erhöhungen teils aus <strong>Populismus</strong>.</li>
-            </ul>
-        ),
-        status: 'sicher',
-        refs: ["6", "11", "12"],
-        image: 'img/public_media/1.png',
-        imageAlt: 'Mauer zwischen Politik und Geld'
-    },
-    {
-        id: 'finnland',
-        name: 'Finnland',
-        region: 'Nordic',
-        model: 'Yle-Steuer',
-        stability: 'Sehr Hoch',
-        independence: 'Hoch',
-        trustScore: 79,
-        fundingDetail: 'Abhängig vom Einkommen (wer mehr verdient, zahlt mehr).',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Finland nutzt eine spezielle Steuer.</li>
-                <li><strong>Sozial gerecht</strong>: wenig Einkommen zahlt nichts, mehr Einkommen zahlt mehr.</li>
-                <li>Das Geld liegt in einem separaten <strong>Fonds</strong>.</li>
-                <li>Die Politik kann den Topf kaum für andere Projekte umleiten.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Breiter Parteikonsens stabilisiert das System.</li>
-                <li>Deshalb nur geringe politische Risiken.</li>
-            </ul>
-        ),
-        status: 'sicher',
-        refs: ["11", "16", "39"],
-        image: 'img/public_media/2.png',
-        imageAlt: 'Der gesicherte Geld-Topf'
-    },
-    {
-        id: 'uk',
-        name: 'Grossbritannien',
-        region: 'Europa',
-        model: 'Lizenzgebühr',
-        stability: 'Sinkend',
-        independence: 'Mittel',
-        trustScore: 62,
-        fundingDetail: 'Gebühr für Live-TV Nutzung.',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>BBC ist stark, steht aber unter politischem Druck.</li>
-                <li>Die Lizenzgebühr war lange eingefroren.</li>
-                <li>Real entspricht das rund <strong>30% Budget-Kürzung</strong>.</li>
-                <li>Regelmässige Charter-Verhandlungen schaffen zusätzlichen Druck.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Mehr junge Nutzer zahlen nicht mehr (<strong>Evasion</strong>).</li>
-                <li>Die Gebühr könnte ab 2027 abgeschafft werden.</li>
-            </ul>
-        ),
-        status: 'risiko',
-        refs: ["7", "8", "9", "10"],
-        image: 'img/public_media/3.png',
-        imageAlt: 'Das schmelzende Budget'
-    },
-    {
-        id: 'japan',
-        name: 'Japan',
-        region: 'Asien',
-        model: 'Empfangsgebühr',
-        stability: 'Hoch',
-        independence: 'Mittel',
-        trustScore: 61,
-        fundingDetail: 'Pflicht-Vertrag bei Gerätebesitz.',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Mit TV-Besitz besteht Zahlpflicht.</li>
-                <li>Teils wird direkt an der Haustür eingezogen.</li>
-                <li>Das Modell bringt hohe Einnahmen (ca. 96%).</li>
-                <li>Viele empfinden den <strong>Zwang</strong> als Belastung.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Immer mehr Haushalte streamen nur noch.</li>
-                <li>Dadurch wirkt das Modell zunehmend <strong>veraltet</strong>.</li>
-            </ul>
-        ),
-        status: 'stabil',
-        refs: ["13", "14", "15"]
-    },
-    {
-        id: 'daenemark',
-        name: 'Dänemark',
-        region: 'Nordic',
-        model: 'Steuer (Staatsbudget)',
-        stability: 'Mittel',
-        independence: 'Gefährdet',
-        trustScore: 57,
-        fundingDetail: 'Geld direkt vom Staat.',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Dänemark wechselte von Gebühr zu direkter Steuerfinanzierung.</li>
-                <li>Direkt danach wurde das Budget um 20% gekürzt.</li>
-                <li>Die Kürzung wirkte wie politische <strong>Strafe</strong>.</li>
-                <li>Direkte Staatsfinanzierung macht abhängiger.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Jede Regierung kann das Budget schnell ändern.</li>
-                <li>Der Sender wird zum politischen Spielball.</li>
-            </ul>
-        ),
-        status: 'risiko',
-        refs: ["1", "3", "17", "18"],
-        image: 'img/public_media/4.png',
-        imageAlt: 'Das Budget als Waffe'
-    },
-    {
-        id: 'frankreich',
-        name: 'Frankreich',
-        region: 'Europa',
-        model: 'Mehrwertsteuer (MwSt)',
-        stability: 'Mittel',
-        independence: 'Mittel',
-        trustScore: 50,
-        fundingDetail: 'Teil der Umsatzsteuer (temporär).',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Frankreich schaffte die Gebühr 2022 ab.</li>
-                <li>Aktuell kommt Geld über einen MwSt-Anteil.</li>
-                <li>Das gilt als <strong>Übergangslösung</strong>.</li>
-                <li>Langfristig droht mehr politische Macht über das Budget.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Ohne stabiles Gesetz kann die Regierung den Geldhahn zudrehen.</li>
-                <li>Besonders kritisch bei unbequemer Berichterstattung.</li>
-            </ul>
-        ),
-        status: 'risiko',
-        refs: ["19", "20", "23", "24"]
-    },
-    {
-        id: 'usa',
-        name: 'USA',
-        region: 'Nordamerika',
-        model: 'Spenden & Stiftungen',
-        stability: 'Niedrig',
-        independence: 'Mittel',
-        trustScore: 40,
-        fundingDetail: 'Freiwillige Spenden von Bürgern/Firmen.',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Der Staat finanziert nur einen kleinen Teil.</li>
-                <li>Sender sind stark von <strong>Spenden</strong> abhängig.</li>
-                <li>Programme richten sich oft an zahlungskräftige Zielgruppen.</li>
-                <li>In armen Regionen entstehen News-Wüsten.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Bei Wirtschaftskrisen brechen Spenden schnell ein.</li>
-                <li>Es fehlt eine stabile Grundsicherung.</li>
-            </ul>
-        ),
-        status: 'gefaehrdet',
-        refs: ["2", "21", "22", "40"],
-        image: 'img/public_media/5.png',
-        imageAlt: 'Nachrichten-Wueste'
-    },
-    {
-        id: 'griechenland',
-        name: 'Griechenland',
-        region: 'Europa',
-        model: 'Staatsbudget (Instabil)',
-        stability: 'Kritisch',
-        independence: 'Niedrig',
-        trustScore: 30,
-        fundingDetail: 'Direkte Kontrolle durch Regierung.',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>2013 wurde ERT <strong>über Nacht geschlossen</strong>.</li>
-                <li>Bildschirme blieben schwarz, der Betrieb stoppte sofort.</li>
-                <li>Das zeigt fehlende rechtliche Schutzmechanismen.</li>
-                <li>Der Staat kann das System abrupt abschalten.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Das Vertrauen in den Sender ist sehr niedrig.</li>
-                <li>Viele sehen die Regierung als direkten Boss der Medien.</li>
-            </ul>
-        ),
-        status: 'kritisch',
-        refs: ["30", "31", "32", "41"],
-        image: 'img/public_media/6.png',
-        imageAlt: 'Schwarzer Bildschirm'
-    },
-    {
-        id: 'neuseeland',
-        name: 'Neuseeland',
-        region: 'Ozeanien',
-        model: 'Kommerzieller Staatsbetrieb',
-        stability: 'Niedrig',
-        independence: 'Niedrig',
-        trustScore: 45,
-        fundingDetail: 'Muss Gewinn machen (Werbung).',
-        description: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>TVNZ ist staatlich, muss aber <strong>Gewinn</strong> erzielen.</li>
-                <li>Darum dominieren Werbung und günstiges Reality-TV.</li>
-                <li>Teurer Qualitätsjournalismus wird schneller gekürzt.</li>
-                <li>Der öffentliche Auftrag rückt in den Hintergrund.</li>
-            </ul>
-        ),
-        risks: (
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Bildung und Information verlieren gegen Renditeziel.</li>
-                <li>Langfristig sinkt die inhaltliche Vielfalt.</li>
-            </ul>
-        ),
-        status: 'gefaehrdet',
-        refs: ["26", "27", "28", "29"]
-    }
-]);
 const PRE_UNIT_IDS = [
     'publicMedia-intro-funding-pre',
     'publicMedia-intro-priority-ranking',
@@ -454,24 +211,27 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
 
                     <FocusRegion id="public_media__nav" label="Hauptnavigation" as="nav" className="flex bg-slate-700/50 p-1 rounded-lg backdrop-blur-sm">
                         {[
-                            { id: 'intro', label: 'Einstieg', icon: Info },
-                            { id: 'map', label: 'Länder-Übersicht', icon: Globe },
-                            { id: 'compare', label: 'Vergleich', icon: TrendingUp },
-                            { id: 'analysis', label: 'Folgen & Analyse', icon: BookOpen },
-                            { id: 'quiz', label: 'Quiz', icon: HelpCircle }
-                        ].map((tab) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setManualTab(tab.id as any)}
-                                className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === tab.id
-                                    ? 'bg-blue-600 text-white shadow-md'
-                                    : 'text-slate-300 hover:text-white hover:bg-slate-700'
-                                    }`}
-                            >
-                                <tab.icon size={16} />
-                                {tab.label}
-                            </button>
-                        ))}
+                            { id: 'intro', label: publicMediaContent.tabs.intro.label, icon: Info },
+                            { id: 'map', label: publicMediaContent.tabs.map.label, icon: Globe },
+                            { id: 'compare', label: publicMediaContent.tabs.compare.label, icon: Scale },
+                            { id: 'analysis', label: publicMediaContent.tabs.analysis.label, icon: Zap },
+                            { id: 'quiz', label: publicMediaContent.tabs.quiz.label, icon: HelpCircle }
+                        ].map((tab) => {
+                            const Icon = tab.icon;
+                            return (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setManualTab(tab.id as any)}
+                                    className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === tab.id
+                                        ? 'bg-blue-600 text-white shadow-md'
+                                        : 'text-slate-300 hover:text-white hover:bg-slate-700'
+                                        }`}
+                                >
+                                    <Icon size={16} />
+                                    {tab.label}
+                                </button>
+                            );
+                        })}
                     </FocusRegion>
                 </div>
             </header>
@@ -510,41 +270,24 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
 
                         {/* Navigation Cards */}
                         <div className="grid md:grid-cols-3 gap-6">
-                            <FocusRegion id="public_media__hero__card_map" label="Karte-Karte" className="group cursor-pointer">
-                                <div onClick={() => setManualTab('map')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-500 transition-all hover:-translate-y-1">
-                                    <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                        <Globe size={24} />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Reise um die Welt</h3>
-                                    <p className="text-slate-600 leading-relaxed">
-                                        Wie funktionieren Mediensysteme in Finnland, den USA oder Griechenland? Ein direkter Vergleich der Modelle.
-                                    </p>
-                                </div>
-                            </FocusRegion>
-
-                            <FocusRegion id="public_media__hero__card_compare" label="Muster-Karte" className="group cursor-pointer">
-                                <div onClick={() => setManualTab('compare')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all hover:-translate-y-1">
-                                    <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
-                                        <TrendingUp size={24} />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Muster erkennen</h3>
-                                    <p className="text-slate-600 leading-relaxed">
-                                        Gibt es einen Zusammenhang zwischen Finanzierung und Vertrauen? Die Daten zeigen ein klares Bild.
-                                    </p>
-                                </div>
-                            </FocusRegion>
-
-                            <FocusRegion id="public_media__hero__card_analysis" label="Folgen-Karte" className="group cursor-pointer">
-                                <div onClick={() => setManualTab('analysis')} className="h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl hover:border-amber-500 transition-all hover:-translate-y-1">
-                                    <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-amber-600 group-hover:text-white transition-colors">
-                                        <BookOpen size={24} />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-slate-900 mb-3">Konsequenzen</h3>
-                                    <p className="text-slate-600 leading-relaxed">
-                                        Was passiert, wenn Systeme kippen? Fallstudien zu Privatisierung und staatlicher Einflussnahme.
-                                    </p>
-                                </div>
-                            </FocusRegion>
+                            {(['map', 'compare', 'analysis'] as const).map((key) => {
+                                const card = publicMediaContent.heroCards[key];
+                                return (
+                                    <FocusRegion key={key} id={`public_media__hero__card_${key}`} label={card.heading} className="group cursor-pointer">
+                                        <div onClick={() => setManualTab(key)} className={`h-full bg-white p-8 rounded-2xl border-2 border-slate-100 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 ${key === 'map' ? 'hover:border-blue-500' : key === 'compare' ? 'hover:border-emerald-500' : 'hover:border-amber-500'}`}>
+                                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 group-hover:text-white transition-colors ${key === 'map' ? 'bg-blue-100 text-blue-600 group-hover:bg-blue-600' : key === 'compare' ? 'bg-emerald-100 text-emerald-600 group-hover:bg-emerald-600' : 'bg-amber-100 text-amber-600 group-hover:bg-amber-600'}`}>
+                                                {key === 'map' && <Globe size={24} />}
+                                                {key === 'compare' && <Scale size={24} />}
+                                                {key === 'analysis' && <Zap size={24} />}
+                                            </div>
+                                            <h3 className="text-xl font-bold text-slate-900 mb-3">{card.heading}</h3>
+                                            <p className="text-slate-600 leading-relaxed">
+                                                {card.text}
+                                            </p>
+                                        </div>
+                                    </FocusRegion>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
@@ -554,7 +297,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                     <FocusRegion id="public_media__map" label="Länder-Übersicht" className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
                         {/* Sidebar List */}
                         <FocusRegion id="public_media__map__sidebar" label="Länder-Liste" className="lg:col-span-3 flex flex-col gap-2 h-full">
-                            <h3 className="text-slate-500 uppercase text-xs font-bold tracking-wider mb-2">Wähle ein Land</h3>
+                            <h3 className="text-slate-500 uppercase text-xs font-bold tracking-wider mb-2">{publicMediaContent.tabs.map.label}</h3>
                             <div className="flex flex-col gap-2">
                                 {countryData.map((c) => (
                                     <button
@@ -643,12 +386,12 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     <FocusRegion id="public_media__map__detail__desc" label="Beschreibung">
                                         <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 mb-3">
                                             <Info size={20} className="text-blue-500" />
-                                            So funktioniert das System
+                                            {publicMediaContent.countryData[0].id === 'deutschland' ? 'So funktioniert das System' : 'System-Details'}
                                         </h3>
                                         <div className="flex flex-col md:flex-row gap-6 items-start">
                                             <div className="flex-1">
                                                 <div className="text-slate-700 leading-relaxed text-base mb-3">
-                                                    {selectedCountry.description}
+                                                    <SafeHTML content={selectedCountry.description} />
                                                 </div>
                                                 <SourceBadge ids={selectedCountry.refs} />
                                             </div>
@@ -675,7 +418,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                             {selectedCountry.status === 'sicher' ? 'Warum es gut funktioniert:' : 'Das grösste Problem:'}
                                         </h3>
                                         <div className={`text-sm ${selectedCountry.status === 'sicher' ? 'text-emerald-800' : 'text-red-800'}`}>
-                                            {selectedCountry.risks}
+                                            <SafeHTML content={selectedCountry.risks} />
                                         </div>
                                     </FocusRegion>
                                 </div>
@@ -689,10 +432,9 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                     <FocusRegion id="public_media__compare" label="Vergleich" className="space-y-8 animate-in fade-in duration-500">
                         <FocusRegion id="public_media__compare__main_visual" label="Vergleich: Visualisierung" className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
                             <FocusRegion id="public_media__compare__intro" label="Einführung" className="max-w-3xl mb-8">
-                                <h2 className="text-2xl font-bold text-slate-900 mb-4">Je unabhängiger, desto mehr Vertrauen</h2>
+                                <h2 className="text-2xl font-bold text-slate-900 mb-4">{publicMediaContent.comparison.heading}</h2>
                                 <p className="text-slate-600 text-lg">
-                                    Die Grafik zeigt: Wenn das Geld sicher ist (unabhängig von Politikern), dann <strong>vertrauen</strong> die Menschen den Nachrichten mehr.
-                                    Wenn das Geld direkt vom Staat oder von Werbung kommt, ist das Vertrauen geringer.
+                                    <SafeHTML content={publicMediaContent.comparison.text} as="span" />
                                 </p>
                                 <SourceBadge ids={["12", "39", "40"]} />
                             </FocusRegion>
@@ -701,7 +443,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                             <FocusRegion id="public_media__compare__chart" label="Vertrauens-Chart" className="relative h-80 flex items-end justify-between gap-4 px-4 pb-8 border-b border-slate-200">
                                 <div className="absolute left-0 top-10 bottom-10 w-px border-l border-dashed border-slate-300"></div>
                                 <div className="absolute -left-8 top-1/2 -rotate-90 text-xs font-bold text-slate-400 tracking-widest uppercase">
-                                    Vertrauens-Wert
+                                    {publicMediaContent.comparison.chartLabel}
                                 </div>
 
                                 {countryData
@@ -729,23 +471,22 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                             <FocusRegion id="public_media__compare__myth" label="Mythos-Check" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                                     <TrendingUp className="text-emerald-500" />
-                                    Mythos: "Staatliche Sender schaden Privaten"
+                                    {publicMediaContent.comparison.mythCheck.heading}
                                 </h3>
                                 <p className="text-slate-700 mb-4">
-                                    Viele glauben: Wenn es ARD/ZDF gibt, haben private Firmen (wie Netflix oder RTL) keine Chance.
-                                    <strong> Studien zeigen:</strong>
+                                    <SafeHTML content={publicMediaContent.comparison.mythCheck.text} />
                                 </p>
                                 <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100 text-sm">
                                     <div className="flex justify-between items-center mb-2 font-bold text-emerald-900">
-                                        <span>Mehr staatliche Online-News</span>
-                                        <span className="text-emerald-600">Führt zu...</span>
+                                        <span>{publicMediaContent.comparison.mythCheck.listHeader}</span>
+                                        <span className="text-emerald-600">{publicMediaContent.comparison.mythCheck.listSubHeader}</span>
                                     </div>
                                     <div className="flex justify-between items-center font-bold text-emerald-900 border-t border-emerald-200 pt-2">
-                                        <span>Mehr Umsatz für Private Firmen</span>
-                                        <span>+28%</span>
+                                        <span>{publicMediaContent.comparison.mythCheck.listResult}</span>
+                                        <span>{publicMediaContent.comparison.mythCheck.listValue}</span>
                                     </div>
                                     <div className="mt-3 text-sm text-emerald-800 italic">
-                                        Warum? Konkurrenz belebt das Geschäft. Gute öffentliche News zwingen Private dazu, auch besser zu werden.
+                                        {publicMediaContent.comparison.mythCheck.footer}
                                     </div>
                                     <SourceBadge ids={["33", "34", "35"]} />
                                 </div>
@@ -754,19 +495,19 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                             <FocusRegion id="public_media__compare__gap" label="Wissens-Lücke" className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                                     <BookOpen className="text-blue-500" />
-                                    Die "Wissens-Lücke"
+                                    {publicMediaContent.comparison.knowledgeGap.heading}
                                 </h3>
                                 <p className="text-slate-700 mb-4">
-                                    Wer weiss eigentlich, was in der Politik passiert?
+                                    {publicMediaContent.comparison.knowledgeGap.text}
                                 </p>
                                 <div className="space-y-3">
                                     <div className="p-3 bg-slate-100 rounded text-slate-700">
-                                        <span className="block font-bold text-xs uppercase mb-1 text-slate-500">In den USA (Markt-System)</span>
-                                        <span className="text-sm">Nur reiche Leute sind gut informiert. Arme Leute wissen oft wenig über Politik.</span>
+                                        <span className="block font-bold text-xs uppercase mb-1 text-slate-500">{publicMediaContent.comparison.knowledgeGap.usaHeader}</span>
+                                        <span className="text-sm">{publicMediaContent.comparison.knowledgeGap.usaText}</span>
                                     </div>
                                     <div className="p-3 bg-blue-50 rounded text-blue-900 border border-blue-100">
-                                        <span className="block font-bold text-xs uppercase mb-1 text-blue-400">In Europa (Öffentliches System)</span>
-                                        <span className="text-sm">Die <strong>Leuten</strong> sind gut informiert, egal wie viel Geld sie haben. Öffentliche Medien informierend alle Bevölkerungsschichten.</span>
+                                        <span className="block font-bold text-xs uppercase mb-1 text-blue-400">{publicMediaContent.comparison.knowledgeGap.europeHeader}</span>
+                                        <span className="text-sm"><SafeHTML content={publicMediaContent.comparison.knowledgeGap.europeText} as="span" /></span>
                                     </div>
                                     <SourceBadge ids={["5", "36", "37"]} />
                                 </div>
@@ -779,67 +520,37 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                 {activeTab === 'analysis' && (
                     <FocusRegion id="public_media__analysis" label="Folgen & Analyse" className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-in slide-in-from-bottom-4 duration-500">
 
-                        {/* Case Study: Privatisierung */}
-                        <FocusRegion id="public_media__analysis__privatization" label="Fallstudie Privatisierung" className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                            <div className="bg-red-50 p-6 border-b border-red-100">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <AlertTriangle className="text-red-600" />
-                                    <h3 className="text-xl font-bold text-red-900">Die Privatisierungs-Falle</h3>
-                                </div>
-                                <p className="text-red-800 text-sm">Was passiert, wenn man Sender verkauft?</p>
-                            </div>
-                            <div className="p-6 space-y-4">
-                                <p className="text-slate-700 leading-relaxed">
-                                    Beispiele aus Frankreich und Neuseeland zeigen: Wenn ein Sender privatisiert wird, gibt es Probleme.
-                                </p>
-                                <ul className="space-y-3">
-                                    <li className="flex gap-3 text-slate-700 bg-slate-50 p-3 rounded">
-                                        <TrendingDown className="text-red-500 shrink-0" size={24} />
-                                        <span>
-                                            <strong>Einheitsbrei:</strong> Private Sender kopieren sich gegenseitig. Alle zeigen das Gleiche (Krimis & Shows), weil das billig ist.
-                                        </span>
-                                    </li>
-                                    <li className="flex gap-3 text-slate-700 bg-slate-50 p-3 rounded">
-                                        <TrendingDown className="text-red-500 shrink-0" size={24} />
-                                        <span>
-                                            <strong>Schlechte News:</strong> Statt Politik-Analysen gibt es Skandale und Verbrechen, um Zuschauer zu ködern.
-                                        </span>
-                                    </li>
-                                </ul>
-                                <SourceBadge ids={["23", "24", "25", "26", "27"]} />
-                            </div>
-                        </FocusRegion>
-
-                        {/* Case Study: Staats-Intervention */}
-                        <FocusRegion id="public_media__analysis__intervention" label="Fallstudie Staatsdruck" className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-                            <div className="bg-amber-50 p-6 border-b border-amber-100">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <ShieldAlert className="text-amber-600" />
-                                    <h3 className="text-xl font-bold text-amber-900">Der "Einschüchterungseffekt"</h3>
-                                </div>
-                                <p className="text-amber-800 text-sm">Wenn der Staat den Geldhahn zudreht</p>
-                            </div>
-                            <div className="p-6 space-y-4">
-                                <p className="text-slate-700 leading-relaxed">
-                                    Wenn Politiker/innen direkt über das Budget entscheiden, werden Sender vorsichtig.
-                                </p>
-                                <ul className="space-y-3">
-                                    <li className="flex gap-3 text-slate-700 bg-slate-50 p-3 rounded">
-                                        <TrendingDown className="text-amber-500 shrink-0" size={24} />
-                                        <span>
-                                            <strong>Budget als Waffe:</strong> In Dänemark wurden 20% gekürzt, weil Politiker/innen die Meinung der Journalisten/innen nicht mochten.
-                                        </span>
-                                    </li>
-                                    <li className="flex gap-3 text-slate-700 bg-slate-50 p-3 rounded">
-                                        <TrendingDown className="text-amber-500 shrink-0" size={24} />
-                                        <span>
-                                            <strong>Angst:</strong> Journalisten/innen berichten nicht mehr kritisch, aus Angst, dass ihr Sender geschlossen wird (wie in Griechenland).
-                                        </span>
-                                    </li>
-                                </ul>
-                                <SourceBadge ids={["1", "3", "30", "31"]} />
-                            </div>
-                        </FocusRegion>
+                        {/* Case Study Template */}
+                        {(['privatization', 'intervention'] as const).map((key) => {
+                            const section = publicMediaContent.analysis[key];
+                            return (
+                                <FocusRegion key={key} id={`public_media__analysis__${key}`} label={section.heading} className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                                    <div className={`${key === 'privatization' ? 'bg-red-50 border-red-100' : 'bg-amber-50 border-amber-100'} p-6 border-b`}>
+                                        <div className="flex items-center gap-3 mb-2">
+                                            {key === 'privatization' ? <AlertTriangle className="text-red-600" /> : <ShieldAlert className="text-amber-600" />}
+                                            <h3 className={`text-xl font-bold ${key === 'privatization' ? 'text-red-900' : 'text-amber-900'}`}>{section.heading}</h3>
+                                        </div>
+                                        <p className={`${key === 'privatization' ? 'text-red-800' : 'text-amber-800'} text-sm`}>{section.subheading}</p>
+                                    </div>
+                                    <div className="p-6 space-y-4">
+                                        <p className="text-slate-700 leading-relaxed">
+                                            {section.text}
+                                        </p>
+                                        <ul className="space-y-3">
+                                            {section.points.map((pt: any, idx: number) => (
+                                                <li key={idx} className="flex gap-3 text-slate-700 bg-slate-50 p-3 rounded">
+                                                    <TrendingDown className={`${key === 'privatization' ? 'text-red-500' : 'text-amber-500'} shrink-0`} size={24} />
+                                                    <span>
+                                                        <strong>{pt.title}:</strong> {pt.text}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        <SourceBadge ids={key === 'privatization' ? ["23", "24", "25", "26", "27"] : ["1", "3", "30", "31"]} />
+                                    </div>
+                                </FocusRegion>
+                            );
+                        })}
 
                         {/* Theory: Social Cohesion */}
                         <FocusRegion id="public_media__analysis__cohesion" label="Zusammenhalt" className="md:col-span-2 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-lg text-white p-8">
@@ -848,11 +559,9 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                     <Users size={40} className="text-blue-100" />
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-bold mb-2">Zusammenhalt vs. Spaltung</h3>
+                                    <h3 className="text-2xl font-bold mb-2">{publicMediaContent.analysis.cohesion.heading}</h3>
                                     <p className="text-blue-100 leading-relaxed mb-4 text-lg">
-                                        Soziale Medien (TikTok, X) wollen oft, dass wir uns streiten, weil das Klicks bringt (<strong>Spaltung</strong>).
-                                        <br /><br />
-                                        Öffentliche Medien haben den Auftrag, alle Menschen zu informieren. Sie sorgen dafür, dass wir uns auf Fakten einigen können. Sie halten die Gesellschaft zusammen (<strong>Zusammenhalt</strong>).
+                                        <SafeHTML content={publicMediaContent.analysis.cohesion.text} as="span" />
                                     </p>
                                     <SourceBadge ids={["4", "38"]} />
                                 </div>
@@ -869,9 +578,9 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                 <span className="inline-block p-3 bg-blue-100 text-blue-600 rounded-full mb-4">
                                     <HelpCircle size={32} />
                                 </span>
-                                <h2 className="text-3xl font-bold text-slate-900 mb-2">Abschluss-Check</h2>
+                                <h2 className="text-3xl font-bold text-slate-900 mb-2">{publicMediaContent.quizView.heading}</h2>
                                 <p className="text-slate-600 text-lg mb-8">
-                                    Starte den nativen Abschluss-Check oder oeffne direkt deine Auswertung.
+                                    {publicMediaContent.quizView.text}
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -882,13 +591,13 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                                         }}
                                         className="px-6 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
                                     >
-                                        Abschluss-Check starten
+                                        {publicMediaContent.quizView.startButton}
                                     </button>
                                     <button
                                         onClick={() => window.location.hash = '#/report/results/publicMedia'}
                                         className="px-6 py-3 rounded-xl bg-emerald-600 text-white font-bold hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200"
                                     >
-                                        Auswertung ansehen
+                                        {publicMediaContent.quizView.resultsButton}
                                     </button>
                                 </div>
                             </div>
@@ -900,7 +609,7 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
                 <div id="quellen" className="mt-8 border-t border-slate-200 pt-6">
                     <h3 className="text-sm font-bold text-slate-600 mb-4 flex items-center">
                         <ExternalLink className="w-4 h-4 mr-2" />
-                        Quellenverzeichnis
+                        {publicMediaContent.footer.sourcesHeading}
                     </h3>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                         {sources.map((source) => (
@@ -942,4 +651,3 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
         </div>
     );
 };
-

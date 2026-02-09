@@ -550,5 +550,72 @@
                 "29"
             ]
         }
-    ]
+    ],
+    "comparison": {
+        "heading": "Je unabhängiger, desto mehr Vertrauen",
+        "text": "Die Grafik zeigt: Wenn das Geld sicher ist (unabhängig von Politikern), dann <strong>vertrauen</strong> die Menschen den Nachrichten mehr. Wenn das Geld direkt vom Staat oder von Werbung kommt, ist das Vertrauen geringer.",
+        "chartLabel": "Vertrauens-Wert",
+        "mythCheck": {
+            "heading": "Mythos: \"Staatliche Sender schaden Privaten\"",
+            "text": "Viele glauben: Wenn es ARD/ZDF gibt, haben private Firmen (wie Netflix oder RTL) keine Chance. <strong>Studien zeigen:</strong>",
+            "listHeader": "Mehr staatliche Online-News",
+            "listSubHeader": "Führt zu...",
+            "listResult": "Mehr Umsatz für Private Firmen",
+            "listValue": "+28%",
+            "footer": "Warum? Konkurrenz belebt das Geschäft. Gute öffentliche News zwingen Private dazu, auch besser zu werden."
+        },
+        "knowledgeGap": {
+            "heading": "Die \"Wissens-Lücke\"",
+            "text": "Wer weiss eigentlich, was in der Politik passiert?",
+            "usaHeader": "In den USA (Markt-System)",
+            "usaText": "Nur reiche Leute sind gut informiert. Arme Leute wissen oft wenig über Politik.",
+            "europeHeader": "In Europa (Öffentliches System)",
+            "europeText": "Die <strong>Leuten</strong> sind gut informiert, egal wie viel Geld sie haben. Öffentliche Medien informierend alle Bevölkerungsschichten."
+        }
+    },
+    "analysis": {
+        "privatization": {
+            "heading": "Die Privatisierungs-Falle",
+            "subheading": "Was passiert, wenn man Sender verkauft?",
+            "text": "Beispiele aus Frankreich und Neuseeland zeigen: Wenn ein Sender privatisiert wird, gibt es Probleme.",
+            "points": [
+                {
+                    "title": "Einheitsbrei",
+                    "text": "Private Sender kopieren sich gegenseitig. Alle zeigen das Gleiche (Krimis & Shows), weil das billig ist."
+                },
+                {
+                    "title": "Schlechte News",
+                    "text": "Statt Politik-Analysen gibt es Skandale und Verbrechen, um Zuschauer zu ködern."
+                }
+            ]
+        },
+        "intervention": {
+            "heading": "Der \"Einschüchterungseffekt\"",
+            "subheading": "Wenn der Staat den Geldhahn zudreht",
+            "text": "Wenn Politiker/innen direkt über das Budget entscheiden, werden Sender vorsichtig.",
+            "points": [
+                {
+                    "title": "Budget als Waffe",
+                    "text": "In Dänemark wurden 20% gekürzt, weil Politiker/innen die Meinung der Journalisten/innen nicht mochten."
+                },
+                {
+                    "title": "Angst",
+                    "text": "Journalisten/innen berichten nicht mehr kritisch, aus Angst, dass ihr Sender geschlossen wird (wie in Griechenland)."
+                }
+            ]
+        },
+        "cohesion": {
+            "heading": "Zusammenhalt vs. Spaltung",
+            "text": "Soziale Medien (TikTok, X) wollen oft, dass wir uns streiten, weil das Klicks bringt (<strong>Spaltung</strong>). Öffentliche Medien haben den Auftrag, alle Menschen zu informieren. Sie sorgen dafür, dass wir uns auf Fakten einigen können. Sie halten die Gesellschaft zusammen (<strong>Zusammenhalt</strong>)."
+        }
+    },
+    "quizView": {
+        "heading": "Abschluss-Check",
+        "text": "Starte den nativen Abschluss-Check oder oeffne direkt deine Auswertung.",
+        "startButton": "Abschluss-Check starten",
+        "resultsButton": "Auswertung ansehen"
+    },
+    "footer": {
+        "sourcesHeading": "Quellenverzeichnis"
+    }
 }

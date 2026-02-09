@@ -24,6 +24,7 @@ import { PageConfig, Source } from '@/types';
 import { swissifyData } from '@/utils/textUtils';
 import { InteractionSequence } from '@/components/interactions/InteractionSequence';
 import { InteractionModal } from '@/components/interactions/InteractionModal';
+import { SafeHTML } from '@/components/SafeHTML';
 import agoraContent from '@/data/content/agora-text.json';
 
 interface AgoraPageProps {
@@ -241,8 +242,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 <BookOpen size={18} />
                             </div>
                             <div>
-                                <div className="font-bold text-base text-slate-900">1. Theorie</div>
-                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Verstehen</div>
+                                <div className="font-bold text-base text-slate-900">{agoraContent.tabs.theory.label}</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">{agoraContent.tabs.theory.sublabel}</div>
                             </div>
                         </button>
 
@@ -255,8 +256,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 <BarChart3 size={18} />
                             </div>
                             <div>
-                                <div className="font-bold text-base text-slate-900">2. Datenlage</div>
-                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Erkennen</div>
+                                <div className="font-bold text-base text-slate-900">{agoraContent.tabs.data.label}</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">{agoraContent.tabs.data.sublabel}</div>
                             </div>
                         </button>
 
@@ -269,8 +270,8 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 <Scale size={18} />
                             </div>
                             <div>
-                                <div className="font-bold text-base text-slate-900">3. Folgen</div>
-                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">Handeln</div>
+                                <div className="font-bold text-base text-slate-900">{agoraContent.tabs.consequences.label}</div>
+                                <div className="text-[10px] uppercase font-bold tracking-wider opacity-60">{agoraContent.tabs.consequences.sublabel}</div>
                             </div>
                         </button>
                     </div>
@@ -287,7 +288,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Intro Text Section */}
                                 <FocusRegion
                                     id="theory__intro"
-                                    label="Einleitung: Wie wir miteinander reden"
+                                    label={agoraContent.sections.theoryIntro.heading}
                                     className="flex flex-col lg:flex-row gap-6 items-center py-4 border-b border-slate-50 pb-8"
                                 >
                                     <FocusRegion
@@ -295,9 +296,9 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         label="Intro Text"
                                         className="flex-1"
                                     >
-                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Wie wir miteinander reden</h2>
+                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">{agoraContent.sections.theoryIntro.heading}</h2>
                                         <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
-                                            <strong>Früher bestimmten Zeitungsredaktionen</strong>, was wichtig war. <strong>Heute entscheidet oft ein Algorithmus</strong> auf deinem Handy. Das verändert nicht nur, wie wir Nachrichten lesen, sondern wie unsere Demokratie funktioniert. <SourceBadge ids={["1", "2"]} />
+                                            <SafeHTML content={agoraContent.sections.theoryIntro.text} className="inline" as="span" /> <SourceBadge ids={["1", "2"]} />
                                         </p>
                                     </FocusRegion>
                                     <FocusRegion
@@ -318,10 +319,10 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Comparison Grid - MOVED TO TOP */}
                                 <FocusRegion
                                     id="theory__comparison"
-                                    label="Der Wandel: Ein Vergleich"
+                                    label={agoraContent.sections.comparison.heading}
                                     className="py-6 border-b border-slate-50"
                                 >
-                                    <h3 className="text-lg font-bold mb-4 text-center text-slate-700">Der Wandel: Ein Vergleich</h3>
+                                    <h3 className="text-lg font-bold mb-4 text-center text-slate-700">{agoraContent.sections.comparison.heading}</h3>
                                     <div className="grid md:grid-cols-2 gap-4 relative">
                                         <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 bg-white p-1.5 rounded-full shadow border border-slate-200">
                                             <ArrowRight className="text-slate-400 w-5 h-5" />
@@ -330,46 +331,42 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         {/* FRÜHER */}
                                         <FocusRegion
                                             id="theory__comparison__left"
-                                            label="Das Lagerfeuer (Früher)"
+                                            label={agoraContent.sections.comparison.campfire.title}
                                             className="bg-slate-50 p-4 rounded-2xl border-2 border-slate-100 hover:border-slate-200 transition-colors"
                                         >
                                             <div className="flex items-center justify-center w-8 h-8 bg-slate-200 rounded-full mb-2 mx-auto">
                                                 <Flame className="w-4 h-4 text-slate-600" />
                                             </div>
-                                            <h4 className="text-center font-bold text-slate-700 mb-1">Das "Lagerfeuer"</h4>
-                                            <p className="text-center text-[10px] text-slate-400 uppercase font-black tracking-widest mb-3">Massenmedien</p>
+                                            <h4 className="text-center font-bold text-slate-700 mb-1">{agoraContent.sections.comparison.campfire.title}</h4>
+                                            <p className="text-center text-[10px] text-slate-400 uppercase font-black tracking-widest mb-3">{agoraContent.sections.comparison.campfire.subtitle}</p>
                                             <ul className="space-y-3 text-sm text-slate-600">
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
-                                                    <span><strong>Alle sehen das Gleiche</strong> (z.B. Tagesschau um 20:00 Uhr).</span>
-                                                </li>
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Lock className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
-                                                    <span>Journalisten filtern Fakten und sortieren Gerüchte aus.</span>
-                                                </li>
+                                                {agoraContent.sections.comparison.campfire.points.map((point, idx) => (
+                                                    <li key={idx} className="flex gap-2.5 items-start">
+                                                        <Users className="w-4 h-4 shrink-0 mt-0.5 text-slate-400" />
+                                                        <span>{point}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </FocusRegion>
 
                                         {/* HEUTE */}
                                         <FocusRegion
                                             id="theory__comparison__right"
-                                            label="Der eigene Tunnel (Heute)"
+                                            label={agoraContent.sections.comparison.tunnel.title}
                                             className="bg-blue-50/50 p-4 rounded-2xl border-2 border-blue-100 hover:border-blue-200 transition-colors"
                                         >
                                             <div className="flex items-center justify-center w-8 h-8 bg-blue-200 rounded-full mb-2 mx-auto">
                                                 <Smartphone className="w-4 h-4 text-blue-600" />
                                             </div>
-                                            <h4 className="text-center font-bold text-blue-900 mb-1">Der "Eigene Tunnel"</h4>
-                                            <p className="text-center text-[10px] text-blue-400 uppercase font-black tracking-widest mb-3">Plattformen</p>
+                                            <h4 className="text-center font-bold text-blue-900 mb-1">{agoraContent.sections.comparison.tunnel.title}</h4>
+                                            <p className="text-center text-[10px] text-blue-400 uppercase font-black tracking-widest mb-3">{agoraContent.sections.comparison.tunnel.subtitle}</p>
                                             <ul className="space-y-3 text-sm text-slate-700">
-                                                <li className="flex gap-2.5 items-start">
-                                                    <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
-                                                    <span><strong>Jeder sieht etwas anderes.</strong> Es fehlt die gemeinsame Basis. <SourceBadge ids={["1", "2"]} /></span>
-                                                </li>
-                                                <li className="flex gap-2.5 items-start">
-                                                    <BrainCircuit className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
-                                                    <span>Algorithmen entscheiden, was dich am Bildschirm hält.</span>
-                                                </li>
+                                                {agoraContent.sections.comparison.tunnel.points.map((point, idx) => (
+                                                    <li key={idx} className="flex gap-2.5 items-start">
+                                                        <Users className="w-4 h-4 shrink-0 mt-0.5 text-blue-500" />
+                                                        <span>{point}</span>
+                                                    </li>
+                                                ))}
                                             </ul>
                                         </FocusRegion>
                                     </div>
@@ -378,21 +375,21 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Agora Box Section */}
                                 <FocusRegion
                                     id="theory__agora"
-                                    label="Was bedeutet Agora?"
+                                    label={agoraContent.sections.agora.heading}
                                     className="py-8 bg-gradient-to-br from-indigo-50/30 to-white rounded-3xl border border-indigo-100/50 p-4 md:p-8 relative overflow-hidden"
                                 >
                                     <div className="relative z-10 w-full">
                                         <h3 className="text-lg font-bold text-indigo-900 mb-4 flex items-center">
                                             <LayoutGrid className="w-5 h-5 mr-3 text-indigo-600" />
-                                            Was bedeutet "Agora"?
+                                            {agoraContent.sections.agora.heading}
                                         </h3>
                                         <div className="grid md:grid-cols-2 gap-6 items-center">
                                             <div className="space-y-4">
                                                 <p className="text-base text-slate-700 leading-relaxed">
-                                                    Das Wort kommt aus dem alten Griechenland. Die <strong>Agora</strong> war der zentrale <strong>Marktplatz</strong> einer Stadt.
+                                                    <SafeHTML content={agoraContent.sections.agora.text1} />
                                                 </p>
                                                 <p className="text-base text-slate-700 leading-relaxed">
-                                                    Es war der Ort, an dem sich die <strong>"Öffentlichkeit"</strong> bildete – wo Bürger/innen diskutierten und Politik machten.
+                                                    <SafeHTML content={agoraContent.sections.agora.text2} />
                                                 </p>
                                                 <div className="w-full max-w-[280px] mx-auto group pt-2">
                                                     <div className="aspect-square bg-white rounded-2xl shadow-lg border border-indigo-100 overflow-hidden transition-transform duration-500 hover:rotate-1">
@@ -409,11 +406,11 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                 <strong className="block text-lg text-indigo-700 mb-3 border-b border-indigo-50 pb-2">Vergleich für heute:</strong>
                                                 <div className="flex items-start gap-4 text-slate-600">
                                                     <div className="bg-indigo-50 p-2 rounded-lg text-xl">🏛️</div>
-                                                    <p><strong className="text-slate-900">Früher:</strong> Wie eine grosse Schulversammlung. <strong>Alle hören dasselbe.</strong></p>
+                                                    <SafeHTML content={agoraContent.sections.agora.comparisonBefore} as="p" />
                                                 </div>
                                                 <div className="flex items-start gap-4 text-slate-600">
                                                     <div className="bg-indigo-50 p-2 rounded-lg text-xl">📱</div>
-                                                    <p><strong className="text-slate-900">Heute:</strong> Tausende kleine WhatsApp-Gruppenchats gleichzeitig. <strong>Jeder sieht nur seinen Teil.</strong></p>
+                                                    <SafeHTML content={agoraContent.sections.agora.comparisonToday} as="p" />
                                                 </div>
                                             </div>
                                         </div>
@@ -424,7 +421,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Gatekeeper Section */}
                                 <FocusRegion
                                     id="theory__gatekeeper"
-                                    label="Gatekeeper erklärt"
+                                    label={agoraContent.sections.gatekeeper.heading}
                                     className="py-8"
                                 >
                                     <div className="flex flex-col md:flex-row gap-6 items-center w-full">
@@ -432,10 +429,10 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             <div className="bg-emerald-50/50 border border-emerald-100 rounded-3xl p-4 md:p-8">
                                                 <div className="flex items-center gap-3 mb-3">
                                                     <div className="bg-emerald-500 p-1.5 rounded-lg"><Lock className="w-4 h-4 text-white" /></div>
-                                                    <h3 className="text-lg font-bold text-emerald-900">Was bedeutet 'Gatekeeper'?</h3>
+                                                    <h3 className="text-lg font-bold text-emerald-900">{agoraContent.sections.gatekeeper.heading}</h3>
                                                 </div>
                                                 <p className="text-base text-emerald-900/80 leading-relaxed">
-                                                    <FocusRegion id="theory__gatekeeper__word__gatekeeper" label="Wort: Gatekeeper" as="span" className="font-bold px-1 rounded transition-colors inline-block">Gatekeeper</FocusRegion> heisst <FocusRegion id="theory__gatekeeper__word__torwaechter" label="Wort: Torwächter" as="span" className="font-bold px-1 rounded transition-colors inline-block">"Torwächter"</FocusRegion>. Früher entschieden Chefredaktionen, was wichtig genug ist. Heute sortieren Algorithmen oder gar niemand mehr – <strong>jeder kann alles posten</strong>, wahr oder falsch.
+                                                    <FocusRegion id="theory__gatekeeper__word__gatekeeper" label="Wort: Gatekeeper" as="span" className="font-bold px-1 rounded transition-colors inline-block">Gatekeeper</FocusRegion> heisst <FocusRegion id="theory__gatekeeper__word__torwaechter" label="Wort: Torwächter" as="span" className="font-bold px-1 rounded transition-colors inline-block">"Torwächter"</FocusRegion>. <SafeHTML content={agoraContent.sections.gatekeeper.text} as="span" />
                                                 </p>
                                             </div>
                                         </div>
@@ -458,15 +455,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             {/* Left: Hype Man */}
                                             <FocusRegion
                                                 id="theory__algorithm"
-                                                label="Algorithmus als Hype-Man"
+                                                label={agoraContent.sections.algorithm.heading}
                                                 className="p-6 md:p-8"
                                             >
                                                 <div className="flex items-center gap-2 mb-3">
                                                     <BrainCircuit className="w-5 h-5 text-blue-600" />
-                                                    <h3 className="font-bold text-blue-900">Der Ja-Sager</h3>
+                                                    <h3 className="font-bold text-blue-900">{agoraContent.sections.algorithm.heading}</h3>
                                                 </div>
                                                 <p className="text-sm text-slate-700 mb-4 leading-relaxed">
-                                                    Der Algorithmus will dich nicht informieren, sondern <strong>bestätigen</strong>. <strong>Wut und Freude binden dich stärker</strong> als neutrale Fakten.
+                                                    <SafeHTML content={agoraContent.sections.algorithm.text} />
                                                 </p>
                                                 <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-blue-100/50">
                                                     <img src="img/agora5.png" alt="Algorithm Hype-Man" className="w-full h-full object-cover" />
@@ -476,15 +473,15 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             {/* Right: Attention */}
                                             <FocusRegion
                                                 id="theory__attention"
-                                                label="Aufmerksamkeits-Ökonomie"
+                                                label={agoraContent.sections.attention.heading}
                                                 className="p-6 md:p-8 bg-white/50"
                                             >
                                                 <div className="flex items-center gap-2 mb-3">
                                                     <div className="bg-amber-100 p-1 rounded"><BrainCircuit className="w-4 h-4 text-amber-600" /></div>
-                                                    <h3 className="font-bold text-amber-900">Die Währung</h3>
+                                                    <h3 className="font-bold text-amber-900">{agoraContent.sections.attention.heading}</h3>
                                                 </div>
                                                 <p className="text-sm text-slate-700 mb-4 leading-relaxed">
-                                                    Das Ziel ist deine <strong>Aufmerksamkeit</strong> (Verweildauer). <strong>Je länger du bleibst, desto mehr Werbung</strong> kannst du sehen.
+                                                    <SafeHTML content={agoraContent.sections.attention.text} />
                                                 </p>
                                                 <div className="aspect-video bg-white rounded-xl overflow-hidden shadow-sm border border-amber-100/50">
                                                     <img src="img/agora6.png" alt="Attention Economy" className="w-full h-full object-cover" />
@@ -502,7 +499,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                                 <FocusRegion
                                     id="data__overview"
-                                    label="Die Zahlen: Eine gespaltene Gesellschaft"
+                                    label={agoraContent.sections.dataOverview.heading}
                                     className="p-2 -m-2 rounded-3xl"
                                 >
                                     <div className="flex flex-col lg:flex-row gap-6 items-center py-4">
@@ -511,9 +508,9 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             label="Daten Intro Text"
                                             className="flex-1"
                                         >
-                                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Die Zahlen: Eine gespaltene Gesellschaft</h2>
+                                            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">{agoraContent.sections.dataOverview.heading}</h2>
                                             <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
-                                                Die Daten aus 2024 und 2025 zeigen ein klares Bild: <strong>Wir driften beim Medienkonsum massiv auseinander.</strong>
+                                                <SafeHTML content={agoraContent.sections.dataOverview.text} />
                                             </p>
                                         </FocusRegion>
                                         <FocusRegion
@@ -542,7 +539,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                                         {/* Right: Chart Section */}
                                         <div id="chart-section" className="col-span-2 scroll-mt-24 bg-slate-50/50 rounded-3xl p-4 md:p-6 border border-slate-100 h-full mt-0">
-                                            <h3 className="font-bold text-lg mb-6 text-center text-slate-800 tracking-tight">Wer schaut noch Nachrichten?</h3>
+                                            <h3 className="font-bold text-lg mb-6 text-center text-slate-800 tracking-tight">{agoraContent.sections.dataStats.chartHeading}</h3>
                                             <div className="max-w-3xl mx-auto w-full space-y-6 pb-2">
                                                 <div className="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                                                     <div className="flex justify-between mb-2 text-sm font-bold text-slate-700">
@@ -566,12 +563,12 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                             </div>
                                             <div className="mt-6 grid md:grid-cols-2 gap-4">
                                                 <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">Die "TikTokisierung"</h4>
-                                                    <p className="text-[10px] text-slate-600 leading-relaxed"><strong>Komplexe Politik wird oft auf 15 Sekunden Spass reduziert.</strong> Hintergründe fehlen meist.</p>
+                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">{agoraContent.sections.dataStats.tiktokHeading}</h4>
+                                                    <p className="text-[10px] text-slate-600 leading-relaxed"><SafeHTML content={agoraContent.sections.dataStats.tiktokText} as="span" /></p>
                                                 </div>
                                                 <div id="bildungskluft-card" className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">Bildungskluft</h4>
-                                                    <p className="text-[10px] text-slate-600 leading-relaxed">Menschen mit niedriger formaler Bildung gehören öfter zu den News-Deprivierten.</p>
+                                                    <h4 className="font-bold text-sm mb-1 text-slate-800">{agoraContent.sections.dataStats.bildungskluftHeading}</h4>
+                                                    <p className="text-[10px] text-slate-600 leading-relaxed">{agoraContent.sections.dataStats.bildungskluftText}</p>
                                                     <div className="mt-1 scale-90 origin-left"><SourceBadge ids={["6"]} /></div>
                                                 </div>
                                             </div>
@@ -582,20 +579,20 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* 15-Second Video Problem Section */}
                                 <FocusRegion
                                     id="data__tiktok"
-                                    label="Das 15-Sekunden-Problem"
+                                    label={agoraContent.sections.tiktokProblem.heading}
                                     className="scroll-mt-24 bg-purple-50/30 rounded-3xl p-4 md:p-8 border border-purple-100 my-4"
                                 >
-                                    <h3 className="font-bold text-xl mb-6 text-center text-purple-900 tracking-tight">Das 15-Sekunden-Problem</h3>
+                                    <h3 className="font-bold text-xl mb-6 text-center text-purple-900 tracking-tight">{agoraContent.sections.tiktokProblem.heading}</h3>
                                     <div className="grid md:grid-cols-2 gap-6 items-center">
                                         <div className="space-y-4">
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                Kannst du eine <strong>Rentenreform</strong> wirklich in einem 15-Sekunden-Video verstehen?
+                                                <SafeHTML content={agoraContent.sections.tiktokProblem.text1} />
                                             </p>
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                Du kriegst die <strong>Emotion</strong>, den schnellen <strong>Slogan</strong>, aber die <strong>Details</strong>, die du für die Stimmabgabe brauchst, fallen weg.
+                                                <SafeHTML content={agoraContent.sections.tiktokProblem.text2} />
                                             </p>
                                             <div className="bg-purple-100 border-l-4 border-purple-500 p-4 rounded-r-xl">
-                                                <p className="text-sm text-purple-900 font-semibold">Komplexe Politik wird auf Unterhaltung reduziert. Hintergründe fehlen meist.</p>
+                                                <p className="text-sm text-purple-900 font-semibold">{agoraContent.sections.tiktokProblem.callout}</p>
                                             </div>
                                             <div className="aspect-video bg-white rounded-2xl overflow-hidden shadow-lg border border-purple-100 hover:shadow-xl transition-shadow mt-4">
                                                 <img
@@ -620,20 +617,20 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Money Flow Section */}
                                 <FocusRegion
                                     id="data__money"
-                                    label="Der Teufelskreis"
+                                    label={agoraContent.sections.moneyFlow.heading}
                                     className="bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl p-4 md:p-8 border border-red-100 my-4"
                                 >
-                                    <h3 className="font-bold text-xl mb-4 text-center text-red-900 tracking-tight">Der Teufelskreis</h3>
+                                    <h3 className="font-bold text-xl mb-4 text-center text-red-900 tracking-tight">{agoraContent.sections.moneyFlow.heading}</h3>
                                     <div className="flex flex-col md:flex-row gap-6 items-center">
                                         <div className="flex-1 space-y-4">
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                Jedes Jahr fliessen <strong>2,1 Milliarden Franken</strong> an Werbegeldern an globale Plattformen.
+                                                <SafeHTML content={agoraContent.sections.moneyFlow.text1} />
                                             </p>
                                             <p className="text-base text-slate-700 leading-relaxed">
-                                                <strong>Geld, das den Schweizer Medienhäusern fehlt</strong>, um Journalismus zu finanzieren, der komplexe Vorlagen verständlich macht.
+                                                <strong>{agoraContent.sections.moneyFlow.text2.split(' um ')[0]}</strong> um {agoraContent.sections.moneyFlow.text2.split(' um ')[1]}
                                             </p>
                                             <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r-xl">
-                                                <p className="text-sm text-red-900 font-semibold">Weniger Geld → Weniger Qualitätsjournalismus → Mehr Abhängigkeit von Plattformen <SourceBadge ids={["7"]} /></p>
+                                                <p className="text-sm text-red-900 font-semibold">{agoraContent.sections.moneyFlow.callout} <SourceBadge ids={["7"]} /></p>
                                             </div>
                                         </div>
                                         <div className="w-full md:w-1/2">
@@ -656,52 +653,56 @@ export function AgoraPage({ config }: AgoraPageProps) {
 
                                 <FocusRegion
                                     id="consequences__intro"
-                                    label="Was passiert mit der Demokratie?"
+                                    label={agoraContent.sections.consequencesIntro.heading}
                                     className="py-6"
                                 >
-                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">Was passiert mit der Demokratie?</h2>
+                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 leading-tight">{agoraContent.sections.consequencesIntro.heading}</h2>
                                     <p className="text-base text-slate-600 leading-relaxed max-w-2xl">
-                                        In einer direkten Demokratie müssen wir <strong>informiert sein, um über komplexe Gesetze abstimmen zu können.</strong>
+                                        <SafeHTML content={agoraContent.sections.consequencesIntro.text} />
                                     </p>
                                 </FocusRegion>
 
                                 <div className="grid md:grid-cols-3 gap-4 py-2">
-                                    <div id="slacktivism-card" className="bg-white border-t-4 border-red-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
-                                        <div className="bg-red-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><Vote className="text-red-600 w-5 h-5" /></div>
-                                        <h3 className="font-bold text-base mb-1 text-slate-800">Slacktivism</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed"><strong>Liken statt wählen:</strong> Politische Posts fühlen sich wie Aktivität an, führen aber selten zur Urne. <SourceBadge ids={["8"]} /></p>
-                                    </div>
-                                    <div id="fake-news-card" className="bg-white border-t-4 border-amber-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
-                                        <div className="bg-amber-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><BrainCircuit className="text-amber-600 w-5 h-5" /></div>
-                                        <h3 className="font-bold text-base mb-1 text-slate-800">Anfällig für Fakes</h3>
-                                        <p className="text-xs text-slate-600 mb-3 leading-relaxed"><strong>Nur 55% der Schweizer erkennen Fakes</strong> zuverlässig. Bei Abstimmungen ist das ein hohes Risiko. <SourceBadge ids={["11"]} /></p>
-                                    </div>
-                                    <div id="polarization-card" className="bg-white border-t-4 border-blue-500 shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300">
-                                        <div className="bg-blue-50 w-10 h-10 rounded-xl flex items-center justify-center mb-3"><TrendingDown className="text-blue-600 w-5 h-5" /></div>
-                                        <h3 className="font-bold text-base mb-1 text-slate-800">Affektive Polarisierung</h3>
-                                        <p className="text-xs text-slate-600 mb-4 leading-relaxed"><strong>Wut klickt besser.</strong> Der politische Gegner wird oft nicht mehr als falsch, sondern als böse gesehen. <SourceBadge ids={["10"]} /></p>
-                                    </div>
+                                    {(['slacktivism', 'fakeNews', 'polarization'] as const).map((key) => {
+                                        const card = agoraContent.sections.consequenceCards[key];
+                                        return (
+                                            <div key={key} id={`${key}-card`} className={`bg-white border-t-4 ${key === 'slacktivism' ? 'border-red-500' : key === 'fakeNews' ? 'border-amber-500' : 'border-blue-500'} shadow-lg p-4 rounded-2xl hover:-translate-y-1 transition-all duration-300`}>
+                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${key === 'slacktivism' ? 'bg-red-50' : key === 'fakeNews' ? 'bg-amber-50' : 'bg-blue-50'}`}>
+                                                    {key === 'slacktivism' && <Vote className="text-red-600 w-5 h-5" />}
+                                                    {key === 'fakeNews' && <BrainCircuit className="text-amber-600 w-5 h-5" />}
+                                                    {key === 'polarization' && <TrendingDown className="text-blue-600 w-5 h-5" />}
+                                                </div>
+                                                <h3 className="font-bold text-base mb-1 text-slate-800">{card.heading}</h3>
+                                                <p className="text-xs text-slate-600 mb-4 leading-relaxed">
+                                                    <SafeHTML content={card.text} as="span" />
+                                                    {key === 'fakeNews' && <SourceBadge ids={["11"]} />}
+                                                    {key === 'slacktivism' && <SourceBadge ids={["8"]} />}
+                                                    {key === 'polarization' && <SourceBadge ids={["10"]} />}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
 
                                 {/* Agenda Setting Section (Replaces Regulation) */}
                                 <FocusRegion
                                     id="consequences__agenda"
-                                    label="Agenda Setting"
+                                    label={agoraContent.sections.agenda.heading}
                                     className="bg-amber-50/50 rounded-[2rem] p-6 md:p-8 my-4 border border-amber-100 relative overflow-hidden"
                                 >
                                     <div className="relative z-10">
                                         <div className="flex items-center gap-3 mb-4">
                                             <div className="bg-amber-500 p-2 rounded-xl"><MessageCircle className="w-5 h-5 text-white" /></div>
-                                            <h3 className="text-xl font-bold text-amber-900 tracking-tight">Die Macht der Agenda</h3>
+                                            <h3 className="text-xl font-bold text-amber-900 tracking-tight">{agoraContent.sections.agenda.heading}</h3>
                                         </div>
                                         <div className="grid md:grid-cols-2 gap-8 items-center">
                                             <div className="space-y-4">
                                                 <p className="text-base text-slate-700 leading-relaxed">
-                                                    <strong>Beispiel Covid-Abstimmungen:</strong> Früher setzten Journalisten die Themen. Heute wachsen Themen oft in privaten Chats (Telegram) heran, bis <strong>die Politik reagieren <em>muss</em>.</strong>
+                                                    <SafeHTML content={agoraContent.sections.agenda.text} />
                                                 </p>
                                                 <div className="bg-white/60 p-4 rounded-xl border border-amber-200/50">
                                                     <p className="text-sm text-amber-900 font-semibold italic">
-                                                        "Die Politik diskutiert nicht mehr das, was wichtig ist, sondern das, was viral geht." <SourceBadge ids={["9"]} />
+                                                        {agoraContent.sections.agenda.quote} <SourceBadge ids={["9"]} />
                                                     </p>
                                                 </div>
                                             </div>
@@ -728,29 +729,29 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                 {/* Final Responsibility Question Section */}
                                 <FocusRegion
                                     id="consequences__final"
-                                    label="Die entscheidende Frage"
+                                    label={agoraContent.sections.finalQuestion.heading}
                                     className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-[2rem] p-6 md:p-10 my-6 border-2 border-slate-200 relative overflow-hidden"
                                 >
                                     <div className="relative z-10">
-                                        <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 text-center">Die entscheidende Frage</h3>
+                                        <h3 className="text-xl md:text-2xl font-bold mb-6 text-slate-900 text-center">{agoraContent.sections.finalQuestion.heading}</h3>
                                         <div className="grid md:grid-cols-2 gap-8 items-center">
                                             <div className="space-y-6">
                                                 <div>
                                                     <p className="text-lg text-slate-700 leading-relaxed mb-4">
-                                                        Wenn der Algorithmus dich nicht informieren <em>will</em>, wer ist dann dafür verantwortlich, dass du informiert <em>bist</em>?
+                                                        <SafeHTML content={agoraContent.sections.finalQuestion.text} as="span" />
                                                     </p>
                                                     <ul className="space-y-3 text-base text-slate-600">
                                                         <li className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
                                                             <span className="text-2xl">🏢</span>
-                                                            <span>Die Tech-Giganten?</span>
+                                                            <span>{agoraContent.sections.finalQuestion.options[0]}</span>
                                                         </li>
                                                         <li className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 transition-colors">
                                                             <span className="text-2xl">🏛️</span>
-                                                            <span>Der Staat? <SourceBadge ids={["12"]} /></span>
+                                                            <span>{agoraContent.sections.finalQuestion.options[1]} <SourceBadge ids={["12"]} /></span>
                                                         </li>
                                                         <li className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm border border-blue-100">
                                                             <span className="text-2xl">🪞</span>
-                                                            <span className="text-blue-700 font-bold">Oder bist du es selbst?</span>
+                                                            <span className="text-blue-700 font-bold">{agoraContent.sections.finalQuestion.options[2]}</span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -775,7 +776,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                     <div id="quellen" className="mt-8 border-t border-slate-200 pt-6">
                         <h3 className="text-sm font-bold text-slate-600 mb-4 flex items-center">
                             <ExternalLink className="w-4 h-4 mr-2" />
-                            Wissenschaftliche Quellen
+                            {agoraContent.footer.sourcesHeading}
                         </h3>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                             {sources.map((source) => (
