@@ -1,7 +1,7 @@
 {
     "id": "publicMedia-outro-funding-post",
     "type": "poll",
-    "question": "Soll die Finanzierung oeffentlicher Medien verpflichtend sein?",
+    "question": "Soll die Finanzierung öffentlicher Medien verpflichtend sein?",
     "options": [
         {
             "id": "ja_klar",
@@ -9,7 +9,7 @@
         },
         {
             "id": "ja_aber_guenstiger",
-            "label": "Ja, aber guenstiger als heute"
+            "label": "Ja, aber günstiger als heute"
         },
         {
             "id": "nein_freiwillig",

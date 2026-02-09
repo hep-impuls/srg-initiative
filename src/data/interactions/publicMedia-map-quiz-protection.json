@@ -1,7 +1,7 @@
 {
     "id": "publicMedia-map-quiz-protection",
     "type": "quiz",
-    "question": "Was schuetzt oeffentliche Medien am besten vor politischem Druck?",
+    "question": "Was schützt öffentliche Medien am besten vor politischem Druck?",
     "options": [
         {
             "id": "direktbudget",
@@ -9,12 +9,12 @@
         },
         {
             "id": "fondslogik",
-            "label": "Unabhaengige Beitrags- oder Fondslogik statt direkter Budgetkontrolle",
+            "label": "Unabhängige Beitrags- oder Fondslogik statt direkter Budgetkontrolle",
             "isCorrect": true
         },
         {
             "id": "werbeabhaengigkeit",
-            "label": "Moeglichst hohe Abhaengigkeit von Werbeeinnahmen"
+            "label": "Möglichst hohe Abhängigkeit von Werbeeinnahmen"
         },
         {
             "id": "sponsoring",

@@ -288,18 +288,18 @@ const countryData = swissifyData([
         stability: 'Hoch',
         independence: 'Hoch',
         trustScore: 64,
-        fundingDetail: 'Pauschale pro Wohnung (egal wie viele Geraete).',
+        fundingDetail: 'Pauschale pro Wohnung (egal wie viele Geräte).',
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>Jeder Haushalt zahlt den gleichen Betrag, auch ohne Fernseher.</li>
                 <li>Das sichert feste Einnahmen.</li>
-                <li>Die Hoehe bestimmt nicht die Politik, sondern die unabhaengige <strong>KEF</strong>.</li>
+                <li>Die Höhe bestimmt nicht die Politik, sondern die unabhängige <strong>KEF</strong>.</li>
                 <li>Vorteil: Schutz vor politischem Druck.</li>
             </ul>
         ),
         risks: (
             <ul className="list-disc pl-5 space-y-1">
-                <li>Bundeslaender blockieren Erhoehungen teils aus <strong>Populismus</strong>.</li>
+                <li>Bundesländer blockieren Erhöhungen teils aus <strong>Populismus</strong>.</li>
             </ul>
         ),
         status: 'sicher',
@@ -315,13 +315,13 @@ const countryData = swissifyData([
         stability: 'Sehr Hoch',
         independence: 'Hoch',
         trustScore: 79,
-        fundingDetail: 'Abhaengig vom Einkommen (wer mehr verdient, zahlt mehr).',
+        fundingDetail: 'Abhängig vom Einkommen (wer mehr verdient, zahlt mehr).',
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>Finland nutzt eine spezielle Steuer.</li>
                 <li><strong>Sozial gerecht</strong>: wenig Einkommen zahlt nichts, mehr Einkommen zahlt mehr.</li>
                 <li>Das Geld liegt in einem separaten <strong>Fonds</strong>.</li>
-                <li>Die Politik kann den Topf kaum fuer andere Projekte umleiten.</li>
+                <li>Die Politik kann den Topf kaum für andere Projekte umleiten.</li>
             </ul>
         ),
         risks: (
@@ -339,23 +339,23 @@ const countryData = swissifyData([
         id: 'uk',
         name: 'Grossbritannien',
         region: 'Europa',
-        model: 'Lizenzgebuehr',
+        model: 'Lizenzgebühr',
         stability: 'Sinkend',
         independence: 'Mittel',
         trustScore: 62,
-        fundingDetail: 'Gebuehr fuer Live-TV Nutzung.',
+        fundingDetail: 'Gebühr für Live-TV Nutzung.',
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>BBC ist stark, steht aber unter politischem Druck.</li>
-                <li>Die Lizenzgebuehr war lange eingefroren.</li>
-                <li>Real entspricht das rund <strong>30% Budget-Kuerzung</strong>.</li>
-                <li>Regelmaessige Charter-Verhandlungen schaffen zusaetzlichen Druck.</li>
+                <li>Die Lizenzgebühr war lange eingefroren.</li>
+                <li>Real entspricht das rund <strong>30% Budget-Kürzung</strong>.</li>
+                <li>Regelmässige Charter-Verhandlungen schaffen zusätzlichen Druck.</li>
             </ul>
         ),
         risks: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>Mehr junge Nutzer zahlen nicht mehr (<strong>Evasion</strong>).</li>
-                <li>Die Gebuehr koennte ab 2027 abgeschafft werden.</li>
+                <li>Die Gebühr könnte ab 2027 abgeschafft werden.</li>
             </ul>
         ),
         status: 'risiko',
@@ -367,15 +367,15 @@ const countryData = swissifyData([
         id: 'japan',
         name: 'Japan',
         region: 'Asien',
-        model: 'Empfangsgebuehr',
+        model: 'Empfangsgebühr',
         stability: 'Hoch',
         independence: 'Mittel',
         trustScore: 61,
-        fundingDetail: 'Pflicht-Vertrag bei Geraetebesitz.',
+        fundingDetail: 'Pflicht-Vertrag bei Gerätebesitz.',
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>Mit TV-Besitz besteht Zahlpflicht.</li>
-                <li>Teils wird direkt an der Haustuer eingezogen.</li>
+                <li>Teils wird direkt an der Haustür eingezogen.</li>
                 <li>Das Modell bringt hohe Einnahmen (ca. 96%).</li>
                 <li>Viele empfinden den <strong>Zwang</strong> als Belastung.</li>
             </ul>
@@ -391,24 +391,24 @@ const countryData = swissifyData([
     },
     {
         id: 'daenemark',
-        name: 'Daenemark',
+        name: 'Dänemark',
         region: 'Nordic',
         model: 'Steuer (Staatsbudget)',
         stability: 'Mittel',
-        independence: 'Gefaehrdet',
+        independence: 'Gefährdet',
         trustScore: 57,
         fundingDetail: 'Geld direkt vom Staat.',
         description: (
             <ul className="list-disc pl-5 space-y-1">
-                <li>Daenemark wechselte von Gebuehr zu direkter Steuerfinanzierung.</li>
-                <li>Direkt danach wurde das Budget um 20% gekuerzt.</li>
-                <li>Die Kuerzung wirkte wie politische <strong>Strafe</strong>.</li>
-                <li>Direkte Staatsfinanzierung macht abhaengiger.</li>
+                <li>Dänemark wechselte von Gebühr zu direkter Steuerfinanzierung.</li>
+                <li>Direkt danach wurde das Budget um 20% gekürzt.</li>
+                <li>Die Kürzung wirkte wie politische <strong>Strafe</strong>.</li>
+                <li>Direkte Staatsfinanzierung macht abhängiger.</li>
             </ul>
         ),
         risks: (
             <ul className="list-disc pl-5 space-y-1">
-                <li>Jede Regierung kann das Budget schnell aendern.</li>
+                <li>Jede Regierung kann das Budget schnell ändern.</li>
                 <li>Der Sender wird zum politischen Spielball.</li>
             </ul>
         ),
@@ -425,13 +425,13 @@ const countryData = swissifyData([
         stability: 'Mittel',
         independence: 'Mittel',
         trustScore: 50,
-        fundingDetail: 'Teil der Umsatzsteuer (temporaer).',
+        fundingDetail: 'Teil der Umsatzsteuer (temporär).',
         description: (
             <ul className="list-disc pl-5 space-y-1">
-                <li>Frankreich schaffte die Gebuehr 2022 ab.</li>
-                <li>Aktuell kommt Geld ueber einen MwSt-Anteil.</li>
-                <li>Das gilt als <strong>Uebergangsloesung</strong>.</li>
-                <li>Langfristig droht mehr politische Macht ueber das Budget.</li>
+                <li>Frankreich schaffte die Gebühr 2022 ab.</li>
+                <li>Aktuell kommt Geld über einen MwSt-Anteil.</li>
+                <li>Das gilt als <strong>Übergangslösung</strong>.</li>
+                <li>Langfristig droht mehr politische Macht über das Budget.</li>
             </ul>
         ),
         risks: (
@@ -451,13 +451,13 @@ const countryData = swissifyData([
         stability: 'Niedrig',
         independence: 'Mittel',
         trustScore: 40,
-        fundingDetail: 'Freiwillige Spenden von Buergern/Firmen.',
+        fundingDetail: 'Freiwillige Spenden von Bürgern/Firmen.',
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>Der Staat finanziert nur einen kleinen Teil.</li>
-                <li>Sender sind stark von <strong>Spenden</strong> abhaengig.</li>
-                <li>Programme richten sich oft an zahlungskraeftige Zielgruppen.</li>
-                <li>In armen Regionen entstehen News-Wuesten.</li>
+                <li>Sender sind stark von <strong>Spenden</strong> abhängig.</li>
+                <li>Programme richten sich oft an zahlungskräftige Zielgruppen.</li>
+                <li>In armen Regionen entstehen News-Wüsten.</li>
             </ul>
         ),
         risks: (
@@ -482,7 +482,7 @@ const countryData = swissifyData([
         fundingDetail: 'Direkte Kontrolle durch Regierung.',
         description: (
             <ul className="list-disc pl-5 space-y-1">
-                <li>2013 wurde ERT <strong>ueber Nacht geschlossen</strong>.</li>
+                <li>2013 wurde ERT <strong>über Nacht geschlossen</strong>.</li>
                 <li>Bildschirme blieben schwarz, der Betrieb stoppte sofort.</li>
                 <li>Das zeigt fehlende rechtliche Schutzmechanismen.</li>
                 <li>Der Staat kann das System abrupt abschalten.</li>
@@ -511,9 +511,9 @@ const countryData = swissifyData([
         description: (
             <ul className="list-disc pl-5 space-y-1">
                 <li>TVNZ ist staatlich, muss aber <strong>Gewinn</strong> erzielen.</li>
-                <li>Darum dominieren Werbung und guenstiges Reality-TV.</li>
-                <li>Teurer Qualitaetsjournalismus wird schneller gekuerzt.</li>
-                <li>Der oeffentliche Auftrag rueckt in den Hintergrund.</li>
+                <li>Darum dominieren Werbung und günstiges Reality-TV.</li>
+                <li>Teurer Qualitätsjournalismus wird schneller gekürzt.</li>
+                <li>Der öffentliche Auftrag rückt in den Hintergrund.</li>
             </ul>
         ),
         risks: (
