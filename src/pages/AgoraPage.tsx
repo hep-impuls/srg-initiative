@@ -88,6 +88,10 @@ export function AgoraPage({ config }: AgoraPageProps) {
     const [completedModals, setCompletedModals] = useState<string[]>([]);
     const hasStartedRef = useRef(false);
 
+    useEffect(() => {
+        document.title = 'SRG Initiative - Vom Dorfplatz zum Feed';
+    }, []);
+
     // --- Modal Trigger Logic ---
 
     // 1. Pre-Unit (Start)

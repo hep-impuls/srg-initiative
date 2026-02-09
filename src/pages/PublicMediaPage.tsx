@@ -94,6 +94,10 @@ export function PublicMediaPage({ config }: PublicMediaPageProps) {
     const [completedModals, setCompletedModals] = useState<string[]>([]);
     const hasStartedRef = useRef(false);
 
+    useEffect(() => {
+        document.title = 'SRG Initiative - Medien-Check Global';
+    }, []);
+
     // Sync manual tab when director changes tab
     useEffect(() => {
         if (currentTab && audioState.isPlaying) {
