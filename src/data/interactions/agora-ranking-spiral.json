@@ -1,23 +1,23 @@
 {
-    "id": "agora-ranking-spiral",
-    "type": "ranking",
-    "question": "Der Teufelskreis der Medien:",
-    "options": [
-        {
-            "id": "outflow",
-            "label": "Werbegeld fliesst ins Ausland ab."
-        },
-        {
-            "id": "budget",
-            "label": "Schweizer Medien haben weniger Budget."
-        },
-        {
-            "id": "quality",
-            "label": "Qualität/Recherche nimmt ab."
-        },
-        {
-            "id": "churn",
-            "label": "Nutzer wandern noch mehr zu Social Media ab."
-        }
-    ]
+  "id": "agora-ranking-spiral",
+  "type": "ranking",
+  "question": "Der Teufelskreis der Medien:",
+  "options": [
+    {
+      "id": "outflow",
+      "label": "Werbegeld fliesst ins Ausland ab."
+    },
+    {
+      "id": "budget",
+      "label": "Schweizer Medien haben weniger Budget."
+    },
+    {
+      "id": "quality",
+      "label": "Qualität/Recherche nimmt ab."
+    },
+    {
+      "id": "churn",
+      "label": "Nutzer wandern noch mehr zu Social Media ab."
+    }
+  ]
 }

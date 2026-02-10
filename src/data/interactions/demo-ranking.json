@@ -1,23 +1,23 @@
 {
-    "id": "demo-ranking",
-    "type": "ranking",
-    "question": "Priorisieren Sie diese Nachhaltigkeitsziele",
-    "options": [
-        {
-            "id": "r1",
-            "label": "CO2-Reduktion"
-        },
-        {
-            "id": "r2",
-            "label": "Kreislaufwirtschaft"
-        },
-        {
-            "id": "r3",
-            "label": "Soziale Fairness"
-        },
-        {
-            "id": "r4",
-            "label": "Biodiversität"
-        }
-    ]
+  "id": "demo-ranking",
+  "type": "ranking",
+  "question": "Priorisieren Sie diese Nachhaltigkeitsziele",
+  "options": [
+    {
+      "id": "r1",
+      "label": "CO2-Reduktion"
+    },
+    {
+      "id": "r2",
+      "label": "Kreislaufwirtschaft"
+    },
+    {
+      "id": "r3",
+      "label": "Soziale Fairness"
+    },
+    {
+      "id": "r4",
+      "label": "Biodiversität"
+    }
+  ]
 }

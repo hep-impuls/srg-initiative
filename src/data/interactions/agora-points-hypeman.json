@@ -1,23 +1,23 @@
 {
-    "id": "agora-points-hypeman",
-    "type": "points",
-    "question": "Der Algorithmus ist dein \"Hype-Man\". Was ist ihm am wichtigsten? (Verteile 100 Punkte)",
-    "options": [
-        {
-            "id": "emotion",
-            "label": "Emotionen (Wut/Freude)"
-        },
-        {
-            "id": "time",
-            "label": "Verweildauer (Time Spent)"
-        },
-        {
-            "id": "facts",
-            "label": "Neutrale Fakten"
-        },
-        {
-            "id": "boredom",
-            "label": "Langweilige Wahrheit"
-        }
-    ]
+  "id": "agora-points-hypeman",
+  "type": "points",
+  "question": "Der Algorithmus ist dein \"Hype-Man\". Was ist ihm am wichtigsten? (Verteile 100 Punkte)",
+  "options": [
+    {
+      "id": "emotion",
+      "label": "Emotionen (Wut/Freude)"
+    },
+    {
+      "id": "time",
+      "label": "Verweildauer (Time Spent)"
+    },
+    {
+      "id": "facts",
+      "label": "Neutrale Fakten"
+    },
+    {
+      "id": "boredom",
+      "label": "Langweilige Wahrheit"
+    }
+  ]
 }

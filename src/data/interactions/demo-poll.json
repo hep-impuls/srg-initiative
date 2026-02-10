@@ -1,23 +1,23 @@
 {
-    "id": "demo-poll",
-    "type": "poll",
-    "question": "Welche Themen interessieren Sie am meisten?",
-    "options": [
-        {
-            "id": "opt1",
-            "label": "Klimawandel & Umwelt"
-        },
-        {
-            "id": "opt2",
-            "label": "Wirtschaft & Arbeit"
-        },
-        {
-            "id": "opt3",
-            "label": "Soziale Gerechtigkeit"
-        },
-        {
-            "id": "opt4",
-            "label": "Digitale Transformation"
-        }
-    ]
+  "id": "demo-poll",
+  "type": "poll",
+  "question": "Welche Themen interessieren Sie am meisten?",
+  "options": [
+    {
+      "id": "opt1",
+      "label": "Klimawandel & Umwelt"
+    },
+    {
+      "id": "opt2",
+      "label": "Wirtschaft & Arbeit"
+    },
+    {
+      "id": "opt3",
+      "label": "Soziale Gerechtigkeit"
+    },
+    {
+      "id": "opt4",
+      "label": "Digitale Transformation"
+    }
+  ]
 }

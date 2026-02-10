@@ -1,24 +1,24 @@
 {
-    "id": "publicMedia-map-quiz-protection",
-    "type": "quiz",
-    "question": "Was schützt öffentliche Medien am besten vor politischem Druck?",
-    "options": [
-        {
-            "id": "direktbudget",
-            "label": "Direkte Budgetkontrolle durch die Regierung"
-        },
-        {
-            "id": "fondslogik",
-            "label": "Unabhängige Beitrags- oder Fondslogik statt direkter Budgetkontrolle",
-            "isCorrect": true
-        },
-        {
-            "id": "werbeabhaengigkeit",
-            "label": "Möglichst hohe Abhängigkeit von Werbeeinnahmen"
-        },
-        {
-            "id": "sponsoring",
-            "label": "Einzelne Grosssponsoren finanzieren den News-Bereich"
-        }
-    ]
+  "id": "publicMedia-map-quiz-protection",
+  "type": "quiz",
+  "question": "Was schützt öffentliche Medien am besten vor politischem Druck?",
+  "options": [
+    {
+      "id": "direktbudget",
+      "label": "Direkte Budgetkontrolle durch die Regierung"
+    },
+    {
+      "id": "fondslogik",
+      "label": "Unabhängige Finanzierung über Beiträge oder Fonds statt direkter Budgetkontrolle",
+      "isCorrect": true
+    },
+    {
+      "id": "werbeabhaengigkeit",
+      "label": "Möglichst hohe Abhängigkeit von Werbeeinnahmen"
+    },
+    {
+      "id": "sponsoring",
+      "label": "Einzelne Grosssponsoren finanzieren den News-Bereich"
+    }
+  ]
 }

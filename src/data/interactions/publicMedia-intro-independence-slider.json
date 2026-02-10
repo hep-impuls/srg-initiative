@@ -1,8 +1,8 @@
 {
-    "id": "publicMedia-intro-independence-slider",
-    "type": "slider",
-    "question": "Wie stark haengen Unabhängigkeit der Medien und Vertrauen in diese zusammen?",
-    "minLabel": "Kaum Zusammenhang",
-    "maxLabel": "Sehr starker Zusammenhang",
-    "options": []
+  "id": "publicMedia-intro-independence-slider",
+  "type": "slider",
+  "question": "Wie stark hängen Unabhängigkeit der Medien und Vertrauen in diese zusammen?",
+  "minLabel": "Kaum Zusammenhang",
+  "maxLabel": "Sehr starker Zusammenhang",
+  "options": []
 }

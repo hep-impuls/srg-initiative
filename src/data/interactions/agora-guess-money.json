@@ -1,7 +1,7 @@
 {
-    "id": "agora-guess-money",
-    "type": "guess",
-    "question": "Der grosse Geldabfluss: Wie viele Werbe-Milliarden fliessen jährlich aus der Schweiz an Google, Meta & Co. ab?",
-    "correctValue": 2.1,
-    "unit": "Mrd."
+  "id": "agora-guess-money",
+  "type": "guess",
+  "question": "Der grosse Geldabfluss: Wie viele Werbe-Milliarden fliessen jährlich aus der Schweiz an Google, Meta & Co. ab?",
+  "correctValue": 2.1,
+  "unit": "Mrd."
 }

@@ -1,24 +1,24 @@
 {
-    "id": "agora-quiz-gatekeeper",
-    "type": "quiz",
-    "question": "Wer oder was ist ein \"Gatekeeper\"?",
-    "options": [
-        {
-            "id": "bouncer",
-            "label": "Ein Türsteher im Club."
-        },
-        {
-            "id": "adblock",
-            "label": "Ein Algorithmus, der Werbung blockiert."
-        },
-        {
-            "id": "editor",
-            "label": "Eine Redaktion, die prüft, ob Infos wahr und relevant sind.",
-            "isCorrect": true
-        },
-        {
-            "id": "user",
-            "label": "Der User, der entscheidet, wem er folgt."
-        }
-    ]
+  "id": "agora-quiz-gatekeeper",
+  "type": "quiz",
+  "question": "Wer oder was ist ein \"Gatekeeper\"?",
+  "options": [
+    {
+      "id": "bouncer",
+      "label": "Ein Türsteher im Club."
+    },
+    {
+      "id": "adblock",
+      "label": "Ein Algorithmus, der Werbung blockiert."
+    },
+    {
+      "id": "editor",
+      "label": "Eine Redaktion, die prüft, ob Infos wahr und relevant sind.",
+      "isCorrect": true
+    },
+    {
+      "id": "user",
+      "label": "Der User, der entscheidet, wem er folgt."
+    }
+  ]
 }

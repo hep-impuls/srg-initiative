@@ -1,23 +1,23 @@
 {
-    "id": "agora-intro-ranking",
-    "type": "ranking",
-    "question": "Wie informierst du dich vor einer eidgenössischen Abstimmung?",
-    "options": [
-        {
-            "id": "booklet",
-            "label": "Rotes Abstimmungsbüchlein lesen"
-        },
-        {
-            "id": "social",
-            "label": "Erklärvideos auf Social Media"
-        },
-        {
-            "id": "talk",
-            "label": "Gespräche mit Familie/Freunden"
-        },
-        {
-            "id": "none",
-            "label": "Informiere mich kaum/gar nicht"
-        }
-    ]
+  "id": "agora-intro-ranking",
+  "type": "ranking",
+  "question": "Wie informierst du dich vor einer eidgenössischen Abstimmung?",
+  "options": [
+    {
+      "id": "booklet",
+      "label": "Rotes Abstimmungsbüchlein lesen"
+    },
+    {
+      "id": "social",
+      "label": "Erklärvideos auf Social Media"
+    },
+    {
+      "id": "talk",
+      "label": "Gespräche mit Familie/Freunden"
+    },
+    {
+      "id": "none",
+      "label": "Informiere mich kaum/gar nicht"
+    }
+  ]
 }

@@ -438,7 +438,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                                     <h3 className="text-lg font-bold text-emerald-900">{agoraContent.sections.gatekeeper.heading}</h3>
                                                 </div>
                                                 <p className="text-base text-emerald-900/80 leading-relaxed">
-                                                    <FocusRegion id="theory__gatekeeper__word__gatekeeper" label="Wort: Gatekeeper" as="span" className="font-bold px-1 rounded transition-colors inline-block">Gatekeeper</FocusRegion> heisst <FocusRegion id="theory__gatekeeper__word__torwaechter" label="Wort: Torwächter" as="span" className="font-bold px-1 rounded transition-colors inline-block">"Torwächter"</FocusRegion>. <SafeHTML content={agoraContent.sections.gatekeeper.text} as="span" />
+                                                    <SafeHTML content={agoraContent.sections.gatekeeper.text} />
                                                 </p>
                                             </div>
                                         </div>
@@ -540,7 +540,7 @@ export function AgoraPage({ config }: AgoraPageProps) {
                                         <div id="stat-cards" className="col-span-1 flex flex-col gap-4 scroll-mt-24">
                                             <StatCard id="stat-deprivierte" value="46%" label="News Deprivierte" subtext="Kaum noch Nachrichten-Fokus." color="red" sourceIds={["5"]} />
                                             <StatCard id="stat-social" value="17%" label="Nur Social" subtext="Kein Journalismus (18-24 J.)." color="purple" sourceIds={["1"]} />
-                                            <StatCard id="stat-tiktok" value="+7%" label="TikTok Boom" subtext="Wachstum als Newsquelle." color="blue" sourceIds={["3"]} />
+                                            <StatCard id="stat-tiktok" value="+7%" label="TikTok-Boom" subtext="Zuwachs bei TikTok als Newsquelle." color="blue" sourceIds={["3"]} />
                                         </div>
 
                                         {/* Right: Chart Section */}

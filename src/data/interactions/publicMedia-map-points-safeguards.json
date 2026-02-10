@@ -1,23 +1,23 @@
 {
-    "id": "publicMedia-map-points-safeguards",
-    "type": "points",
-    "question": "Verteile 100 Punkte auf die wichtigsten Schutzfaktoren im System.",
-    "options": [
-        {
-            "id": "finanzierungsstabilitaet",
-            "label": "Finanzierungsstabilität"
-        },
-        {
-            "id": "politische_distanzregeln",
-            "label": "Politische Distanzregeln"
-        },
-        {
-            "id": "transparenz",
-            "label": "Transparenz"
-        },
-        {
-            "id": "regionale_grundversorgung",
-            "label": "Regionale Grundversorgung"
-        }
-    ]
+  "id": "publicMedia-map-points-safeguards",
+  "type": "points",
+  "question": "Verteile 100 Punkte auf die wichtigsten Schutzfaktoren im System.",
+  "options": [
+    {
+      "id": "finanzierungsstabilitaet",
+      "label": "Finanzierungsstabilität"
+    },
+    {
+      "id": "politische_distanzregeln",
+      "label": "Politische Distanzregeln"
+    },
+    {
+      "id": "transparenz",
+      "label": "Transparenz"
+    },
+    {
+      "id": "regionale_grundversorgung",
+      "label": "Regionale Grundversorgung"
+    }
+  ]
 }

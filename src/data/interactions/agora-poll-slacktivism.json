@@ -1,19 +1,19 @@
 {
-    "id": "agora-poll-slacktivism",
-    "type": "poll",
-    "question": "Slacktivism: Hast du schon mal einen politischen Post geliked und hattest das Gefühl, \"deine Pflicht getan zu haben\"?",
-    "options": [
-        {
-            "id": "often",
-            "label": "Ja, oft."
-        },
-        {
-            "id": "sometimes",
-            "label": "Ab und zu."
-        },
-        {
-            "id": "never",
-            "label": "Nein, Liken ist für mich kein Wählen."
-        }
-    ]
+  "id": "agora-poll-slacktivism",
+  "type": "poll",
+  "question": "Slacktivism: Hast du schon mal einen politischen Post geliked und hattest das Gefühl, \"deine Pflicht getan zu haben\"?",
+  "options": [
+    {
+      "id": "often",
+      "label": "Ja, oft."
+    },
+    {
+      "id": "sometimes",
+      "label": "Ab und zu."
+    },
+    {
+      "id": "never",
+      "label": "Nein, Liken ist für mich kein Wählen."
+    }
+  ]
 }

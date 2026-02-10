@@ -1,7 +1,7 @@
 {
-    "id": "agora-outro-scale-1",
-    "type": "slider",
-    "question": "Wie siehst du das JETZT nach der Einheit? Ich verstehe jetzt, warum mein Feed anders aussieht als der meines Sitznachbarn.",
-    "minLabel": "Nein, gar nicht",
-    "maxLabel": "Ja, absolut"
+  "id": "agora-outro-scale-1",
+  "type": "slider",
+  "question": "Wie siehst du das JETZT nach der Einheit? Ich verstehe jetzt, warum mein Feed anders aussieht als der meines Sitznachbarn.",
+  "minLabel": "Nein, gar nicht",
+  "maxLabel": "Ja, absolut"
 }

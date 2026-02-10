@@ -1,24 +1,24 @@
 {
-    "id": "agora-quiz-tiktok",
-    "type": "quiz",
-    "question": "Was ist das \"15-Sekunden-Problem\" bei TikTok?",
-    "options": [
-        {
-            "id": "boring",
-            "label": "Die Videos sind zu langweilig."
-        },
-        {
-            "id": "context",
-            "label": "Komplexe Themen verlieren Kontext und Details.",
-            "isCorrect": true
-        },
-        {
-            "id": "speed",
-            "label": "Man kann nicht schnell genug liken."
-        },
-        {
-            "id": "ads",
-            "label": "Es gibt zu viel Werbung."
-        }
-    ]
+  "id": "agora-quiz-tiktok",
+  "type": "quiz",
+  "question": "Was ist das \"15-Sekunden-Problem\" bei TikTok?",
+  "options": [
+    {
+      "id": "boring",
+      "label": "Die Videos sind zu langweilig."
+    },
+    {
+      "id": "context",
+      "label": "Komplexe Themen verlieren Kontext und Details.",
+      "isCorrect": true
+    },
+    {
+      "id": "speed",
+      "label": "Man kann nicht schnell genug liken."
+    },
+    {
+      "id": "ads",
+      "label": "Es gibt zu viel Werbung."
+    }
+  ]
 }

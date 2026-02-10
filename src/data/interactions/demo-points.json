@@ -1,19 +1,19 @@
 {
-    "id": "demo-points",
-    "type": "points",
-    "question": "Wie sollte das Budget (100 CHF) verteilt werden?",
-    "options": [
-        {
-            "id": "p1",
-            "label": "Öffentlicher Verkehr"
-        },
-        {
-            "id": "p2",
-            "label": "Strassenbau"
-        },
-        {
-            "id": "p3",
-            "label": "Velowege"
-        }
-    ]
+  "id": "demo-points",
+  "type": "points",
+  "question": "Wie sollte das Budget (100 CHF) verteilt werden?",
+  "options": [
+    {
+      "id": "p1",
+      "label": "Öffentlicher Verkehr"
+    },
+    {
+      "id": "p2",
+      "label": "Strassenbau"
+    },
+    {
+      "id": "p3",
+      "label": "Velowege"
+    }
+  ]
 }

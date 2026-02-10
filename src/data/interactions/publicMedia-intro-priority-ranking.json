@@ -1,23 +1,23 @@
 {
-    "id": "publicMedia-intro-priority-ranking",
-    "type": "ranking",
-    "question": "Was ist dir bei Nachrichten am wichtigsten?",
-    "options": [
-        {
-            "id": "unabhaengigkeit",
-            "label": "Unabhängigkeit"
-        },
-        {
-            "id": "erklaerung",
-            "label": "Erklärung"
-        },
-        {
-            "id": "regionale_abdeckung",
-            "label": "Regionale Abdeckung"
-        },
-        {
-            "id": "geringe_kosten",
-            "label": "Geringe Kosten"
-        }
-    ]
+  "id": "publicMedia-intro-priority-ranking",
+  "type": "ranking",
+  "question": "Was ist dir bei Nachrichten am wichtigsten?",
+  "options": [
+    {
+      "id": "unabhaengigkeit",
+      "label": "Unabhängigkeit"
+    },
+    {
+      "id": "erklaerung",
+      "label": "Erklärung"
+    },
+    {
+      "id": "regionale_abdeckung",
+      "label": "Regionale Abdeckung"
+    },
+    {
+      "id": "geringe_kosten",
+      "label": "Geringe Kosten"
+    }
+  ]
 }

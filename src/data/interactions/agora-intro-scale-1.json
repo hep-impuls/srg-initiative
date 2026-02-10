@@ -1,7 +1,7 @@
 {
-    "id": "agora-intro-scale-1",
-    "type": "slider",
-    "question": "Ich erkenne Fake News sofort, wenn ich sie sehe.",
-    "minLabel": "Stimme gar nicht zu",
-    "maxLabel": "Stimme voll zu"
+  "id": "agora-intro-scale-1",
+  "type": "slider",
+  "question": "Ich erkenne Fake News sofort, wenn ich sie sehe.",
+  "minLabel": "Stimme gar nicht zu",
+  "maxLabel": "Stimme voll zu"
 }

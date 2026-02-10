@@ -1,7 +1,7 @@
 {
-    "id": "agora-guess-tv",
-    "type": "guess",
-    "question": "Schätzfrage zu den Daten: Wie viel Prozent der Schweizer Bevölkerung schauen noch klassisch TV-Nachrichten?",
-    "correctValue": 43,
-    "unit": "%"
+  "id": "agora-guess-tv",
+  "type": "guess",
+  "question": "Schätzfrage zu den Daten: Wie viel Prozent der Schweizer Bevölkerung schauen noch klassisch TV-Nachrichten?",
+  "correctValue": 43,
+  "unit": "%"
 }

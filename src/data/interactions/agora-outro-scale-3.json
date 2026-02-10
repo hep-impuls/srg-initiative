@@ -1,7 +1,7 @@
 {
-    "id": "agora-outro-scale-3",
-    "type": "slider",
-    "question": "Wie siehst du das JETZT? Ich fühle mich verantwortlich, aktiv nach anderen Meinungen zu suchen.",
-    "minLabel": "Nein, gar nicht",
-    "maxLabel": "Ja, absolut"
+  "id": "agora-outro-scale-3",
+  "type": "slider",
+  "question": "Wie siehst du das JETZT? Ich fühle mich verantwortlich, aktiv nach anderen Meinungen zu suchen.",
+  "minLabel": "Nein, gar nicht",
+  "maxLabel": "Ja, absolut"
 }

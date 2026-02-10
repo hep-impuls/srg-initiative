@@ -1,7 +1,7 @@
 {
-    "id": "agora-slider-fakenews",
-    "type": "slider",
-    "question": "Vorschau auf die Folgen: Wie viele Schweizer können Fake News deiner Meinung nach sicher erkennen?",
-    "minLabel": "0%",
-    "maxLabel": "100%"
+  "id": "agora-slider-fakenews",
+  "type": "slider",
+  "question": "Vorschau auf die Folgen: Wie viele Schweizer*innen können Fake News deiner Meinung nach sicher erkennen?",
+  "minLabel": "0%",
+  "maxLabel": "100%"
 }
